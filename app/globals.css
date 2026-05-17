@@ -784,8 +784,16 @@ a {
     grid-template-columns: 1fr;
   }
 
+  [dir="rtl"] .layout {
+    grid-template-columns: 1fr;
+  }
+
   .sidebar {
     display: none;
+  }
+
+  [dir="rtl"] .main {
+    grid-column: 1;
   }
 
   .article-aside {
