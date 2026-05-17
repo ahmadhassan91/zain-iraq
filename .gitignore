@@ -1,0 +1,14 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.netlify
+.next
+.playwright-cli
+dist-functions
+deno.lock
+node_modules
+out
+output
+tmp
+tsconfig.tsbuildinfo

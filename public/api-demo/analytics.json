@@ -1,0 +1,34 @@
+{
+  "apiCallsToday": 18400,
+  "avgResponseMs": 118,
+  "lowConfidenceSearches": 64,
+  "helpfulRating": 0.86,
+  "events": [
+    {
+      "event": "search_performed",
+      "channel": "website",
+      "query": "roaming",
+      "confidence": 0.94,
+      "latencyMs": 118
+    },
+    {
+      "event": "article_opened",
+      "channel": "agent_portal",
+      "articleId": "slow-internet",
+      "agentGroup": "Technical Support"
+    },
+    {
+      "event": "feedback_submitted",
+      "channel": "chatbot",
+      "articleId": "roaming-activation",
+      "rating": "helpful"
+    }
+  ],
+  "searchTrends": [
+    { "label": "Roaming activation", "searches": 1240, "failures": 24 },
+    { "label": "Slow internet", "searches": 980, "failures": 68 },
+    { "label": "App login", "searches": 760, "failures": 42 },
+    { "label": "SIM replacement", "searches": 640, "failures": 18 },
+    { "label": "Balance deduction", "searches": 590, "failures": 71 }
+  ]
+}

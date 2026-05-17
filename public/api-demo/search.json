@@ -1,0 +1,36 @@
+{
+  "query": "roaming",
+  "language": "en",
+  "channel": "website",
+  "searchId": "srch_20260517_8831",
+  "total": 3,
+  "results": [
+    {
+      "id": "roaming-activation",
+      "title": "How to activate roaming",
+      "channelVariant": "Website",
+      "confidence": 0.94,
+      "type": "Troubleshooting",
+      "status": "Published",
+      "tags": ["roaming", "travel", "international"]
+    },
+    {
+      "id": "slow-internet",
+      "title": "Slow internet or no data connectivity",
+      "channelVariant": "Agent Portal",
+      "confidence": 0.91,
+      "type": "Troubleshooting",
+      "status": "Published",
+      "tags": ["4.5G", "internet", "APN", "coverage"]
+    },
+    {
+      "id": "international-calls",
+      "title": "International calls and rates",
+      "channelVariant": "Chatbot",
+      "confidence": 0.83,
+      "type": "FAQ",
+      "status": "Published",
+      "tags": ["international", "calls", "rates"]
+    }
+  ]
+}

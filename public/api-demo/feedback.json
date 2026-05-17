@@ -1,0 +1,11 @@
+{
+  "eventId": "fb_20260517_1021",
+  "articleId": "roaming-activation",
+  "searchId": "srch_20260517_8831",
+  "channel": "chatbot",
+  "language": "en",
+  "rating": "helpful",
+  "comment": "Customer confirmed the roaming steps worked.",
+  "capturedAt": "2026-05-17T10:21:00+03:00",
+  "nextAction": "increase_article_quality_score"
+}

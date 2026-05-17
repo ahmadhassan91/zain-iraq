@@ -1,0 +1,13 @@
+{
+  "articleId": "roaming-activation",
+  "channel": "whatsapp",
+  "language": "en",
+  "confidence": 0.94,
+  "response": {
+    "format": "short_text",
+    "text": "Before travelling, confirm roaming is active in the Zain Iraq app or through support. After arrival, restart your phone and select a partner network if needed.",
+    "maxLength": 320
+  },
+  "allowedActions": ["send_to_customer", "handoff_to_agent", "capture_feedback"],
+  "restrictedFieldsRemoved": ["agentNote", "internalEligibilityChecks"]
+}

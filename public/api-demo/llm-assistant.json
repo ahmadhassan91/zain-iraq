@@ -1,0 +1,24 @@
+{
+  "request": {
+    "question": "How can I activate roaming before travel?",
+    "channel": "chatbot",
+    "language": "en",
+    "customerType": "prepaid"
+  },
+  "response": {
+    "answer": "Before travelling, confirm roaming is active in the Zain Iraq app or through Zain support. After you arrive, restart your device and choose a partner network manually if automatic selection does not connect.",
+    "confidence": 0.94,
+    "grounding": [
+      {
+        "articleId": "roaming-activation",
+        "title": "How to activate roaming",
+        "score": 0.94
+      }
+    ],
+    "handoff": {
+      "required": false,
+      "reason": null
+    },
+    "loggedEvents": ["assistant_answered", "confidence_recorded", "citation_attached"]
+  }
+}

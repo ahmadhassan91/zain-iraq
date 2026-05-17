@@ -1,0 +1,24 @@
+{
+  "id": "roaming-activation",
+  "title": "How to activate roaming",
+  "category": "Roaming",
+  "type": "Troubleshooting",
+  "status": "Published",
+  "visibility": "Public",
+  "language": "en",
+  "updatedAt": "2026-05-12",
+  "confidence": 0.94,
+  "channels": ["website", "agent_portal", "chatbot", "whatsapp"],
+  "content": {
+    "summary": "Guide customers through roaming readiness, activation checks and travel support steps.",
+    "customerAnswer": "Before travelling, open the Zain Iraq app or contact support to confirm roaming is active. Restart the device after arrival and choose a partner network if automatic selection does not connect.",
+    "agentNote": "Verify line status, roaming eligibility, spend controls and active package before escalation.",
+    "steps": [
+      "Confirm customer line is active",
+      "Check roaming eligibility",
+      "Validate destination coverage",
+      "Ask customer to restart device",
+      "Escalate if partner network attach fails"
+    ]
+  }
+}
