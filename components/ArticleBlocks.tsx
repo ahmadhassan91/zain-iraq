@@ -4,22 +4,27 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Copy, ExternalLink, Pin, Star } from "lucide-react";
 import type { Agent, Article } from "@/lib/data";
+import { useLanguage } from "./AppChrome";
+import { agentLocalized, articleCopy, term } from "@/lib/localized-copy";
 
 export function ArticleResult({ article, href }: { article: Article; href: string }) {
+  const { language } = useLanguage();
+  const localized = articleCopy(article, language);
+
   return (
     <Link className="result-item" href={href}>
       <div>
         <div className="chip-row">
-          <span className={`chip ${article.status.toLowerCase().replaceAll(" ", "-")}`}>{article.status}</span>
-          <span className="chip">{article.category}</span>
-          <span className="chip">{article.visibility}</span>
+          <span className={`chip ${article.status.toLowerCase().replaceAll(" ", "-")}`}>{term(article.status, language)}</span>
+          <span className="chip">{localized.category}</span>
+          <span className="chip">{term(article.visibility, language)}</span>
         </div>
-        <h3>{article.title}</h3>
-        <p className="muted">{article.summary}</p>
+        <h3>{localized.title}</h3>
+        <p className="muted">{localized.summary}</p>
         <div className="chip-row">
           {article.channelVariants.map((variant) => (
             <span className="chip" key={variant}>
-              {variant}
+              {term(variant, language)}
             </span>
           ))}
         </div>
@@ -30,15 +35,18 @@ export function ArticleResult({ article, href }: { article: Article; href: strin
 }
 
 export function PersonaCard({ agent, active = false }: { agent: Agent; active?: boolean }) {
+  const { language } = useLanguage();
+  const localized = agentLocalized(agent, language);
+
   return (
     <div className={`persona-card ${active ? "active" : ""}`}>
       <div className={`avatar ${agent.color}`}>{agent.initials}</div>
       <div>
-        <h3>{agent.role}</h3>
-        <p className="muted">{agent.name}</p>
-        <p className="small">{agent.skill}</p>
+        <h3>{localized.role}</h3>
+        <p className="muted">{localized.name}</p>
+        <p className="small">{localized.skill}</p>
         <div className="chip-row">
-          <span className="chip magenta">{agent.group}</span>
+          <span className="chip magenta">{localized.group}</span>
           <span className="chip">
             <Pin size={13} /> {agent.pinned.length} pinned
           </span>

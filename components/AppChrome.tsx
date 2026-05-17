@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { BarChart3, Bell, BookOpen, Bot, FileText, Globe2, Home, LayoutDashboard, Search, ShieldCheck, Users } from "lucide-react";
 import { ZainLogo } from "./ZainLogo";
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
@@ -17,7 +17,68 @@ const navItems = [
   { href: "/api-readiness", label: "API Readiness", icon: Bot }
 ];
 
-type Language = "EN" | "AR" | "KU";
+export type Language = "EN" | "AR" | "KU";
+
+const shellCopy: Record<Language, Record<string, string>> = {
+  EN: {
+    product: "Zain Iraq Knowledge Base",
+    subtitle: "Unified knowledge platform for customers, agents and admins",
+    scopeTitle: "Platform scope",
+    scope: "Customer knowledge, agent assistance, governance, analytics and channel-ready content delivery.",
+    Home: "Home",
+    "Customer KB": "Customer KB",
+    "Agent Workspace": "Agent Workspace",
+    "Admin Dashboard": "Admin Dashboard",
+    Articles: "Articles",
+    Notifications: "Notifications",
+    Analytics: "Analytics",
+    "Groups & Skills": "Groups & Skills",
+    "API Readiness": "API Readiness"
+  },
+  AR: {
+    product: "قاعدة معرفة زين العراق",
+    subtitle: "منصة معرفة موحدة للعملاء والوكلاء والإدارة",
+    scopeTitle: "نطاق المنصة",
+    scope: "معرفة العملاء، مساعدة الوكلاء، الحوكمة، التحليلات، وتسليم المحتوى للقنوات.",
+    Home: "الرئيسية",
+    "Customer KB": "معرفة العملاء",
+    "Agent Workspace": "مساحة الوكيل",
+    "Admin Dashboard": "لوحة الإدارة",
+    Articles: "المقالات",
+    Notifications: "التنبيهات",
+    Analytics: "التحليلات",
+    "Groups & Skills": "المجموعات والمهارات",
+    "API Readiness": "جاهزية الواجهات"
+  },
+  KU: {
+    product: "بنکەی زانیاری زەین عێراق",
+    subtitle: "پلاتفۆرمی یەکگرتووی زانیاری بۆ کڕیاران، ئەجێنتەکان و بەڕێوەبەران",
+    scopeTitle: "سنوری پلاتفۆرم",
+    scope: "زانیاری کڕیار، یارمەتی ئەجێنت، حوکمرانی، شیکاری و گەیاندنی ناوەڕۆک بۆ کەناڵەکان.",
+    Home: "سەرەکی",
+    "Customer KB": "زانیاری کڕیار",
+    "Agent Workspace": "شوێنی کاری ئەجێنت",
+    "Admin Dashboard": "داشبۆردی بەڕێوەبەر",
+    Articles: "بابەتەکان",
+    Notifications: "ئاگادارکردنەوەکان",
+    Analytics: "شیکارییەکان",
+    "Groups & Skills": "گرووپ و شارەزایی",
+    "API Readiness": "ئامادەیی API"
+  }
+};
+
+const LanguageContext = createContext<{ language: Language; setLanguage: (language: Language) => void }>({
+  language: "EN",
+  setLanguage: () => undefined
+});
+
+export function useLanguage() {
+  return useContext(LanguageContext);
+}
+
+export function localize(key: string, language: Language) {
+  return shellCopy[language][key] || key;
+}
 
 export function Header({
   active = "Home",
@@ -33,8 +94,8 @@ export function Header({
       <div className="brand-area">
         <ZainLogo />
         <div className="product-title">
-          <strong>Zain Iraq Knowledge Base</strong>
-          <span>Unified knowledge platform for customers, agents and admins</span>
+          <strong>{shellCopy[language].product}</strong>
+          <span>{shellCopy[language].subtitle}</span>
         </div>
       </div>
       <div className="topbar-actions">
@@ -47,7 +108,7 @@ export function Header({
         </div>
         <div className="chip">
           <ShieldCheck size={16} />
-          {active}
+          {localize(active, language)}
         </div>
       </div>
     </header>
@@ -55,6 +116,8 @@ export function Header({
 }
 
 export function Sidebar({ active = "Home" }: { active?: string }) {
+  const { language } = useLanguage();
+
   return (
     <aside className="sidebar">
       <div className="nav-list">
@@ -63,14 +126,14 @@ export function Sidebar({ active = "Home" }: { active?: string }) {
           return (
             <Link key={item.label} className={`nav-item ${active === item.label ? "active" : ""}`} href={item.href}>
               <Icon size={18} />
-              {item.label}
+              {localize(item.label, language)}
             </Link>
           );
         })}
       </div>
       <div className="footer-note">
-        <strong>Platform scope</strong>
-        <p className="small">Customer knowledge, agent assistance, governance, analytics and channel-ready content delivery.</p>
+        <strong>{shellCopy[language].scopeTitle}</strong>
+        <p className="small">{shellCopy[language].scope}</p>
       </div>
     </aside>
   );
@@ -87,13 +150,15 @@ export function AppShell({
   const isRtl = language !== "EN";
 
   return (
-    <div className="app" dir={isRtl ? "rtl" : "ltr"}>
-      <Header active={active} language={language} onLanguageChange={setLanguage} />
-      <div className="layout">
-        <Sidebar active={active} />
-        <main className="main">{children}</main>
+    <LanguageContext.Provider value={{ language, setLanguage }}>
+      <div className="app" dir={isRtl ? "rtl" : "ltr"}>
+        <Header active={active} language={language} onLanguageChange={setLanguage} />
+        <div className="layout">
+          <Sidebar active={active} />
+          <main className="main">{children}</main>
+        </div>
       </div>
-    </div>
+    </LanguageContext.Provider>
   );
 }
 
