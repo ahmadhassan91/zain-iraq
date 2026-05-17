@@ -1,21 +1,33 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search } from "lucide-react";
+import { AlertTriangle, Bell, Search } from "lucide-react";
 import { AppShell, ArticleMini, SectionTitle } from "@/components/AppChrome";
 import { ArticleResult } from "@/components/ArticleBlocks";
 import { DemoActionButton } from "@/components/DemoActionButton";
-import { articles, searchArticles } from "@/lib/data";
+import { announcements, articles, searchArticles } from "@/lib/data";
 
 export default function CustomerPage() {
   const [query, setQuery] = useState("How do I activate roaming?");
-  const [dir, setDir] = useState<"ltr" | "rtl">("ltr");
   const [searched, setSearched] = useState(false);
   const results = useMemo(() => searchArticles(query).filter((article) => article.visibility !== "Private Group"), [query]);
+  const customerAnnouncements = announcements.filter((announcement) => announcement.audience !== "Agent");
+  const liveAlert = customerAnnouncements.find((announcement) => announcement.status === "Live");
 
   return (
     <AppShell active="Customer KB">
-      <section className="hero" dir={dir}>
+      {liveAlert ? (
+        <section className="alert-banner">
+          <AlertTriangle color="#d12c89" />
+          <div>
+            <h3>{liveAlert.title}</h3>
+            <p className="muted">{liveAlert.message}</p>
+          </div>
+          <span className={`chip ${liveAlert.severity.toLowerCase()}`}>{liveAlert.severity}</span>
+        </section>
+      ) : null}
+
+      <section className="hero">
         <h1>How can we help you today?</h1>
         <p>Search Zain Iraq support content across roaming, bundles, SIM services, internet, app support and business FAQs.</p>
         <div className="search-box">
@@ -24,11 +36,6 @@ export default function CustomerPage() {
             <Search size={17} />
             {searched ? "Searched" : "Search"}
           </button>
-        </div>
-        <div className="chip-row" style={{ marginTop: 14 }}>
-          <button className="btn" onClick={() => setDir("ltr")}>English</button>
-          <button className="btn" onClick={() => setDir("rtl")}>Arabic RTL</button>
-          <button className="btn" onClick={() => setDir("rtl")}>Kurdish RTL</button>
         </div>
       </section>
 
@@ -44,9 +51,13 @@ export default function CustomerPage() {
           </div>
           <div className="grid">
             <div className="panel">
-              <h3>What&apos;s New</h3>
-              <ArticleMini title="4.5G+ unlimited data support update" meta="Published for website, chatbot and agent channels" />
-              <ArticleMini title="Roaming support readiness" meta="Updated customer-facing travel checklist" />
+              <div className="section-title">
+                <h2>What&apos;s New</h2>
+                <Bell size={18} color="#4a9e9d" />
+              </div>
+              {customerAnnouncements.map((announcement) => (
+                <ArticleMini key={announcement.id} title={announcement.title} meta={`${announcement.status} · ${announcement.channel} · ${announcement.scheduledFor}`} />
+              ))}
             </div>
             <div className="panel">
               <h3>What are we missing?</h3>
@@ -58,14 +69,18 @@ export default function CustomerPage() {
       </section>
 
       <section className="section">
-        <SectionTitle title="Popular support categories" />
+        <SectionTitle title="Trending FAQs and most viewed" />
         <div className="grid four">
-          {["Bundles", "Roaming", "SIM Services", "Digital Channels"].map((category) => (
-            <div className="card" key={category}>
-              <h3>{category}</h3>
-              <p className="muted">Browse public FAQs, guides and troubleshooting content.</p>
-            </div>
-          ))}
+          {articles
+            .filter((article) => article.visibility !== "Private Group")
+            .sort((a, b) => b.views - a.views)
+            .slice(0, 4)
+            .map((article) => (
+              <div className="card" key={article.id}>
+                <h3>{article.title}</h3>
+                <p className="muted">{article.views.toLocaleString()} views · {article.helpful}% helpful</p>
+              </div>
+            ))}
         </div>
       </section>
     </AppShell>

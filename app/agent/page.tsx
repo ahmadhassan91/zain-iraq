@@ -1,11 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Filter, Search } from "lucide-react";
+import { Bell, Filter, Search } from "lucide-react";
 import { AppShell, SectionTitle } from "@/components/AppChrome";
 import { ArticleResult, PersonaCard } from "@/components/ArticleBlocks";
 import { LlmAssistant } from "@/components/LlmAssistant";
-import { agents, articles, searchArticles } from "@/lib/data";
+import { agents, announcements, articles, searchArticles } from "@/lib/data";
 
 export default function AgentPage() {
   const [agentId, setAgentId] = useState("roaming");
@@ -14,6 +14,7 @@ export default function AgentPage() {
   const agent = agents.find((item) => item.id === agentId) ?? agents[0];
   const results = useMemo(() => searchArticles(query), [query]);
   const pinned = articles.filter((article) => agent.pinned.includes(article.id));
+  const agentUpdates = announcements.filter((announcement) => announcement.audience !== "Customer");
 
   return (
     <AppShell active="Agent Workspace">
@@ -52,6 +53,23 @@ export default function AgentPage() {
         </div>
 
         <aside className="grid">
+          <div className="panel">
+            <SectionTitle title="Operational updates">
+              <Bell size={18} color="#d12c89" />
+            </SectionTitle>
+            <div className="article-list">
+              {agentUpdates.map((announcement) => (
+                <div className="result-item" key={announcement.id}>
+                  <div>
+                    <h3>{announcement.title}</h3>
+                    <p className="muted">{announcement.message}</p>
+                    <p className="small">{announcement.scheduledFor}</p>
+                  </div>
+                  <span className={`chip ${announcement.severity.toLowerCase()}`}>{announcement.severity}</span>
+                </div>
+              ))}
+            </div>
+          </div>
           <LlmAssistant initialQuestion={query} />
           <div className="persona-list">
             {agents.map((item) => (

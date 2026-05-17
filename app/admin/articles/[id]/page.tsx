@@ -1,3 +1,4 @@
+import { Bold, ImagePlus, Italic, Link as LinkIcon, List, Paperclip, PlaySquare, Underline } from "lucide-react";
 import { AppShell, SectionTitle } from "@/components/AppChrome";
 import { DemoActionButton } from "@/components/DemoActionButton";
 import { articles, findArticle } from "@/lib/data";
@@ -44,12 +45,40 @@ export default function AdminArticlePage({ params }: { params: { id: string } })
               </select>
             </label>
             <label className="full">
-              <span className="small">Short answer</span>
+              <span className="small">Rich answer editor</span>
+              <div className="toolbar" aria-label="Rich text toolbar">
+                <button className="btn compact" type="button"><Bold size={15} /></button>
+                <button className="btn compact" type="button"><Italic size={15} /></button>
+                <button className="btn compact" type="button"><Underline size={15} /></button>
+                <button className="btn compact" type="button"><List size={15} /></button>
+                <button className="btn compact" type="button"><LinkIcon size={15} /></button>
+              </div>
               <textarea className="textarea" defaultValue={article.customerAnswer} />
             </label>
             <label className="full">
               <span className="small">Internal note</span>
               <textarea className="textarea" defaultValue={article.internalNote} />
+            </label>
+            <label>
+              <span className="small">Media upload</span>
+              <div className="field media-field">
+                <ImagePlus size={16} />
+                Branch photo, coverage map or support image
+              </div>
+            </label>
+            <label>
+              <span className="small">Video tutorial</span>
+              <div className="field media-field">
+                <PlaySquare size={16} />
+                Add walkthrough video URL
+              </div>
+            </label>
+            <label className="full">
+              <span className="small">Attachments</span>
+              <div className="field media-field">
+                <Paperclip size={16} />
+                PDF, rate sheet, service advisory or training file
+              </div>
             </label>
           </div>
         </div>
@@ -78,6 +107,7 @@ export default function AdminArticlePage({ params }: { params: { id: string } })
             <DemoActionButton className="btn" message="Draft saved">Save draft</DemoActionButton>
             <DemoActionButton className="btn magenta" message="Approved">Approve</DemoActionButton>
             <DemoActionButton className="btn primary" message="Published">Publish</DemoActionButton>
+            <DemoActionButton className="btn ghost" message="Archived">Archive</DemoActionButton>
           </div>
         </aside>
       </div>

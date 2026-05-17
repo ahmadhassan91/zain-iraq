@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { AlertTriangle, ArrowRight, FileText, RadioTower } from "lucide-react";
+import { AlertTriangle, ArrowRight, Bell, FileText, RadioTower } from "lucide-react";
 import { AppShell, SectionTitle, StatCard } from "@/components/AppChrome";
 import { ArticleResult } from "@/components/ArticleBlocks";
-import { analytics, articles, integrations } from "@/lib/data";
+import { analytics, announcements, articles, integrations } from "@/lib/data";
 
 export default function AdminPage() {
   return (
@@ -23,6 +23,25 @@ export default function AdminPage() {
 
       <section className="section">
         <div className="grid two">
+          <div className="panel">
+            <SectionTitle title="Announcements requiring action">
+              <Bell size={18} color="#d12c89" />
+            </SectionTitle>
+            <div className="article-list">
+              {announcements.map((announcement) => (
+                <div className="result-item" key={announcement.id}>
+                  <div>
+                    <h3>{announcement.title}</h3>
+                    <p className="muted">{announcement.message}</p>
+                  </div>
+                  <span className={`chip ${announcement.status.toLowerCase()}`}>{announcement.status}</span>
+                </div>
+              ))}
+            </div>
+            <Link className="btn magenta" href="/admin/notifications" style={{ marginTop: 14 }}>
+              Manage alerts
+            </Link>
+          </div>
           <div className="panel">
             <SectionTitle title="Content requiring attention">
               <span className="chip magenta"><AlertTriangle size={14} /> Knowledge gaps</span>
@@ -75,6 +94,10 @@ export default function AdminPage() {
             <FileText color="#d12c89" />
             <h3>Workflow management</h3>
             <p className="muted">Draft, approve, ready to publish, scheduled publish and archive statuses.</p>
+          </Link>
+          <Link className="card" href="/admin/articles">
+            <h3>Article management</h3>
+            <p className="muted">Edit existing content, manage pinned articles, archive stale entries and review performance.</p>
           </Link>
           <Link className="card" href="/admin/analytics">
             <h3>API analytics</h3>

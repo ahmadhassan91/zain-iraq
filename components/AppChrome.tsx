@@ -1,21 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { BarChart3, BookOpen, Bot, FileText, Globe2, Home, LayoutDashboard, Search, ShieldCheck, Users } from "lucide-react";
+import { BarChart3, Bell, BookOpen, Bot, FileText, Globe2, Home, LayoutDashboard, Search, ShieldCheck, Users } from "lucide-react";
 import { ZainLogo } from "./ZainLogo";
+import { useState } from "react";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/customer", label: "Customer KB", icon: Globe2 },
   { href: "/agent", label: "Agent Workspace", icon: Search },
   { href: "/admin", label: "Admin Dashboard", icon: LayoutDashboard },
-  { href: "/admin/articles/new", label: "Content Workflow", icon: FileText },
+  { href: "/admin/articles", label: "Articles", icon: FileText },
+  { href: "/admin/notifications", label: "Notifications", icon: Bell },
   { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/admin/groups", label: "Groups & Skills", icon: Users },
   { href: "/api-readiness", label: "API Readiness", icon: Bot }
 ];
 
-export function Header({ active = "Home" }: { active?: string }) {
+type Language = "EN" | "AR" | "KU";
+
+export function Header({
+  active = "Home",
+  language,
+  onLanguageChange
+}: {
+  active?: string;
+  language: Language;
+  onLanguageChange: (language: Language) => void;
+}) {
   return (
     <header className="topbar">
       <div className="brand-area">
@@ -27,9 +39,11 @@ export function Header({ active = "Home" }: { active?: string }) {
       </div>
       <div className="topbar-actions">
         <div className="language-switch" aria-label="Language switcher">
-          <span>EN</span>
-          <span>AR</span>
-          <span>KU</span>
+          {(["EN", "AR", "KU"] as Language[]).map((item) => (
+            <button className={language === item ? "active" : ""} key={item} onClick={() => onLanguageChange(item)}>
+              {item}
+            </button>
+          ))}
         </div>
         <div className="chip">
           <ShieldCheck size={16} />
@@ -69,9 +83,12 @@ export function AppShell({
   active?: string;
   children: React.ReactNode;
 }) {
+  const [language, setLanguage] = useState<Language>("EN");
+  const isRtl = language !== "EN";
+
   return (
-    <div className="app">
-      <Header active={active} />
+    <div className="app" dir={isRtl ? "rtl" : "ltr"}>
+      <Header active={active} language={language} onLanguageChange={setLanguage} />
       <div className="layout">
         <Sidebar active={active} />
         <main className="main">{children}</main>

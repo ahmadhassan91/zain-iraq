@@ -31,6 +31,17 @@ export type Article = {
   updatedAt: string;
 };
 
+export type Announcement = {
+  id: string;
+  title: string;
+  audience: "Customer" | "Agent" | "All";
+  severity: "Info" | "Advisory" | "Critical";
+  channel: "Website" | "Agent Portal" | "Chatbot" | "WhatsApp";
+  status: "Live" | "Scheduled" | "Draft";
+  message: string;
+  scheduledFor: string;
+};
+
 export const agents: Agent[] = [
   {
     id: "billing",
@@ -245,6 +256,39 @@ export const analytics = [
   { label: "App login", searches: 760, failures: 42 },
   { label: "SIM replacement", searches: 640, failures: 18 },
   { label: "Balance deduction", searches: 590, failures: 71 }
+];
+
+export const announcements: Announcement[] = [
+  {
+    id: "network-maintenance",
+    title: "Planned maintenance in Baghdad",
+    audience: "Customer",
+    severity: "Advisory",
+    channel: "Website",
+    status: "Live",
+    message: "Some customers may notice intermittent data service between 01:00 and 03:00 during planned optimization work.",
+    scheduledFor: "2026-05-18 01:00"
+  },
+  {
+    id: "roaming-advisory",
+    title: "Roaming partner advisory",
+    audience: "Agent",
+    severity: "Critical",
+    channel: "Agent Portal",
+    status: "Live",
+    message: "For roaming attach failures, confirm destination partner network before creating a technical ticket.",
+    scheduledFor: "2026-05-17 13:30"
+  },
+  {
+    id: "super-card-update",
+    title: "Super Card support article refresh",
+    audience: "All",
+    severity: "Info",
+    channel: "Chatbot",
+    status: "Scheduled",
+    message: "Updated bundle support content will be pushed to chatbot and WhatsApp variants after approval.",
+    scheduledFor: "2026-05-19 09:00"
+  }
 ];
 
 export const integrations = [
