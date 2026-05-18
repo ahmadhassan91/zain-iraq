@@ -13,19 +13,21 @@ import { agentCopy, agentLocalized, announcementCopy, articleCopy, term } from "
 export default function AgentPage() {
   const [loggedIn, setLoggedIn] = useState(false);
 
+  if (!loggedIn) {
+    return (
+      <RoleLogin
+        role="Agent"
+        title="Agent portal"
+        body="Access internal troubleshooting procedures, pinned knowledge, agent-only notes and the LLM assistant."
+        points={["Internal operational notes", "Skill-based pinned articles", "AI-assisted KB answers", "Escalation guidance"]}
+        onLogin={() => setLoggedIn(true)}
+      />
+    );
+  }
+
   return (
     <AppShell active="Agent Workspace">
-      {!loggedIn ? (
-        <RoleLogin
-          role="Agent"
-          title="Agent login"
-          body="Use this role to access internal troubleshooting procedures, pinned knowledge, agent-only notes and the LLM assistant."
-          points={["Internal notes", "Pinned articles", "AI assist", "Escalation guidance"]}
-          onLogin={() => setLoggedIn(true)}
-        />
-      ) : (
-        <AgentContent />
-      )}
+      <AgentContent />
     </AppShell>
   );
 }

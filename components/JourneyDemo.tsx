@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { CheckCircle2, Eye, LockKeyhole, LogIn, RefreshCcw, Send, ShieldCheck, UserCog } from "lucide-react";
 import { useDemoKnowledge } from "@/lib/demo-state";
+import { ZainLogo } from "./ZainLogo";
 
 export function RoleSelector() {
   const roles = [
@@ -97,24 +98,59 @@ export function RoleLogin({
   onLogin: () => void;
 }) {
   return (
-    <section className="login-screen">
-      <div className="login-card">
-        <span className="chip magenta">{role} portal</span>
-        <h1>{title}</h1>
-        <p>{body}</p>
-        <div className="login-meta">
-          {points.map((point) => (
-            <span className="chip" key={point}>
-              <CheckCircle2 size={14} />
-              {point}
-            </span>
-          ))}
+    <main className="portal-page">
+      <header className="portal-header">
+        <Link href="/" className="portal-brand">
+          <ZainLogo />
+          <span>Zain Iraq Knowledge Base</span>
+        </Link>
+        <div className="portal-links">
+          <Link href="/customer">Customer view</Link>
+          <Link href="/">Role selection</Link>
         </div>
-        <button className="btn primary" onClick={onLogin}>
-          <LogIn size={16} />
-          Login as {role}
-        </button>
-      </div>
-    </section>
+      </header>
+
+      <section className="portal-shell">
+        <div className="portal-copy">
+          <span className="chip magenta">{role} portal</span>
+          <h1>{title}</h1>
+          <p>{body}</p>
+          <div className="portal-points">
+            {points.map((point) => (
+              <div className="portal-point" key={point}>
+                <CheckCircle2 size={17} />
+                <span>{point}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <form
+          className="portal-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            onLogin();
+          }}
+        >
+          <div>
+            <span className="small">Demo credentials</span>
+            <h2>Sign in to continue</h2>
+          </div>
+          <label>
+            <span className="small">Work email</span>
+            <input className="field" defaultValue={role === "Admin" ? "admin@zain.iq" : "agent@zain.iq"} />
+          </label>
+          <label>
+            <span className="small">Password</span>
+            <input className="field" defaultValue="demo-password" type="password" />
+          </label>
+          <button className="btn primary" type="submit">
+            <LogIn size={16} />
+            Continue to {role} workspace
+          </button>
+          <p className="small">POC login only. No production authentication is enabled.</p>
+        </form>
+      </section>
+    </main>
   );
 }

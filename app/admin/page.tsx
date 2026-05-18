@@ -17,19 +17,21 @@ const rights = [
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
 
+  if (!loggedIn) {
+    return (
+      <RoleLogin
+        role="Admin"
+        title="Admin portal"
+        body="Govern the knowledge base, publish approved content, control visibility and monitor content gaps from one focused workspace."
+        points={["Publish customer and agent content", "Set role and channel visibility", "Manage live alerts", "Review analytics and gaps"]}
+        onLogin={() => setLoggedIn(true)}
+      />
+    );
+  }
+
   return (
     <AppShell active="Admin Dashboard">
-      {!loggedIn ? (
-        <RoleLogin
-          role="Admin"
-          title="Admin login"
-          body="Use this role to govern the knowledge base, publish approved content, control visibility and monitor content gaps."
-          points={["Publish content", "Set visibility", "Manage alerts", "Review analytics"]}
-          onLogin={() => setLoggedIn(true)}
-        />
-      ) : (
-        <AdminWorkspace />
-      )}
+      <AdminWorkspace />
     </AppShell>
   );
 }
