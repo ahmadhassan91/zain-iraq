@@ -1,65 +1,77 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Bot, Globe2, Headphones, LayoutDashboard, Sparkles } from "lucide-react";
-import { AppShell, SectionTitle, StatCard } from "@/components/AppChrome";
+import { AppShell, SectionTitle, StatCard, useLanguage } from "@/components/AppChrome";
 import { agents, analytics, articles } from "@/lib/data";
 import { PersonaCard } from "@/components/ArticleBlocks";
+import { analyticsLabel, homeCopy } from "@/lib/localized-copy";
 
 export default function Home() {
   return (
     <AppShell active="Home">
+      <HomeContent />
+    </AppShell>
+  );
+}
+
+function HomeContent() {
+  const { language } = useLanguage();
+  const copy = homeCopy[language];
+
+  return (
+    <>
       <section className="hero">
-        <h1>One Zain knowledge source for customers, agents and digital channels.</h1>
-        <p>
-          AI-assisted search, targeted agent guidance, content governance, analytics, multilingual support and channel-ready knowledge delivery.
-        </p>
+        <h1>{copy.heroTitle}</h1>
+        <p>{copy.heroBody}</p>
         <div className="inline-actions">
           <Link className="btn primary" href="/customer">
-            Customer Knowledge Center <ArrowRight size={16} />
+            {copy.customerCenter} <ArrowRight size={16} />
           </Link>
           <Link className="btn" href="/agent">
-            Agent Workspace
+            {copy.agentWorkspace}
           </Link>
           <Link className="btn" href="/admin">
-            Admin Dashboard
+            {copy.adminDashboard}
           </Link>
         </div>
       </section>
 
       <section className="section">
         <div className="grid four">
-          <StatCard label="Seed articles" value={`${articles.length}`} detail="FAQs, guides and troubleshooting flows" />
-          <StatCard label="Targeted agents" value={`${agents.length}`} detail="Billing, technical, roaming, digital and PTX" />
-          <StatCard label="Channel variants" value="4" detail="Website, Agent Portal, Chatbot, WhatsApp" />
-          <StatCard label="AI confidence" value="94%" detail="Shown on ranked search results" />
+          <StatCard label={copy.seedArticles} value={`${articles.length}`} detail={copy.seedDetail} />
+          <StatCard label={copy.targetedAgents} value={`${agents.length}`} detail={copy.targetedDetail} />
+          <StatCard label={copy.channelVariants} value="4" detail={copy.channelDetail} />
+          <StatCard label={copy.aiConfidence} value="94%" detail={copy.aiConfidenceDetail} />
         </div>
       </section>
 
       <section className="section">
-        <SectionTitle title="Role-based journeys" />
+        <SectionTitle title={copy.journeys} />
         <div className="grid three">
           <Link className="card" href="/customer">
             <Globe2 color="#d12c89" />
-            <h3>Public customer</h3>
-            <p className="muted">Search Zain FAQs, roaming, bundles, app support and public troubleshooting guides.</p>
+            <h3>{copy.publicCustomer}</h3>
+            <p className="muted">{copy.publicCustomerDetail}</p>
           </Link>
           <Link className="card" href="/agent">
             <Headphones color="#4a9e9d" />
-            <h3>Contact center agent</h3>
-            <p className="muted">Use skill-based recommendations, copy-ready answers and restricted procedures.</p>
+            <h3>{copy.contactAgent}</h3>
+            <p className="muted">{copy.contactAgentDetail}</p>
           </Link>
           <Link className="card" href="/admin">
             <LayoutDashboard color="#5f3283" />
-            <h3>Knowledge administrator</h3>
-            <p className="muted">Create, approve, publish, archive and analyze content across channels.</p>
+            <h3>{copy.knowledgeAdmin}</h3>
+            <p className="muted">{copy.knowledgeAdminDetail}</p>
           </Link>
         </div>
       </section>
 
       <section className="section">
-        <SectionTitle title="4-5 targeted agent skills">
+        <SectionTitle title={copy.skillsTitle}>
           <span className="chip">
             <Sparkles size={14} />
-            5 targeted agents
+            {copy.fiveAgents}
           </span>
         </SectionTitle>
         <div className="grid two">
@@ -69,14 +81,14 @@ export default function Home() {
             ))}
           </div>
           <div className="panel">
-            <h3>Knowledge gap signal</h3>
-            <p className="muted">Admin sees failed or low-confidence searches from all channels.</p>
+            <h3>{copy.gapSignal}</h3>
+            <p className="muted">{copy.gapSignalDetail}</p>
             <div className="stat-bars">
               {analytics.map((row) => (
                 <div className="bar-row" key={row.label}>
                   <div className="section-title">
-                    <span>{row.label}</span>
-                    <span className="small">{row.failures} gaps</span>
+                    <span>{analyticsLabel(row.label, language)}</span>
+                    <span className="small">{row.failures} {copy.gaps}</span>
                   </div>
                   <div className="bar-track">
                     <div className="bar-fill" style={{ width: `${Math.min(100, row.failures)}%` }} />
@@ -86,29 +98,29 @@ export default function Home() {
             </div>
             <Link className="btn magenta" href="/api-readiness">
               <Bot size={16} />
-              View API readiness
+              {copy.viewApi}
             </Link>
           </div>
         </div>
       </section>
 
       <section className="section">
-        <SectionTitle title="API-first delivery" />
+        <SectionTitle title={copy.apiFirst} />
         <div className="grid three">
           <div className="card">
-            <h3>Knowledge APIs</h3>
-            <p className="muted">Search, article retrieval and channel-specific content responses for website, agent portal, chatbot and WhatsApp.</p>
+            <h3>{copy.knowledgeApis}</h3>
+            <p className="muted">{copy.knowledgeApisDetail}</p>
           </div>
           <div className="card">
-            <h3>Quality signals</h3>
-            <p className="muted">Confidence scores, feedback capture, missing-content flags and analytics events are part of the response model.</p>
+            <h3>{copy.qualitySignals}</h3>
+            <p className="muted">{copy.qualitySignalsDetail}</p>
           </div>
           <div className="card">
-            <h3>LLM-ready assistant</h3>
-            <p className="muted">A grounded assistant can use approved KB articles as context and return cited answers with handoff rules.</p>
+            <h3>{copy.llmReady}</h3>
+            <p className="muted">{copy.llmReadyDetail}</p>
           </div>
         </div>
       </section>
-    </AppShell>
+    </>
   );
 }

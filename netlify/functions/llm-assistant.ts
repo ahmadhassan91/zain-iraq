@@ -147,7 +147,7 @@ export default async (req: Request, _context: Context) => {
     body: JSON.stringify({
       model,
       instructions:
-        "You are the Zain Iraq knowledge assistant. Answer only from the provided approved KB context. Keep the answer concise, customer-safe, and operational. If the context is insufficient, say an agent should verify it. Do not invent prices, codes, eligibility rules, or policies.",
+        "You are the Zain Iraq knowledge assistant. Answer only from the provided approved KB context. Keep the answer concise, customer-safe, and operational. Reply in the requested language field: English for en, Arabic for ar, and Sorani Kurdish for ku. If the context is insufficient, say an agent should verify it. Do not invent prices, codes, eligibility rules, or policies.",
       input: [
         {
           role: "user",

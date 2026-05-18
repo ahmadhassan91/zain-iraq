@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Bot, Loader2, Send } from "lucide-react";
+import { useLanguage } from "./AppChrome";
+import { articles } from "@/lib/data";
+import { articleCopy, llmCopy } from "@/lib/localized-copy";
 
 type AssistantResponse = {
   answer?: string;
@@ -16,6 +19,17 @@ export function LlmAssistant({ initialQuestion = "Customer cannot use data while
   const [question, setQuestion] = useState(initialQuestion);
   const [response, setResponse] = useState<AssistantResponse | null>(null);
   const [loading, setLoading] = useState(false);
+  const { language } = useLanguage();
+  const copy = llmCopy[language];
+
+  useEffect(() => {
+    setQuestion(initialQuestion);
+  }, [initialQuestion]);
+
+  function citationTitle(citation: { articleId: string; title: string }) {
+    const article = articles.find((item) => item.id === citation.articleId);
+    return article ? articleCopy(article, language).title : citation.title;
+  }
 
   async function askAssistant() {
     setLoading(true);
@@ -28,7 +42,7 @@ export function LlmAssistant({ initialQuestion = "Customer cannot use data while
         body: JSON.stringify({
           question,
           channel: "agent_portal",
-          language: "en"
+          language: language.toLowerCase()
         })
       });
 
@@ -60,16 +74,16 @@ export function LlmAssistant({ initialQuestion = "Customer cannot use data while
   return (
     <div className="panel assistant-panel">
       <div className="section-title">
-        <h2>LLM assistant</h2>
+        <h2>{copy.title}</h2>
         <span className="chip magenta">
           <Bot size={14} />
-          Grounded by KB
+          {copy.badge}
         </span>
       </div>
       <textarea className="textarea" value={question} onChange={(event) => setQuestion(event.target.value)} aria-label="LLM assistant question" />
       <button className="btn primary" onClick={askAssistant} disabled={loading}>
         {loading ? <Loader2 size={16} className="spin" /> : <Send size={16} />}
-        {loading ? "Asking" : "Ask assistant"}
+        {loading ? copy.asking : copy.ask}
       </button>
       {response && (
         <div className="assistant-answer">
@@ -79,13 +93,13 @@ export function LlmAssistant({ initialQuestion = "Customer cannot use data while
             <>
               <p>{response.answer}</p>
               <div className="chip-row">
-                <span className="chip">Confidence {Math.round((response.confidence || 0) * 100)}%</span>
-                {response.handoff?.required && <span className="chip magenta">Agent handoff</span>}
+                <span className="chip">{copy.confidence} {Math.round((response.confidence || 0) * 100)}%</span>
+                {response.handoff?.required && <span className="chip magenta">{copy.handoff}</span>}
               </div>
               <div className="citation-list">
                 {response.citations?.map((citation) => (
                   <span className="small" key={citation.articleId}>
-                    {citation.title} · {Math.round(citation.confidence * 100)}%
+                    {citationTitle(citation)} · {Math.round(citation.confidence * 100)}%
                   </span>
                 ))}
               </div>

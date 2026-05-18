@@ -6,7 +6,7 @@ import { AppShell, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult, PersonaCard } from "@/components/ArticleBlocks";
 import { LlmAssistant } from "@/components/LlmAssistant";
 import { agents, announcements, articles, searchArticles } from "@/lib/data";
-import { agentCopy, agentLocalized, announcementCopy, term } from "@/lib/localized-copy";
+import { agentCopy, agentLocalized, announcementCopy, articleCopy, term } from "@/lib/localized-copy";
 
 export default function AgentPage() {
   return (
@@ -107,7 +107,7 @@ function AgentContent() {
             <h3>{copy.tabs}</h3>
             <div className="chip-row">
               {results.slice(0, 3).map((article) => (
-                <span className="chip" key={article.id}>{article.title}</span>
+                <span className="chip" key={article.id}>{articleCopy(article, language).title}</span>
               ))}
             </div>
           </div>

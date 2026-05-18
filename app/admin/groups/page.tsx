@@ -1,12 +1,28 @@
+"use client";
+
 import { AppShell, SectionTitle } from "@/components/AppChrome";
 import { PersonaCard } from "@/components/ArticleBlocks";
 import { agents } from "@/lib/data";
+import { useLanguage } from "@/components/AppChrome";
+import { groupsCopy } from "@/lib/localized-copy";
 
 export default function GroupsPage() {
   return (
     <AppShell active="Groups & Skills">
-      <SectionTitle title="Agent groups and targeted skills">
-        <span className="chip">5 targeted agents</span>
+      <GroupsContent />
+    </AppShell>
+  );
+}
+
+function GroupsContent() {
+  const { language } = useLanguage();
+  const copy = groupsCopy[language];
+  const permissionItems = [copy.item1, copy.item2, copy.item3, copy.item4, copy.item5];
+
+  return (
+    <>
+      <SectionTitle title={copy.title}>
+        <span className="chip">{copy.target}</span>
       </SectionTitle>
       <div className="grid two">
         <div className="persona-list">
@@ -15,15 +31,9 @@ export default function GroupsPage() {
           ))}
         </div>
         <div className="panel">
-          <h3>Permission model</h3>
+          <h3>{copy.permission}</h3>
           <div className="timeline">
-            {[
-              "Public content is visible to all customers and digital channels",
-              "Agent content is visible to authenticated contact center users",
-              "Private Group content is restricted by agent group and skill",
-              "Digital Channel content exposes safe variants for API consumers",
-              "Admins can pin global content and assign group visibility"
-            ].map((item, index) => (
+            {permissionItems.map((item, index) => (
               <div className="step" key={item}>
                 <span className="step-number">{index + 1}</span>
                 <p>{item}</p>
@@ -32,6 +42,6 @@ export default function GroupsPage() {
           </div>
         </div>
       </div>
-    </AppShell>
+    </>
   );
 }

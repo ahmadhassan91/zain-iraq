@@ -1,80 +1,98 @@
+"use client";
+
 import { Bell, CalendarClock, Radio } from "lucide-react";
-import { AppShell, SectionTitle } from "@/components/AppChrome";
+import { AppShell, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { DemoActionButton } from "@/components/DemoActionButton";
 import { announcements } from "@/lib/data";
+import { announcementCopy, defaultFormCopy, notificationsCopy, term } from "@/lib/localized-copy";
 
 export default function NotificationsPage() {
   return (
     <AppShell active="Notifications">
-      <SectionTitle title="Notification and alert management">
+      <NotificationsContent />
+    </AppShell>
+  );
+}
+
+function NotificationsContent() {
+  const { language } = useLanguage();
+  const copy = notificationsCopy[language];
+  const defaultCopy = defaultFormCopy[language];
+
+  return (
+    <>
+      <SectionTitle title={copy.title}>
         <span className="chip live">
           <Bell size={14} />
-          {announcements.filter((item) => item.status === "Live").length} live
+          {announcements.filter((item) => item.status === "Live").length} {copy.live}
         </span>
       </SectionTitle>
 
       <div className="grid two">
         <div className="panel">
-          <h3>Create announcement</h3>
+          <h3>{copy.create}</h3>
           <div className="form-grid">
             <label>
-              <span className="small">Title</span>
-              <input className="field" defaultValue="Roaming service advisory" />
+              <span className="small">{copy.fieldTitle}</span>
+              <input className="field" value={defaultCopy.title} readOnly />
             </label>
             <label>
-              <span className="small">Audience</span>
+              <span className="small">{copy.audience}</span>
               <select className="field" defaultValue="All">
-                <option>Customer</option>
-                <option>Agent</option>
-                <option>All</option>
+                <option>{term("Customer", language)}</option>
+                <option>{term("Agent", language)}</option>
+                <option>{term("All", language)}</option>
               </select>
             </label>
             <label>
-              <span className="small">Channel</span>
+              <span className="small">{copy.channel}</span>
               <select className="field" defaultValue="Website">
-                <option>Website</option>
-                <option>Agent Portal</option>
-                <option>Chatbot</option>
-                <option>WhatsApp</option>
+                <option>{term("Website", language)}</option>
+                <option>{term("Agent Portal", language)}</option>
+                <option>{term("Chatbot", language)}</option>
+                <option>{term("WhatsApp", language)}</option>
               </select>
             </label>
             <label>
-              <span className="small">Schedule</span>
+              <span className="small">{copy.schedule}</span>
               <input className="field" defaultValue="2026-05-18 09:00" />
             </label>
             <label className="full">
-              <span className="small">Banner message</span>
-              <textarea className="textarea" defaultValue="Customers may experience intermittent roaming registration in selected destinations. Agents should verify partner network status before escalation." />
+              <span className="small">{copy.message}</span>
+              <textarea className="textarea" value={defaultCopy.message} readOnly />
             </label>
           </div>
           <div className="inline-actions" style={{ marginTop: 14 }}>
-            <DemoActionButton className="btn" message="Scheduled">Schedule</DemoActionButton>
-            <DemoActionButton className="btn magenta" message="Published live">Publish now</DemoActionButton>
+            <DemoActionButton className="btn" message={copy.scheduled}>{copy.scheduleBtn}</DemoActionButton>
+            <DemoActionButton className="btn magenta" message={copy.published}>{copy.publish}</DemoActionButton>
           </div>
         </div>
 
         <div className="panel">
-          <SectionTitle title="Live and scheduled alerts">
+          <SectionTitle title={copy.list}>
             <CalendarClock size={18} color="#4a9e9d" />
           </SectionTitle>
           <div className="article-list">
-            {announcements.map((announcement) => (
-              <div className="result-item" key={announcement.id}>
-                <div>
-                  <h3>{announcement.title}</h3>
-                  <p className="muted">{announcement.message}</p>
-                  <div className="chip-row">
-                    <span className={`chip ${announcement.status.toLowerCase()}`}>{announcement.status}</span>
-                    <span className={`chip ${announcement.severity.toLowerCase()}`}>{announcement.severity}</span>
-                    <span className="chip">{announcement.audience}</span>
+            {announcements.map((announcement) => {
+              const localized = announcementCopy(announcement, language);
+              return (
+                <div className="result-item" key={announcement.id}>
+                  <div>
+                    <h3>{localized.title}</h3>
+                    <p className="muted">{localized.message}</p>
+                    <div className="chip-row">
+                      <span className={`chip ${announcement.status.toLowerCase()}`}>{term(announcement.status, language)}</span>
+                      <span className={`chip ${announcement.severity.toLowerCase()}`}>{term(announcement.severity, language)}</span>
+                      <span className="chip">{term(announcement.audience, language)}</span>
+                    </div>
                   </div>
+                  <Radio size={22} color="#d12c89" />
                 </div>
-                <Radio size={22} color="#d12c89" />
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
-    </AppShell>
+    </>
   );
 }

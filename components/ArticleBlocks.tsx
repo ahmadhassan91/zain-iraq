@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Copy, ExternalLink, Pin, Star } from "lucide-react";
 import type { Agent, Article } from "@/lib/data";
 import { useLanguage } from "./AppChrome";
-import { agentLocalized, articleCopy, term } from "@/lib/localized-copy";
+import { agentLocalized, articleCopy, term, viewerCopy } from "@/lib/localized-copy";
 
 export function ArticleResult({ article, href }: { article: Article; href: string }) {
   const { language } = useLanguage();
@@ -48,7 +48,7 @@ export function PersonaCard({ agent, active = false }: { agent: Agent; active?: 
         <div className="chip-row">
           <span className="chip magenta">{localized.group}</span>
           <span className="chip">
-            <Pin size={13} /> {agent.pinned.length} pinned
+            <Pin size={13} /> {agent.pinned.length} {term("pinned", language)}
           </span>
         </div>
       </div>
@@ -58,11 +58,13 @@ export function PersonaCard({ agent, active = false }: { agent: Agent; active?: 
 
 export function CopyReadyAnswer({ answer }: { answer: string }) {
   const [copied, setCopied] = useState(false);
+  const { language } = useLanguage();
+  const copy = viewerCopy[language];
 
   return (
     <div className="card copy-card">
       <div className="section-title">
-        <h2>Copy-ready answer</h2>
+        <h2>{copy.copyReady}</h2>
         <button
           className="btn"
           onClick={async () => {
@@ -71,7 +73,7 @@ export function CopyReadyAnswer({ answer }: { answer: string }) {
           }}
         >
           <Copy size={16} />
-          {copied ? "Copied" : "Copy"}
+          {copied ? copy.copied : copy.copy}
         </button>
       </div>
       <p>{answer}</p>
@@ -94,34 +96,37 @@ export function TroubleshootingFlow({ steps }: { steps: string[] }) {
 
 export function ArticleViewer({ article, mode }: { article: Article; mode: "customer" | "agent" }) {
   const [feedback, setFeedback] = useState("");
+  const { language } = useLanguage();
+  const localized = articleCopy(article, language);
+  const copy = viewerCopy[language];
 
   return (
     <div className="article-shell">
       <article className="article-main">
         <div className="chip-row">
-          <span className="chip published">{article.status}</span>
-          <span className="chip">{article.type}</span>
-          <span className="chip">{article.language}</span>
+          <span className="chip published">{term(article.status, language)}</span>
+          <span className="chip">{term(article.type, language)}</span>
+          <span className="chip">{language}</span>
         </div>
-        <h1 className="article-title">{article.title}</h1>
-        <p className="muted">{article.summary}</p>
+        <h1 className="article-title">{localized.title}</h1>
+        <p className="muted">{localized.summary}</p>
 
         <div className="section">
-          <CopyReadyAnswer answer={article.customerAnswer} />
+          <CopyReadyAnswer answer={localized.customerAnswer} />
         </div>
 
         <div className="section">
           <div className="panel">
-            <h3>Troubleshooting procedure</h3>
-            <TroubleshootingFlow steps={article.steps} />
+            <h3>{copy.procedure}</h3>
+            <TroubleshootingFlow steps={localized.steps} />
           </div>
         </div>
 
         {mode === "agent" ? (
           <div className="section">
             <div className="panel">
-              <h3>Internal operational note</h3>
-              <p>{article.internalNote}</p>
+              <h3>{copy.internalNote}</h3>
+              <p>{localized.internalNote}</p>
             </div>
           </div>
         ) : null}
@@ -130,40 +135,40 @@ export function ArticleViewer({ article, mode }: { article: Article; mode: "cust
       <aside className="article-aside">
         <div className="grid">
           <div>
-            <h3>Delivery channels</h3>
+            <h3>{copy.delivery}</h3>
             <div className="chip-row">
               {article.channelVariants.map((variant) => (
                 <span className="chip" key={variant}>
-                  {variant}
+                  {term(variant, language)}
                 </span>
               ))}
             </div>
           </div>
           <div>
-            <h3>AI confidence</h3>
+            <h3>{copy.confidence}</h3>
             <div className="confidence">{article.confidence}%</div>
           </div>
           <div>
-            <h3>Customer feedback</h3>
-            <p className="muted">{article.helpful}% helpful from recent ratings</p>
+            <h3>{copy.feedback}</h3>
+            <p className="muted">{article.helpful}% {copy.helpfulRatings}</p>
             {feedback ? <p className="chip published">{feedback}</p> : null}
             <div className="inline-actions">
-              <button className="btn" onClick={() => setFeedback("Helpful feedback captured")}>
+              <button className="btn" onClick={() => setFeedback(copy.helpfulCaptured)}>
                 <Star size={16} />
-                Helpful
+                {copy.helpful}
               </button>
-              <button className="btn ghost" onClick={() => setFeedback("Missing-info signal sent to Knowledge Gaps")}>
-                Missing info
+              <button className="btn ghost" onClick={() => setFeedback(copy.missingSent)}>
+                {copy.missingInfo}
               </button>
             </div>
           </div>
           <Link className="btn primary" href={mode === "agent" ? "/agent" : "/customer"}>
-            Back to workspace
+            {copy.back}
             <ArrowRight size={16} />
           </Link>
           <Link className="btn" href={`/customer/article/${article.id}`}>
             <ExternalLink size={16} />
-            Guest view link
+            {copy.guest}
           </Link>
         </div>
       </aside>
