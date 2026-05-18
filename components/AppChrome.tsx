@@ -13,6 +13,11 @@ const navItems = [
   { href: "/api-readiness", label: "API Readiness", icon: Bot }
 ];
 
+const publicNavItems = [
+  { href: "/", label: "Home", icon: Home },
+  { href: "/customer", label: "Customer KB", icon: Globe2 }
+];
+
 export type Language = "EN" | "AR" | "KU";
 
 const shellCopy: Record<Language, Record<string, string>> = {
@@ -21,6 +26,8 @@ const shellCopy: Record<Language, Record<string, string>> = {
     subtitle: "Unified knowledge platform for customers, agents and admins",
     scopeTitle: "Platform scope",
     scope: "Customer knowledge, agent assistance, governance, analytics and channel-ready content delivery.",
+    publicScopeTitle: "Customer support",
+    publicScope: "Search approved public help for roaming, bundles, SIM, internet, app support and service updates.",
     Home: "Home",
     "Customer KB": "Customer KB",
     "Agent Workspace": "Agent Workspace",
@@ -36,6 +43,8 @@ const shellCopy: Record<Language, Record<string, string>> = {
     subtitle: "منصة معرفة موحدة للعملاء والوكلاء والإدارة",
     scopeTitle: "نطاق المنصة",
     scope: "معرفة العملاء، مساعدة الوكلاء، الحوكمة، التحليلات، وتسليم المحتوى للقنوات.",
+    publicScopeTitle: "دعم العملاء",
+    publicScope: "ابحث في المساعدة العامة المعتمدة للتجوال، الباقات، الشريحة، الإنترنت، التطبيق وتحديثات الخدمة.",
     Home: "الرئيسية",
     "Customer KB": "معرفة العملاء",
     "Agent Workspace": "مساحة الوكيل",
@@ -51,6 +60,8 @@ const shellCopy: Record<Language, Record<string, string>> = {
     subtitle: "پلاتفۆرمی یەکگرتووی زانیاری بۆ کڕیاران، ئەجێنتەکان و بەڕێوەبەران",
     scopeTitle: "سنوری پلاتفۆرم",
     scope: "زانیاری کڕیار، یارمەتی ئەجێنت، حوکمرانی، شیکاری و گەیاندنی ناوەڕۆک بۆ کەناڵەکان.",
+    publicScopeTitle: "پشتگیری کڕیار",
+    publicScope: "لە یارمەتی گشتی پەسەندکراو بگەڕێ بۆ ڕۆمینگ، پاکێج، SIM، ئینتەرنێت، ئەپ و نوێکاری خزمەت.",
     Home: "سەرەکی",
     "Customer KB": "زانیاری کڕیار",
     "Agent Workspace": "شوێنی کاری ئەجێنت",
@@ -111,13 +122,14 @@ export function Header({
   );
 }
 
-export function Sidebar({ active = "Home" }: { active?: string }) {
+export function Sidebar({ active = "Home", variant = "internal" }: { active?: string; variant?: "internal" | "public" }) {
   const { language } = useLanguage();
+  const items = variant === "public" ? publicNavItems : navItems;
 
   return (
     <aside className="sidebar">
       <div className="nav-list">
-        {navItems.map((item) => {
+        {items.map((item) => {
           const Icon = item.icon;
           return (
             <Link key={item.label} className={`nav-item ${active === item.label ? "active" : ""}`} href={item.href}>
@@ -128,8 +140,8 @@ export function Sidebar({ active = "Home" }: { active?: string }) {
         })}
       </div>
       <div className="footer-note">
-        <strong>{shellCopy[language].scopeTitle}</strong>
-        <p className="small">{shellCopy[language].scope}</p>
+        <strong>{variant === "public" ? shellCopy[language].publicScopeTitle : shellCopy[language].scopeTitle}</strong>
+        <p className="small">{variant === "public" ? shellCopy[language].publicScope : shellCopy[language].scope}</p>
       </div>
     </aside>
   );
@@ -137,10 +149,12 @@ export function Sidebar({ active = "Home" }: { active?: string }) {
 
 export function AppShell({
   active,
-  children
+  children,
+  variant = "internal"
 }: {
   active?: string;
   children: React.ReactNode;
+  variant?: "internal" | "public";
 }) {
   const [language, setLanguage] = useState<Language>("EN");
   const isRtl = language !== "EN";
@@ -150,7 +164,7 @@ export function AppShell({
       <div className="app" dir={isRtl ? "rtl" : "ltr"}>
         <Header active={active} language={language} onLanguageChange={setLanguage} />
         <div className="layout">
-          <Sidebar active={active} />
+          <Sidebar active={active} variant={variant} />
           <main className="main">{children}</main>
         </div>
       </div>

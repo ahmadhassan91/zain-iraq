@@ -11,6 +11,9 @@ import { agentLocalized, articleCopy, term, viewerCopy } from "@/lib/localized-c
 export function ArticleResult({ article, href }: { article: Article; href: string }) {
   const { language } = useLanguage();
   const localized = articleCopy(article, language);
+  const variants = href.startsWith("/customer")
+    ? article.channelVariants.filter((variant) => variant !== "Agent Portal")
+    : article.channelVariants;
 
   return (
     <Link className="result-item" href={href}>
@@ -23,7 +26,7 @@ export function ArticleResult({ article, href }: { article: Article; href: strin
         <h3>{localized.title}</h3>
         <p className="muted">{localized.summary}</p>
         <div className="chip-row">
-          {article.channelVariants.map((variant) => (
+          {variants.map((variant) => (
             <span className="chip" key={variant}>
               {term(variant, language)}
             </span>
@@ -103,6 +106,9 @@ export function ArticleViewer({ article, mode }: { article: Article; mode: "cust
   const localized = articleCopy(articleWithDemo, language);
   const copy = viewerCopy[language];
   const showGuestLink = mode === "agent" && article.visibility === "Public";
+  const variants = mode === "customer"
+    ? articleWithDemo.channelVariants.filter((variant) => variant !== "Agent Portal")
+    : articleWithDemo.channelVariants;
 
   return (
     <div className="article-shell">
@@ -141,7 +147,7 @@ export function ArticleViewer({ article, mode }: { article: Article; mode: "cust
           <div>
             <h3>{copy.delivery}</h3>
             <div className="chip-row">
-              {article.channelVariants.map((variant) => (
+              {variants.map((variant) => (
                 <span className="chip" key={variant}>
                   {term(variant, language)}
                 </span>

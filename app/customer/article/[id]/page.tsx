@@ -15,7 +15,7 @@ export default function CustomerArticlePage({ params }: { params: { id: string }
   }
 
   return (
-    <AppShell active="Customer KB">
+    <AppShell active="Customer KB" variant="public">
       <ArticleViewer article={article} mode="customer" />
     </AppShell>
   );

@@ -12,7 +12,7 @@ import { announcementCopy, articleCopy, customerCopy, term } from "@/lib/localiz
 
 export default function CustomerPage() {
   return (
-    <AppShell active="Customer KB">
+    <AppShell active="Customer KB" variant="public">
       <CustomerContent />
     </AppShell>
   );
