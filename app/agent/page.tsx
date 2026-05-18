@@ -4,8 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import { Bell, Filter, Search } from "lucide-react";
 import { AppShell, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult, PersonaCard } from "@/components/ArticleBlocks";
+import { DemoImpactPanel } from "@/components/JourneyDemo";
 import { LlmAssistant } from "@/components/LlmAssistant";
 import { agents, announcements, articles, searchArticles } from "@/lib/data";
+import { applyDemoKnowledgeToArticle, useDemoKnowledge } from "@/lib/demo-state";
 import { agentCopy, agentLocalized, announcementCopy, articleCopy, term } from "@/lib/localized-copy";
 
 export default function AgentPage() {
@@ -22,10 +24,11 @@ function AgentContent() {
   const [searched, setSearched] = useState(false);
   const { language } = useLanguage();
   const copy = agentCopy[language];
+  const { state } = useDemoKnowledge();
   const agent = agents.find((item) => item.id === agentId) ?? agents[0];
   const localizedAgent = agentLocalized(agent, language);
-  const results = useMemo(() => searchArticles(query), [query]);
-  const pinned = articles.filter((article) => agent.pinned.includes(article.id));
+  const results = useMemo(() => searchArticles(query).map((article) => applyDemoKnowledgeToArticle(article, state)), [query, state]);
+  const pinned = articles.filter((article) => agent.pinned.includes(article.id)).map((article) => applyDemoKnowledgeToArticle(article, state));
   const agentUpdates = announcements.filter((announcement) => announcement.audience !== "Customer");
 
   useEffect(() => {
@@ -38,6 +41,9 @@ function AgentContent() {
       <SectionTitle title={copy.title}>
         <span className="chip magenta">{localizedAgent.role}</span>
       </SectionTitle>
+
+      <DemoImpactPanel view="agent" />
+
       <div className="grid two">
         <div className="grid">
           <div className="panel">

@@ -14,25 +14,25 @@ type Article = {
 const knowledgeBase: Article[] = [
   {
     id: "roaming-activation",
-    title: "How to activate roaming",
+    title: "Roaming bundles and data setup",
     confidence: 0.94,
     channels: ["website", "agent_portal", "chatbot", "whatsapp"],
-    summary: "Guide customers through roaming readiness, activation checks and travel support steps.",
+    summary: "Public guidance for roaming bundle selection, device data roaming and usage checks while abroad.",
     answer:
-      "Before travelling, open the Zain Iraq app or contact support to confirm roaming is active. Restart the device after arrival and choose a partner network if automatic selection does not connect.",
-    internalNote: "Verify line status, roaming eligibility, spend controls and active package before escalation.",
-    tags: ["roaming", "travel", "international"]
+      "Before travelling, review the available roaming bundles for your destination, subscribe to the preferred bundle and make sure data roaming is enabled from your handset settings. Zain Iraq customers can check roaming offers and usage details through *225#.",
+    internalNote: "Verify bundle activation, destination/operator coverage, data roaming handset setting, partner network attachment and credit-balance internet protection before escalation.",
+    tags: ["roaming", "travel", "international", "225"]
   },
   {
     id: "slow-internet",
-    title: "Slow internet or no data connectivity",
+    title: "4.5G+ internet recharge cards",
     confidence: 0.91,
     channels: ["agent_portal", "chatbot"],
-    summary: "Structured technical flow for slow data, no internet and APN-related issues.",
+    summary: "Support flow for prepaid internet recharge cards, balance checks and 4.5G+ usage questions.",
     answer:
-      "Restart your device, make sure mobile data is enabled, check your bundle balance, and try switching airplane mode on and off for 10 seconds.",
-    internalNote: "Check coverage, package balance, network barring, SIM status and APN before network ticket creation.",
-    tags: ["4.5g", "internet", "apn", "coverage", "data"]
+      "Recharge using the standard *101# card-number method, and check internet balance by sending an empty SMS to 21777.",
+    internalNote: "Confirm card validity, remaining data balance, free social eligibility, APN/device status and whether another active internet offer has priority before raising a network ticket.",
+    tags: ["4.5g", "internet", "apn", "coverage", "data", "21777", "101"]
   },
   {
     id: "app-login",

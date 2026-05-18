@@ -5,7 +5,9 @@ import { AlertTriangle, Bell, Search } from "lucide-react";
 import { AppShell, ArticleMini, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult } from "@/components/ArticleBlocks";
 import { DemoActionButton } from "@/components/DemoActionButton";
+import { DemoImpactPanel } from "@/components/JourneyDemo";
 import { announcements, articles, searchArticles } from "@/lib/data";
+import { applyDemoKnowledgeToArticle, useDemoKnowledge } from "@/lib/demo-state";
 import { announcementCopy, articleCopy, customerCopy, term } from "@/lib/localized-copy";
 
 export default function CustomerPage() {
@@ -21,7 +23,11 @@ function CustomerContent() {
   const [searched, setSearched] = useState(false);
   const { language } = useLanguage();
   const copy = customerCopy[language];
-  const results = useMemo(() => searchArticles(query).filter((article) => article.visibility !== "Private Group"), [query]);
+  const { state } = useDemoKnowledge();
+  const results = useMemo(
+    () => searchArticles(query).filter((article) => article.visibility === "Public").map((article) => applyDemoKnowledgeToArticle(article, state)),
+    [query, state]
+  );
   const customerAnnouncements = announcements.filter((announcement) => announcement.audience !== "Agent");
   const liveAlert = customerAnnouncements.find((announcement) => announcement.status === "Live");
 
@@ -53,6 +59,11 @@ function CustomerContent() {
             {searched ? copy.searched : copy.search}
           </button>
         </div>
+      </section>
+
+      <section className="section">
+        <SectionTitle title="What the customer can see" />
+        <DemoImpactPanel view="customer" />
       </section>
 
       <section className="section">
@@ -92,7 +103,8 @@ function CustomerContent() {
         <SectionTitle title={copy.trending} />
         <div className="grid four">
           {articles
-            .filter((article) => article.visibility !== "Private Group")
+            .filter((article) => article.visibility === "Public")
+            .map((article) => applyDemoKnowledgeToArticle(article, state))
             .sort((a, b) => b.views - a.views)
             .slice(0, 4)
             .map((article) => (

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BarChart3, Bell, BookOpen, Bot, FileText, Globe2, Home, LayoutDashboard, Search, ShieldCheck, Users } from "lucide-react";
+import { BookOpen, Bot, Globe2, Home, LayoutDashboard, Search, ShieldCheck } from "lucide-react";
 import { ZainLogo } from "./ZainLogo";
 import { createContext, useContext, useState } from "react";
 
@@ -10,10 +10,6 @@ const navItems = [
   { href: "/customer", label: "Customer KB", icon: Globe2 },
   { href: "/agent", label: "Agent Workspace", icon: Search },
   { href: "/admin", label: "Admin Dashboard", icon: LayoutDashboard },
-  { href: "/admin/articles", label: "Articles", icon: FileText },
-  { href: "/admin/notifications", label: "Notifications", icon: Bell },
-  { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
-  { href: "/admin/groups", label: "Groups & Skills", icon: Users },
   { href: "/api-readiness", label: "API Readiness", icon: Bot }
 ];
 

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Copy, ExternalLink, Pin, Star } from "lucide-react";
 import type { Agent, Article } from "@/lib/data";
 import { useLanguage } from "./AppChrome";
+import { applyDemoKnowledgeToArticle, useDemoKnowledge } from "@/lib/demo-state";
 import { agentLocalized, articleCopy, term, viewerCopy } from "@/lib/localized-copy";
 
 export function ArticleResult({ article, href }: { article: Article; href: string }) {
@@ -97,8 +98,11 @@ export function TroubleshootingFlow({ steps }: { steps: string[] }) {
 export function ArticleViewer({ article, mode }: { article: Article; mode: "customer" | "agent" }) {
   const [feedback, setFeedback] = useState("");
   const { language } = useLanguage();
-  const localized = articleCopy(article, language);
+  const { state } = useDemoKnowledge();
+  const articleWithDemo = applyDemoKnowledgeToArticle(article, state);
+  const localized = articleCopy(articleWithDemo, language);
   const copy = viewerCopy[language];
+  const showGuestLink = mode === "agent" && article.visibility === "Public";
 
   return (
     <div className="article-shell">
@@ -146,11 +150,11 @@ export function ArticleViewer({ article, mode }: { article: Article; mode: "cust
           </div>
           <div>
             <h3>{copy.confidence}</h3>
-            <div className="confidence">{article.confidence}%</div>
+            <div className="confidence">{articleWithDemo.confidence}%</div>
           </div>
           <div>
             <h3>{copy.feedback}</h3>
-            <p className="muted">{article.helpful}% {copy.helpfulRatings}</p>
+            <p className="muted">{articleWithDemo.helpful}% {copy.helpfulRatings}</p>
             {feedback ? <p className="chip published">{feedback}</p> : null}
             <div className="inline-actions">
               <button className="btn" onClick={() => setFeedback(copy.helpfulCaptured)}>
@@ -166,10 +170,12 @@ export function ArticleViewer({ article, mode }: { article: Article; mode: "cust
             {copy.back}
             <ArrowRight size={16} />
           </Link>
-          <Link className="btn" href={`/customer/article/${article.id}`}>
-            <ExternalLink size={16} />
-            {copy.guest}
-          </Link>
+          {showGuestLink ? (
+            <Link className="btn" href={`/customer/article/${articleWithDemo.id}`}>
+              <ExternalLink size={16} />
+              {copy.guest}
+            </Link>
+          ) : null}
         </div>
       </aside>
     </div>

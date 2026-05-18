@@ -81,7 +81,7 @@ export const agents: Agent[] = [
     group: "Digital Care",
     initials: "MY",
     color: "blue",
-    pinned: ["app-login", "chatbot-escalation"]
+    pinned: ["app-login", "super-card"]
   },
   {
     id: "enterprise",
@@ -91,14 +91,14 @@ export const agents: Agent[] = [
     group: "Business Support",
     initials: "AR",
     color: "purple",
-    pinned: ["push-to-x", "enterprise-sla"]
+    pinned: ["push-to-x", "international-calls"]
   }
 ];
 
 export const articles: Article[] = [
   {
     id: "roaming-activation",
-    title: "How to activate roaming",
+    title: "Roaming bundles and data setup",
     category: "Roaming",
     type: "Troubleshooting",
     language: "English",
@@ -109,15 +109,15 @@ export const articles: Article[] = [
     helpful: 91,
     tags: ["roaming", "travel", "international"],
     channelVariants: ["Website", "Agent Portal", "Chatbot", "WhatsApp"],
-    summary: "Guide customers through roaming readiness, activation checks and travel support steps.",
-    customerAnswer: "Before travelling, open the Zain Iraq app or contact support to confirm roaming is active. Restart the device after arrival and choose a partner network if automatic selection does not connect.",
-    internalNote: "Verify line status, roaming eligibility, spend controls and active package before escalation.",
-    steps: ["Confirm customer line is active", "Check roaming eligibility", "Validate destination coverage", "Ask customer to restart device", "Escalate if partner network attach fails"],
+    summary: "Public guidance for roaming bundle selection, device data roaming and usage checks while abroad.",
+    customerAnswer: "Before travelling, review the available roaming bundles for your destination, subscribe to the preferred bundle and make sure data roaming is enabled from your handset settings. Zain Iraq customers can check roaming offers and usage details through *225#.",
+    internalNote: "If roaming data fails, verify bundle activation, destination/operator coverage, data roaming handset setting, partner network attachment and whether credit-balance internet was disabled for protection.",
+    steps: ["Confirm roaming bundle and destination", "Ask customer to enable data roaming on handset", "Check usage or offers through *225#", "Manually select a partner network if needed", "Escalate only after eligibility and partner attach checks"],
     updatedAt: "2026-05-12"
   },
   {
     id: "slow-internet",
-    title: "Slow internet or no data connectivity",
+    title: "4.5G+ internet recharge cards",
     category: "Technical Support",
     type: "Troubleshooting",
     language: "English",
@@ -128,15 +128,15 @@ export const articles: Article[] = [
     helpful: 88,
     tags: ["4.5G", "internet", "APN", "coverage"],
     channelVariants: ["Agent Portal", "Chatbot"],
-    summary: "Structured technical flow for slow data, no internet and APN-related issues.",
-    customerAnswer: "Restart your device, make sure mobile data is enabled, check your bundle balance, and try switching airplane mode on and off for 10 seconds.",
-    internalNote: "Check coverage, package balance, network barring, SIM status and APN before network ticket creation.",
-    steps: ["Check active bundle", "Validate network coverage", "Confirm APN settings", "Test SIM in another device", "Create technical ticket if issue persists"],
+    summary: "Support flow for prepaid internet recharge cards, balance checks and 4.5G+ usage questions.",
+    customerAnswer: "Zain Iraq prepaid internet cards include weekly and monthly data options. Recharge using the standard *101# card-number method, and check internet balance by sending an empty SMS to 21777.",
+    internalNote: "Confirm card validity, remaining data balance, free social eligibility, APN/device status and whether another active internet offer has priority before raising a network ticket.",
+    steps: ["Confirm card type and validity", "Ask customer to check balance via empty SMS to 21777", "Validate APN and mobile data settings", "Check whether another internet offer has usage priority", "Escalate only after coverage and SIM checks"],
     updatedAt: "2026-05-10"
   },
   {
     id: "sim-replacement",
-    title: "SIM replacement process",
+    title: "eSIM and SIM replacement support",
     category: "SIM Services",
     type: "Guide",
     language: "English",
@@ -147,15 +147,15 @@ export const articles: Article[] = [
     helpful: 84,
     tags: ["SIM", "replacement", "ownership"],
     channelVariants: ["Agent Portal", "Website"],
-    summary: "Agent process and customer guidance for damaged, lost or upgraded SIM replacement.",
-    customerAnswer: "Please visit the nearest Zain branch with your valid ID. The branch team will verify ownership and complete the SIM replacement.",
-    internalNote: "Do not share internal identity verification rules through public channels.",
-    steps: ["Confirm reason for replacement", "Guide customer to nearest branch", "Explain ID requirement", "Record interaction note"],
+    summary: "Customer guidance for eSIM availability, SIM replacement and branch-assisted ownership verification.",
+    customerAnswer: "Zain Iraq offers eSIM as a digital version of the regular SIM. For SIM replacement or ownership-sensitive updates, visit a Zain branch with valid ID so the branch team can verify the request.",
+    internalNote: "Keep ownership checks internal. For eSIM or replacement cases, confirm device support, line status and branch requirement without exposing verification rules publicly.",
+    steps: ["Confirm whether the request is eSIM, lost SIM or damaged SIM", "Check device support for eSIM where relevant", "Guide customer to nearest branch for ownership verification", "Record the interaction note"],
     updatedAt: "2026-05-08"
   },
   {
     id: "app-login",
-    title: "Zain Iraq app login issue",
+    title: "MyZain app and self-service access",
     category: "Digital Channels",
     type: "Troubleshooting",
     language: "English",
@@ -166,15 +166,15 @@ export const articles: Article[] = [
     helpful: 79,
     tags: ["app", "login", "OTP", "self-service"],
     channelVariants: ["Website", "Agent Portal", "Chatbot", "WhatsApp"],
-    summary: "Support flow for app login, OTP, password and device-related self-service issues.",
-    customerAnswer: "Update the Zain Iraq app, confirm your number is active, request a new OTP and make sure SMS reception is available on your device.",
-    internalNote: "If OTP is delayed for multiple users, check digital incident board before individual escalation.",
-    steps: ["Confirm app version", "Validate active line", "Retry OTP", "Clear cache", "Escalate to digital support"],
+    summary: "Support flow for MyZain sign-in, app access, OTP and self-service journeys.",
+    customerAnswer: "Use the Zain Iraq app or MyZain access for account self-service. If login fails, update the app, confirm your number is active, request a new OTP and make sure SMS reception is working.",
+    internalNote: "If multiple users report OTP or login delays, check digital incident status before opening individual escalation tickets.",
+    steps: ["Confirm app version", "Validate active line", "Retry OTP", "Check SMS reception", "Escalate to digital support if issue persists"],
     updatedAt: "2026-05-14"
   },
   {
     id: "balance-deduction",
-    title: "Unexpected balance deduction",
+    title: "Customer care and bill support",
     category: "Billing",
     type: "FAQ",
     language: "English",
@@ -183,17 +183,17 @@ export const articles: Article[] = [
     confidence: 86,
     views: 1726,
     helpful: 82,
-    tags: ["billing", "balance", "recharge"],
+    tags: ["billing", "balance", "support", "bill"],
     channelVariants: ["Agent Portal", "WhatsApp"],
-    summary: "Agent guidance for investigating balance deduction complaints.",
-    customerAnswer: "We can review your recent usage and active services. Some deductions may relate to bundle renewal, value-added services or out-of-bundle usage.",
-    internalNote: "Check charging history and active VAS subscriptions before refund discussion.",
-    steps: ["Open charging history", "Review bundle renewal", "Check active VAS", "Explain charge reason", "Escalate billing dispute if unresolved"],
+    summary: "Guidance for customer care contact routes, postpaid billing help and account support.",
+    customerAnswer: "For general support, Zain Iraq customers can call Customer Care at 107. Postpaid customers can use 307, and bill-related requests may be handled through Zain support channels or branches.",
+    internalNote: "For billing cases, check line type, recent usage, active subscriptions, bill status and account ownership before sharing next steps.",
+    steps: ["Identify prepaid, postpaid or corporate line", "Confirm the customer request type", "Review bill or usage history", "Route to 107, 307, branch or billing queue as appropriate", "Escalate unresolved billing disputes"],
     updatedAt: "2026-05-07"
   },
   {
     id: "international-calls",
-    title: "International calls and rates",
+    title: "International calls and roaming prices",
     category: "International",
     type: "FAQ",
     language: "English",
@@ -204,10 +204,10 @@ export const articles: Article[] = [
     helpful: 76,
     tags: ["international", "calls", "rates"],
     channelVariants: ["Website", "Chatbot"],
-    summary: "Explain international dialing format and where customers can confirm destination rates.",
-    customerAnswer: "Dial 00 followed by the country code, area code and phone number. Rates vary by destination and package.",
-    internalNote: "Use latest rate table from approved commercial source only.",
-    steps: ["Confirm destination", "Check package type", "Share dialing format", "Point to rate details"],
+    summary: "Explain international call basics and how customers should confirm rates by destination or offer.",
+    customerAnswer: "International and roaming rates depend on destination, visited network and active package. Customers should confirm the latest destination rates or bundle details before travelling or placing international calls.",
+    internalNote: "Do not quote unverified rates from memory. Use approved commercial/rate sources and confirm whether the customer is asking about local, international, flight or maritime roaming.",
+    steps: ["Confirm destination and call direction", "Check line type and active package", "Use approved rate source", "Explain that prices vary by network and offer", "Escalate unusual charging disputes"],
     updatedAt: "2026-05-04"
   },
   {
@@ -242,10 +242,10 @@ export const articles: Article[] = [
     helpful: 80,
     tags: ["bundle", "super card", "prepaid"],
     channelVariants: ["Website", "Chatbot", "WhatsApp"],
-    summary: "Public FAQ for subscribing, renewal and checking remaining bundle units.",
-    customerAnswer: "Use the approved subscription channel shown in the Zain Iraq app or official support page to activate your bundle.",
-    internalNote: "Confirm latest commercial codes before sharing through assisted channels.",
-    steps: ["Select bundle", "Confirm balance", "Subscribe through app or SMS", "Check renewal status"],
+    summary: "Public FAQ for Super Card bundles, recharge channels, renewal and remaining units.",
+    customerAnswer: "Super Card bundles include data, local minutes and SMS with weekly or monthly validity. Customers can recharge using the standard recharge method, voice instructions on 116, the Zain Iraq app, or supported subscription channels.",
+    internalNote: "Confirm the selected Super Card tier, subscription/unsubscription code, renewal status and remaining units before advising the customer.",
+    steps: ["Identify selected Super Card tier", "Confirm recharge or subscription channel", "Check remaining units and validity", "Explain renewal or unsubscription status", "Escalate only if charging history does not match bundle rules"],
     updatedAt: "2026-05-01"
   }
 ];

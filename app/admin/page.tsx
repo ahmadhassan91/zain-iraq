@@ -1,136 +1,106 @@
 "use client";
 
 import Link from "next/link";
-import { AlertTriangle, ArrowRight, Bell, FileText, RadioTower } from "lucide-react";
-import { AppShell, SectionTitle, StatCard, useLanguage } from "@/components/AppChrome";
-import { ArticleResult } from "@/components/ArticleBlocks";
-import { analytics, announcements, articles, integrations } from "@/lib/data";
-import { adminCopy, analyticsLabel, announcementCopy, integrationCopy, term } from "@/lib/localized-copy";
+import { BarChart3, Bell, FileText, LockKeyhole, Pin, RadioTower, Users } from "lucide-react";
+import { AppShell, SectionTitle, StatCard } from "@/components/AppChrome";
+import { DemoImpactPanel } from "@/components/JourneyDemo";
+import { analytics, articles } from "@/lib/data";
+
+const rights = [
+  { icon: FileText, title: "Create and edit KB articles", body: "Maintain customer answer, internal agent note, steps, status and channel variants." },
+  { icon: LockKeyhole, title: "Control visibility", body: "Publish content for Customer, Agent Portal, Chatbot, WhatsApp or private agent groups." },
+  { icon: Pin, title: "Pin operational content", body: "Promote high-priority content for targeted care teams and live incidents." },
+  { icon: Bell, title: "Manage alerts", body: "Publish customer banners and internal advisories without changing the whole article." }
+];
 
 export default function AdminPage() {
   return (
     <AppShell active="Admin Dashboard">
-      <AdminContent />
-    </AppShell>
-  );
-}
+      <section className="page-heading">
+        <div>
+          <span className="chip magenta">Admin role</span>
+          <h1>Governance workspace</h1>
+          <p>Shows what Admin can control, and how a publish action changes Customer and Agent journeys.</p>
+        </div>
+        <Link className="btn primary" href="/admin/articles/roaming-activation">
+          Open article editor
+        </Link>
+      </section>
 
-function AdminContent() {
-  const { language } = useLanguage();
-  const copy = adminCopy[language];
+      <section className="section">
+        <DemoImpactPanel view="admin" />
+      </section>
 
-  return (
-    <>
-      <section className="section" style={{ marginTop: 0 }}>
-        <SectionTitle title={copy.title}>
-          <Link className="btn primary" href="/admin/articles/new">
-            {copy.createArticle} <ArrowRight size={16} />
-          </Link>
-        </SectionTitle>
-        <div className="grid four">
-          <StatCard label={copy.publishedContent} value="6" detail={copy.publishedDetail} />
-          <StatCard label={copy.drafts} value="2" detail={copy.draftsDetail} />
-          <StatCard label={copy.failedSearches} value="223" detail={copy.failedDetail} />
-          <StatCard label={copy.apiResponse} value="118ms" detail={copy.apiDetail} />
+      <section className="section">
+        <div className="action-row">
+          <Link className="btn" href="/admin/articles"><FileText size={16} /> Articles</Link>
+          <Link className="btn" href="/admin/notifications"><Bell size={16} /> Notifications</Link>
+          <Link className="btn" href="/admin/analytics"><BarChart3 size={16} /> Analytics</Link>
+          <Link className="btn" href="/admin/groups"><Users size={16} /> Groups & Skills</Link>
         </div>
       </section>
 
       <section className="section">
-        <div className="grid two">
-          <div className="panel">
-            <SectionTitle title={copy.announcements}>
-              <Bell size={18} color="#d12c89" />
+        <div className="grid four">
+          <StatCard label="Published content" value="6" detail="Public and internal KB entries" />
+          <StatCard label="Drafts" value="2" detail="Awaiting approval or scheduling" />
+          <StatCard label="Search gaps" value="223" detail="Failed or low-confidence searches" />
+          <StatCard label="API response" value="118ms" detail="Average search endpoint response" />
+        </div>
+      </section>
+
+      <section className="section">
+        <SectionTitle title="Admin rights" />
+        <div className="grid four">
+          {rights.map((right) => {
+            const Icon = right.icon;
+            return (
+              <div className="card quiet-card" key={right.title}>
+                <Icon color="#d12c89" />
+                <h3>{right.title}</h3>
+                <p className="muted">{right.body}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="grid two balanced">
+          <div className="panel stat-bars">
+            <SectionTitle title="Knowledge gaps">
+              <BarChart3 size={18} color="#4a9e9d" />
             </SectionTitle>
-            <div className="article-list">
-              {announcements.map((announcement) => {
-                const localized = announcementCopy(announcement, language);
-                return (
-                  <div className="result-item" key={announcement.id}>
-                    <div>
-                      <h3>{localized.title}</h3>
-                      <p className="muted">{localized.message}</p>
-                    </div>
-                    <span className={`chip ${announcement.status.toLowerCase()}`}>{term(announcement.status, language)}</span>
-                  </div>
-                );
-              })}
-            </div>
-            <Link className="btn magenta" href="/admin/notifications" style={{ marginTop: 14 }}>
-              {copy.manageAlerts}
-            </Link>
+            {analytics.slice(0, 4).map((row) => (
+              <div className="bar-row" key={row.label}>
+                <div className="section-title">
+                  <span>{row.label}</span>
+                  <span className="small">{row.failures} gaps</span>
+                </div>
+                <div className="bar-track">
+                  <div className="bar-fill" style={{ width: `${Math.min(100, row.failures)}%` }} />
+                </div>
+              </div>
+            ))}
           </div>
           <div className="panel">
-            <SectionTitle title={copy.contentAttention}>
-              <span className="chip magenta"><AlertTriangle size={14} /> {copy.gaps}</span>
+            <SectionTitle title="Content controlled by Admin">
+              <RadioTower size={18} color="#d12c89" />
             </SectionTitle>
-            <div className="result-list">
+            <div className="article-list">
               {articles.slice(0, 4).map((article) => (
-                <ArticleResult key={article.id} article={article} href={`/admin/articles/${article.id}`} />
+                <Link className="result-item" href={`/admin/articles/${article.id}`} key={article.id}>
+                  <div>
+                    <h3>{article.title}</h3>
+                    <p className="muted">{article.visibility} · {article.channelVariants.join(", ")}</p>
+                  </div>
+                  <span className="chip published">{article.status}</span>
+                </Link>
               ))}
             </div>
           </div>
-          <div className="panel">
-            <SectionTitle title={copy.integrations}>
-              <RadioTower size={20} color="#4a9e9d" />
-            </SectionTitle>
-            <div className="article-list">
-              {integrations.map((integration) => {
-                const localized = integrationCopy(integration, language);
-                return (
-                  <div className="result-item" key={integration.name}>
-                    <div>
-                      <h3>{localized.name}</h3>
-                      <p className="muted">{localized.detail}</p>
-                    </div>
-                    <span className={`chip ${integration.status === "Demo Connected" ? "published" : ""}`}>
-                      {term(integration.status, language)}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
         </div>
       </section>
-
-      <section className="section">
-        <SectionTitle title={copy.searchTrends} />
-        <div className="panel stat-bars">
-          {analytics.map((row) => (
-            <div className="bar-row" key={row.label}>
-              <div className="section-title">
-                <span>{analyticsLabel(row.label, language)}</span>
-                <span className="small">{row.searches} {term("searches", language)} / {row.failures} {term("failed", language)}</span>
-              </div>
-              <div className="bar-track">
-                <div className="bar-fill" style={{ width: `${Math.min(100, row.searches / 13)}%` }} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="grid three">
-          <Link className="card" href="/admin/articles/new">
-            <FileText color="#d12c89" />
-            <h3>{copy.workflow}</h3>
-            <p className="muted">{copy.workflowDetail}</p>
-          </Link>
-          <Link className="card" href="/admin/articles">
-            <h3>{copy.articleManagement}</h3>
-            <p className="muted">{copy.articleManagementDetail}</p>
-          </Link>
-          <Link className="card" href="/admin/analytics">
-            <h3>{copy.apiAnalytics}</h3>
-            <p className="muted">{copy.apiAnalyticsDetail}</p>
-          </Link>
-          <Link className="card" href="/admin/groups">
-            <h3>{copy.groups}</h3>
-            <p className="muted">{copy.groupsDetail}</p>
-          </Link>
-        </div>
-      </section>
-    </>
+    </AppShell>
   );
 }
