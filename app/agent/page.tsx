@@ -4,16 +4,28 @@ import { useEffect, useMemo, useState } from "react";
 import { Bell, Filter, Search } from "lucide-react";
 import { AppShell, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult, PersonaCard } from "@/components/ArticleBlocks";
-import { DemoImpactPanel } from "@/components/JourneyDemo";
+import { DemoImpactPanel, RoleLogin } from "@/components/JourneyDemo";
 import { LlmAssistant } from "@/components/LlmAssistant";
 import { agents, announcements, articles, searchArticles } from "@/lib/data";
 import { applyDemoKnowledgeToArticle, useDemoKnowledge } from "@/lib/demo-state";
 import { agentCopy, agentLocalized, announcementCopy, articleCopy, term } from "@/lib/localized-copy";
 
 export default function AgentPage() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <AppShell active="Agent Workspace">
-      <AgentContent />
+      {!loggedIn ? (
+        <RoleLogin
+          role="Agent"
+          title="Agent login"
+          body="Use this role to access internal troubleshooting procedures, pinned knowledge, agent-only notes and the LLM assistant."
+          points={["Internal notes", "Pinned articles", "AI assist", "Escalation guidance"]}
+          onLogin={() => setLoggedIn(true)}
+        />
+      ) : (
+        <AgentContent />
+      )}
     </AppShell>
   );
 }

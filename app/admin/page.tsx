@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { BarChart3, Bell, FileText, LockKeyhole, Pin, RadioTower, Users } from "lucide-react";
 import { AppShell, SectionTitle, StatCard } from "@/components/AppChrome";
-import { DemoImpactPanel } from "@/components/JourneyDemo";
+import { DemoImpactPanel, RoleLogin } from "@/components/JourneyDemo";
 import { analytics, articles } from "@/lib/data";
 
 const rights = [
@@ -14,8 +15,28 @@ const rights = [
 ];
 
 export default function AdminPage() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
   return (
     <AppShell active="Admin Dashboard">
+      {!loggedIn ? (
+        <RoleLogin
+          role="Admin"
+          title="Admin login"
+          body="Use this role to govern the knowledge base, publish approved content, control visibility and monitor content gaps."
+          points={["Publish content", "Set visibility", "Manage alerts", "Review analytics"]}
+          onLogin={() => setLoggedIn(true)}
+        />
+      ) : (
+        <AdminWorkspace />
+      )}
+    </AppShell>
+  );
+}
+
+function AdminWorkspace() {
+  return (
+    <>
       <section className="page-heading">
         <div>
           <span className="chip magenta">Admin role</span>
@@ -101,6 +122,6 @@ export default function AdminPage() {
           </div>
         </div>
       </section>
-    </AppShell>
+    </>
   );
 }

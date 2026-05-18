@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CheckCircle2, Eye, LockKeyhole, RefreshCcw, Send, ShieldCheck, UserCog } from "lucide-react";
+import { CheckCircle2, Eye, LockKeyhole, LogIn, RefreshCcw, Send, ShieldCheck, UserCog } from "lucide-react";
 import { useDemoKnowledge } from "@/lib/demo-state";
 
 export function RoleSelector() {
@@ -79,6 +79,42 @@ export function DemoImpactPanel({ view }: { view: "admin" | "customer" | "agent"
           <p className="small">This updates the Customer and Agent views in the same browser session.</p>
         </div>
       ) : null}
+    </section>
+  );
+}
+
+export function RoleLogin({
+  role,
+  title,
+  body,
+  points,
+  onLogin
+}: {
+  role: "Admin" | "Agent";
+  title: string;
+  body: string;
+  points: string[];
+  onLogin: () => void;
+}) {
+  return (
+    <section className="login-screen">
+      <div className="login-card">
+        <span className="chip magenta">{role} portal</span>
+        <h1>{title}</h1>
+        <p>{body}</p>
+        <div className="login-meta">
+          {points.map((point) => (
+            <span className="chip" key={point}>
+              <CheckCircle2 size={14} />
+              {point}
+            </span>
+          ))}
+        </div>
+        <button className="btn primary" onClick={onLogin}>
+          <LogIn size={16} />
+          Login as {role}
+        </button>
+      </div>
     </section>
   );
 }

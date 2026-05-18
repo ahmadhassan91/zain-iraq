@@ -20,8 +20,8 @@ export default function Home() {
             A cleaner demo of how Admin governance changes what customers see publicly and what internal agents see operationally.
           </p>
         </div>
-        <Link className="btn primary" href="/admin">
-          Start with Admin <ArrowRight size={16} />
+        <Link className="btn primary" href="/customer">
+          Open customer dashboard <ArrowRight size={16} />
         </Link>
       </section>
 
