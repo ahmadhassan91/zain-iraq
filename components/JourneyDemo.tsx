@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { CheckCircle2, Eye, LockKeyhole, LogIn, RefreshCcw, Send, ShieldCheck, UserCog } from "lucide-react";
+import { useLanguage } from "@/components/AppChrome";
 import { useDemoKnowledge } from "@/lib/demo-state";
+import { demoImpactCopy } from "@/lib/localized-copy";
 import { ZainLogo } from "./ZainLogo";
 
 export function RoleSelector() {
@@ -49,21 +51,29 @@ export function RoleSelector() {
 
 export function DemoImpactPanel({ view }: { view: "admin" | "customer" | "agent" }) {
   const { state, publishUpdate, resetUpdate } = useDemoKnowledge();
+  const { language } = useLanguage();
+  const copy = demoImpactCopy[language];
   const isAdmin = view === "admin";
   const isAgent = view === "agent";
+  const isUpdated = state.version === "v1.1";
+  const title = isUpdated ? copy.updatedTitle : copy.title;
+  const customerSummary = isUpdated ? copy.updatedCustomerSummary : copy.customerSummary;
+  const agentNote = isUpdated ? copy.updatedAgentNote : copy.agentNote;
+  const publishedAt = state.publishedAt === "Just published by Admin" ? copy.justPublished : state.publishedAt;
+  const visibility = state.visibility === "Agent only" ? copy.agentOnly : copy.customerAgent;
 
   return (
     <section className="impact-panel">
       <div className="impact-copy">
         <span className="chip published">
           <CheckCircle2 size={14} />
-          {state.version} · {state.visibility}
+          {state.version} · {visibility}
         </span>
-        <h2>{state.title}</h2>
-        <p>{isAgent ? state.agentNote : state.customerSummary}</p>
+        <h2>{title}</h2>
+        <p>{isAgent ? agentNote : customerSummary}</p>
         <div className="meta-row">
-          <span className="small">Published: {state.publishedAt}</span>
-          {isAgent ? <span className="chip magenta"><LockKeyhole size={13} /> Internal note visible</span> : null}
+          <span className="small">{copy.published}: {publishedAt}</span>
+          {isAgent ? <span className="chip magenta"><LockKeyhole size={13} /> {copy.internalNoteVisible}</span> : null}
         </div>
       </div>
 
@@ -71,13 +81,13 @@ export function DemoImpactPanel({ view }: { view: "admin" | "customer" | "agent"
         <div className="impact-actions">
           <button className="btn primary" onClick={publishUpdate}>
             <Send size={16} />
-            Publish demo update
+            {copy.publishUpdate}
           </button>
           <button className="btn ghost" onClick={resetUpdate}>
             <RefreshCcw size={16} />
-            Reset
+            {copy.reset}
           </button>
-          <p className="small">This updates the Customer and Agent views in the same browser session.</p>
+          <p className="small">{copy.adminHint}</p>
         </div>
       ) : null}
     </section>
@@ -105,8 +115,8 @@ export function RoleLogin({
           <span>Zain Iraq Knowledge Base</span>
         </Link>
         <div className="portal-links">
-          <Link href="/customer">Customer view</Link>
-          <Link href="/">Role selection</Link>
+          <Link href="/">Public home</Link>
+          <Link href="/customer">Customer KB</Link>
         </div>
       </header>
 

@@ -16,6 +16,7 @@ export const customerCopy = {
     submitFeedback: "Submit feedback",
     feedbackSubmitted: "Feedback submitted",
     trending: "Trending FAQs and most viewed",
+    customerCanSee: "What the customer can see",
     views: "views",
     helpful: "helpful"
   },
@@ -33,6 +34,7 @@ export const customerCopy = {
     submitFeedback: "إرسال الملاحظات",
     feedbackSubmitted: "تم إرسال الملاحظات",
     trending: "الأسئلة الشائعة والأكثر مشاهدة",
+    customerCanSee: "ما الذي يراه العميل",
     views: "مشاهدة",
     helpful: "مفيد"
   },
@@ -50,8 +52,60 @@ export const customerCopy = {
     submitFeedback: "ناردنی بۆچوون",
     feedbackSubmitted: "بۆچوون نێردرا",
     trending: "پرسیارە باوەکان و بابەتە زۆر بینراوەکان",
+    customerCanSee: "کڕیار چی دەبینێت",
     views: "بینین",
     helpful: "یارمەتیدەر"
+  }
+} satisfies Record<Language, Record<string, string>>;
+
+export const demoImpactCopy = {
+  EN: {
+    title: "Roaming support update",
+    customerSummary: "Customers should confirm roaming is enabled before travel and restart the device after arrival.",
+    agentNote: "Agents must check roaming eligibility, spend controls, partner network status and active package before escalation.",
+    updatedTitle: "Roaming data fix for travel customers",
+    updatedCustomerSummary: "If roaming data is not working, ask the customer to restart the device and manually select a partner network from mobile settings.",
+    updatedAgentNote: "Before opening a technical ticket, verify roaming eligibility, data bar status, APN settings and destination partner availability.",
+    customerAgent: "Customer + Agent",
+    agentOnly: "Agent only",
+    published: "Published",
+    justPublished: "Just published by Admin",
+    internalNoteVisible: "Internal note visible",
+    publishUpdate: "Publish demo update",
+    reset: "Reset",
+    adminHint: "This updates the Customer and Agent views in the same browser session."
+  },
+  AR: {
+    title: "تحديث دعم التجوال",
+    customerSummary: "يجب على العملاء التأكد من تفعيل التجوال قبل السفر وإعادة تشغيل الجهاز بعد الوصول.",
+    agentNote: "يجب على الوكلاء فحص أهلية التجوال، حدود الإنفاق، حالة شبكة الشريك والباقة النشطة قبل التصعيد.",
+    updatedTitle: "إصلاح بيانات التجوال للعملاء المسافرين",
+    updatedCustomerSummary: "إذا لم تعمل بيانات التجوال، اطلب من العميل إعادة تشغيل الجهاز واختيار شبكة شريك يدوياً من إعدادات الهاتف.",
+    updatedAgentNote: "قبل فتح تذكرة فنية، تحقق من أهلية التجوال، حالة حظر البيانات، إعدادات APN وتوفر شريك الوجهة.",
+    customerAgent: "العميل + الوكيل",
+    agentOnly: "الوكيل فقط",
+    published: "نشر",
+    justPublished: "نشره المسؤول للتو",
+    internalNoteVisible: "الملاحظة الداخلية ظاهرة",
+    publishUpdate: "نشر تحديث العرض",
+    reset: "إعادة ضبط",
+    adminHint: "هذا يحدّث مشهدي العميل والوكيل في نفس جلسة المتصفح."
+  },
+  KU: {
+    title: "نوێکاری پشتگیری ڕۆمینگ",
+    customerSummary: "کڕیاران پێویستە پێش گەشت دڵنیا بن ڕۆمینگ چالاکە و دوای گەیشتن ئامێرەکە دووبارە پێبکەنەوە.",
+    agentNote: "ئەجێنتەکان پێویستە شیاوی ڕۆمینگ، سنووری خەرجکردن، دۆخی تۆڕی هاوبەش و پاکێجی چالاک بپشکنن پێش بەرزکردنەوە.",
+    updatedTitle: "چارەسەری داتای ڕۆمینگ بۆ کڕیارانی گەشت",
+    updatedCustomerSummary: "ئەگەر داتای ڕۆمینگ کار نەکرد، داوا لە کڕیار بکە ئامێرەکە دووبارە پێبکاتەوە و بە دەستی تۆڕی هاوبەش هەڵبژێرێت لە ڕێکخستنی مۆبایل.",
+    updatedAgentNote: "پێش کردنەوەی تیکەتی تەکنیکی، شیاوی ڕۆمینگ، دۆخی بلۆکی داتا، ڕێکخستنی APN و بەردەستبوونی هاوبەشی شوێنی گەشت بپشکنە.",
+    customerAgent: "کڕیار + ئەجێنت",
+    agentOnly: "تەنها ئەجێنت",
+    published: "بڵاوکراوە",
+    justPublished: "ئێستا لەلایەن بەڕێوەبەرەوە بڵاوکرایەوە",
+    internalNoteVisible: "تێبینی ناوخۆ دیارە",
+    publishUpdate: "بڵاوکردنەوەی نوێکاری نمایش",
+    reset: "ڕێکخستنەوە",
+    adminHint: "ئەمە دیمەنی کڕیار و ئەجێنت لە هەمان دانیشتنی وێبگەڕ نوێ دەکاتەوە."
   }
 } satisfies Record<Language, Record<string, string>>;
 

@@ -62,7 +62,7 @@ function CustomerContent() {
       </section>
 
       <section className="section">
-        <SectionTitle title="What the customer can see" />
+        <SectionTitle title={copy.customerCanSee} />
         <DemoImpactPanel view="customer" />
       </section>
 
