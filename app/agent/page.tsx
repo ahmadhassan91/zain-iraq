@@ -52,7 +52,7 @@ function AgentContent() {
 
   return (
     <>
-      <SectionTitle title={copy.title}>
+      <SectionTitle title={copy.title} level={1}>
         <span className="chip magenta">{localizedAgent.role}</span>
       </SectionTitle>
 

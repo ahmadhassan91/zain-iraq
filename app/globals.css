@@ -449,6 +449,7 @@ a {
 }
 
 .hero h1,
+.section-title h1,
 .section-title h2,
 .article-title {
   margin: 0;
@@ -583,6 +584,7 @@ a {
   margin-bottom: 14px;
 }
 
+.section-title h1,
 .section-title h2 {
   font-size: 26px;
 }

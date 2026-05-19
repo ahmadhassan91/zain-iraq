@@ -192,14 +192,18 @@ export function StatCard({
 
 export function SectionTitle({
   title,
-  children
+  children,
+  level = 2
 }: {
   title: string;
   children?: React.ReactNode;
+  level?: 1 | 2;
 }) {
+  const Heading = level === 1 ? "h1" : "h2";
+
   return (
     <div className="section-title">
-      <h2>{title}</h2>
+      <Heading>{title}</Heading>
       {children}
     </div>
   );

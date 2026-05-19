@@ -18,7 +18,7 @@ export function AdminArticleEditor({ article, isNew }: { article: Article; isNew
 
   return (
     <>
-      <SectionTitle title={isNew ? copy.createTitle : copy.editTitle}>
+      <SectionTitle title={isNew ? copy.createTitle : copy.editTitle} level={1}>
         <span className="chip ready">{copy.autosaved}</span>
       </SectionTitle>
       <div className="admin-editor">
@@ -51,11 +51,11 @@ export function AdminArticleEditor({ article, isNew }: { article: Article; isNew
             <label className="full">
               <span className="small">{copy.richAnswer}</span>
               <div className="toolbar" aria-label="Rich text toolbar">
-                <button className="btn compact" type="button"><Bold size={15} /></button>
-                <button className="btn compact" type="button"><Italic size={15} /></button>
-                <button className="btn compact" type="button"><Underline size={15} /></button>
-                <button className="btn compact" type="button"><List size={15} /></button>
-                <button className="btn compact" type="button"><LinkIcon size={15} /></button>
+                <button className="btn compact" type="button" aria-label="Bold"><Bold size={15} /></button>
+                <button className="btn compact" type="button" aria-label="Italic"><Italic size={15} /></button>
+                <button className="btn compact" type="button" aria-label="Underline"><Underline size={15} /></button>
+                <button className="btn compact" type="button" aria-label="List"><List size={15} /></button>
+                <button className="btn compact" type="button" aria-label="Insert link"><LinkIcon size={15} /></button>
               </div>
               <textarea className="textarea" value={localized.customerAnswer} readOnly />
             </label>

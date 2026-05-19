@@ -22,7 +22,7 @@ function ArticlesContent() {
 
   return (
     <>
-      <SectionTitle title={copy.title}>
+      <SectionTitle title={copy.title} level={1}>
         <Link className="btn primary" href="/admin/articles/new">
           <FilePlus2 size={16} />
           {copy.create}
@@ -58,7 +58,7 @@ function ArticlesContent() {
                         <Archive size={15} />
                         {copy.archive}
                       </DemoActionButton>
-                      <DemoActionButton className="btn compact ghost" message={copy.removed}>
+                      <DemoActionButton className="btn compact ghost" message={copy.removed} aria-label={copy.removed}>
                         <Trash2 size={15} />
                       </DemoActionButton>
                     </div>

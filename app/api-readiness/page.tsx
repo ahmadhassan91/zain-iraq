@@ -178,7 +178,7 @@ function ApiReadinessContent() {
   return (
     <>
       <section className="section flush-top">
-        <SectionTitle title={copy.title}>
+        <SectionTitle title={copy.title} level={1}>
           <span className="chip">
             <CheckCircle2 size={14} />
             {copy.ready}

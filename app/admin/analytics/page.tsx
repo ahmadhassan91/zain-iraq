@@ -39,7 +39,7 @@ function AnalyticsContent() {
 
   return (
     <>
-      <SectionTitle title={copy.title} />
+      <SectionTitle title={copy.title} level={1} />
       <div className="grid four">
         <StatCard label={copy.apiCalls} value="18.4k" detail={copy.apiCallsDetail} />
         <StatCard label={copy.avgResponse} value="118ms" detail={copy.avgResponseDetail} />

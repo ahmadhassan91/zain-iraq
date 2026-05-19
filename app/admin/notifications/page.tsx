@@ -21,7 +21,7 @@ function NotificationsContent() {
 
   return (
     <>
-      <SectionTitle title={copy.title}>
+      <SectionTitle title={copy.title} level={1}>
         <span className="chip live">
           <Bell size={14} />
           {announcements.filter((item) => item.status === "Live").length} {copy.live}

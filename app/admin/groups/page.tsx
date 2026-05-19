@@ -21,7 +21,7 @@ function GroupsContent() {
 
   return (
     <>
-      <SectionTitle title={copy.title}>
+      <SectionTitle title={copy.title} level={1}>
         <span className="chip">{copy.target}</span>
       </SectionTitle>
       <div className="grid two">
