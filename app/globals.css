@@ -684,7 +684,8 @@ a {
 }
 
 .guided-journey,
-.maturity-panel {
+.maturity-panel,
+.demo-path {
   display: grid;
   gap: 18px;
   margin-top: 22px;
@@ -695,6 +696,83 @@ a {
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   box-shadow: var(--shadow);
+}
+
+.demo-path {
+  grid-template-columns: minmax(0, 0.62fr) minmax(420px, 1fr);
+  align-items: center;
+  margin-top: 0;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.62)),
+    linear-gradient(90deg, var(--blue-soft), var(--teal-soft));
+}
+
+[data-theme="dark"] .demo-path {
+  background:
+    linear-gradient(135deg, rgba(20, 23, 29, 0.88), rgba(20, 23, 29, 0.72)),
+    linear-gradient(90deg, rgba(31, 63, 119, 0.22), rgba(74, 158, 157, 0.12));
+}
+
+.demo-path h2 {
+  margin: 8px 0 6px;
+  font-size: 26px;
+}
+
+.demo-path p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.demo-path-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.demo-step {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  min-height: 112px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  transition: all 0.25s ease;
+}
+
+.demo-step:hover,
+.demo-step.active {
+  transform: translateY(-2px);
+  border-color: rgba(209, 44, 137, 0.28);
+  box-shadow: var(--shadow-hover);
+}
+
+.demo-step > span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--blue);
+  font-family: var(--font-display);
+  font-weight: 900;
+}
+
+.demo-step.active > span {
+  background: var(--magenta);
+}
+
+.demo-step strong {
+  display: block;
+  margin-bottom: 5px;
+  line-height: 1.25;
+}
+
+.demo-step p {
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .customer-journey {
@@ -728,10 +806,17 @@ a {
 }
 
 .knowledge-category-row,
+.category-showcase,
 .scenario-tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.category-showcase {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
 }
 
 .knowledge-category,
@@ -746,6 +831,20 @@ a {
   transition: all 0.25s ease;
 }
 
+.knowledge-category {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  min-height: 94px;
+}
+
+.knowledge-category span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .knowledge-category:hover,
 .scenario-tabs button:hover,
 .scenario-tabs button.active {
@@ -754,6 +853,10 @@ a {
   background: linear-gradient(135deg, var(--magenta), var(--violet));
   box-shadow: var(--shadow-glow);
   transform: translateY(-1px);
+}
+
+.knowledge-category:hover span {
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .scenario-tabs.compact {
@@ -834,6 +937,38 @@ a {
   margin-top: 0;
 }
 
+.support-channel-card {
+  display: grid;
+  gap: 10px;
+  min-height: 190px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  transition: all 0.25s ease;
+}
+
+.support-channel-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(74, 158, 157, 0.28);
+  box-shadow: var(--shadow-hover);
+}
+
+.support-channel-card svg {
+  color: var(--teal);
+}
+
+.support-channel-card h3,
+.support-channel-card p {
+  margin: 0;
+}
+
+.support-channel-card p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .maturity-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -867,6 +1002,13 @@ a {
   color: rgba(255, 255, 255, 0.86);
   font-size: 18px;
   line-height: 1.5;
+}
+
+.hero .hero-chip {
+  margin-bottom: 16px;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .search-box {
@@ -1589,6 +1731,7 @@ a {
   .intro-hero,
   .page-heading,
   .impact-panel,
+  .demo-path,
   .portal-shell {
     grid-template-columns: 1fr;
   }
@@ -1619,11 +1762,13 @@ a {
   }
 
   .grid.three,
-  .role-grid,
-  .journey-strip,
-  .journey-flow-grid,
-  .maturity-grid,
-  .grid.four {
+    .role-grid,
+    .journey-strip,
+    .journey-flow-grid,
+    .demo-path-steps,
+    .category-showcase,
+    .maturity-grid,
+    .grid.four {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -1674,6 +1819,8 @@ a {
   .role-grid,
   .journey-strip,
   .journey-flow-grid,
+  .demo-path-steps,
+  .category-showcase,
   .maturity-grid,
   .grid.four {
     grid-template-columns: 1fr;

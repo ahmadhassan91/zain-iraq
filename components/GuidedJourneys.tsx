@@ -1,59 +1,118 @@
 "use client";
 
 import Link from "next/link";
-import { AlertTriangle, ArrowRight, Bot, CheckCircle2, FilePlus2, Headphones, RadioTower, Search, ShieldCheck } from "lucide-react";
+import {
+  AlertTriangle,
+  ArrowRight,
+  Bot,
+  CheckCircle2,
+  CreditCard,
+  FilePlus2,
+  Headphones,
+  MapPin,
+  RadioTower,
+  Search,
+  ShieldCheck,
+  Smartphone,
+  Wifi
+} from "lucide-react";
 import { useMemo, useState } from "react";
 import { useDemoKnowledge } from "@/lib/demo-state";
 
 const customerScenarios = [
   {
     id: "roaming",
-    label: "Roaming issue",
+    label: "Roaming data",
     query: "customer cannot use data while roaming",
-    intent: "Intent understood: roaming data failure",
-    article: "Roaming bundles and data setup",
-    action: "Restart device, enable data roaming, manually select partner network",
-    related: ["International calls", "Super Card", "Travel bundle usage"],
-    escalation: "Escalate only if partner attach and eligibility checks fail"
+    intent: "Recognize travel + data failure",
+    article: "Roaming services, bundles and Q&A",
+    action: "Enable data roaming, check bundle via *225#, manually select partner network",
+    related: ["Roaming prices", "Helpful tips", "International calls"],
+    escalation: "Escalate only after bundle, handset and partner-network checks"
   },
   {
     id: "sim",
-    label: "SIM replacement",
+    label: "SIM/eSIM",
     query: "SIM replacement and eSIM documents",
-    intent: "Intent understood: SIM/eSIM service request",
-    article: "eSIM and SIM replacement support",
-    action: "Confirm device support and branch visit with valid ID",
-    related: ["Nearest branch", "Ownership verification", "eSIM QR activation"],
-    escalation: "Branch-assisted verification required"
+    intent: "Recognize identity + branch service",
+    article: "SIM replacement requirements",
+    action: "Show 5,000 IQD SIM swap, 10,000 IQD eSIM, valid ID and *315# store locator",
+    related: ["Nearest Zain center", "Ownership documents", "4.5G+ SIM upgrade"],
+    escalation: "Route to store when ownership or document checks are required"
   },
   {
     id: "billing",
-    label: "Bill/payment",
+    label: "Balance/payment",
     query: "unexpected balance deduction",
-    intent: "Intent understood: billing investigation",
-    article: "Customer care and bill support",
-    action: "Check line type, recent usage, active services and bill status",
-    related: ["Recharge", "Balance transfer", "Postpaid support"],
+    intent: "Recognize recharge, usage or bill dispute",
+    article: "Recharge, balance and postpaid bill support",
+    action: "Check balance via *100#, recharge via *101#, then review active services",
+    related: ["Pay My Bill", "Recharge card", "Postpaid support"],
     escalation: "Route unresolved dispute to billing queue"
   },
   {
     id: "products",
-    label: "Product discovery",
+    label: "Bundles",
     query: "Super Card bundle support",
-    intent: "Intent understood: prepaid bundle discovery",
-    article: "Super Card bundle support",
-    action: "Recommend package, explain validity, renewal and remaining units",
-    related: ["Prepaid plans", "Recharge cards", "App subscription"],
-    escalation: "Offer live support if package eligibility is unclear"
+    intent: "Recognize prepaid bundle discovery",
+    article: "Super Card and KAFOO bundle support",
+    action: "Compare data, minutes, SMS, validity and subscription channel",
+    related: ["KAFOO", "Data bundles", "Zain Iraq App"],
+    escalation: "Offer live support if eligibility or subscription status is unclear"
   }
 ];
 
 const zainCategories = [
-  { label: "Prepaid Plans", href: "/customer?topic=prepaid" },
-  { label: "Services & Offers", href: "/customer?topic=services" },
-  { label: "SIM Replacement", href: "/customer?topic=sim-replacement" },
-  { label: "Super Card", href: "/customer/article/super-card" }
+  { label: "Prepaid", detail: "KAFOO, Super Card, data bundles", href: "/customer?topic=prepaid" },
+  { label: "Postpaid", detail: "Plans, bills, roaming", href: "/customer?topic=postpaid" },
+  { label: "Zain-Fi", detail: "Devices, data offers, Connect SIM", href: "/customer?topic=zain-fi" },
+  { label: "Services", detail: "Digital services, apps, devices", href: "/customer?topic=services" },
+  { label: "Support", detail: "Knowledge Center, stores, contact", href: "/customer?topic=support" }
 ];
+
+const demoSteps = [
+  {
+    href: "/customer",
+    label: "Customer",
+    title: "Find an answer",
+    body: "Public KB, Zain categories, app/store/contact channels"
+  },
+  {
+    href: "/agent",
+    label: "Agent",
+    title: "Resolve the case",
+    body: "Internal checklist, pinned content, LLM grounded by KB"
+  },
+  {
+    href: "/admin",
+    label: "Admin",
+    title: "Govern the source",
+    body: "Publish once, control visibility, monitor content gaps"
+  }
+];
+
+export function DemoPathNav({ current }: { current: "customer" | "agent" | "admin" }) {
+  return (
+    <section className="demo-path" aria-label="POC presenter demo path">
+      <div>
+        <span className="chip advisory">Presenter demo path</span>
+        <h2>One telco issue, three role views</h2>
+        <p className="muted">Start with a customer support question, show the agent resolution workspace, then show how Admin changes the source of truth.</p>
+      </div>
+      <div className="demo-path-steps">
+        {demoSteps.map((step, index) => (
+          <Link className={`demo-step ${current === step.label.toLowerCase() ? "active" : ""}`} href={step.href} key={step.label}>
+            <span>{index + 1}</span>
+            <div>
+              <strong>{step.label}: {step.title}</strong>
+              <p>{step.body}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export function CustomerJourneyPanel({
   onSelectQuery
@@ -67,17 +126,19 @@ export function CustomerJourneyPanel({
     <section className="guided-journey customer-journey">
       <div className="journey-heading">
         <div>
-          <span className="chip magenta">Website-native support layer</span>
-          <h2>Guided customer journey</h2>
-          <p className="muted">A familiar Zain Knowledge Center structure with intelligent search, diagnosis and next actions layered on top.</p>
+          <span className="chip magenta">Zain-style Knowledge Center</span>
+          <h2>Choose a customer intent</h2>
+          <p className="muted">The demo now starts where telecom customers usually start: roaming, SIM/eSIM, balance, bundles, app support and nearby stores.</p>
         </div>
-        <div className="knowledge-category-row" aria-label="Zain knowledge center categories">
-          {zainCategories.map((category) => (
-            <Link className="knowledge-category" href={category.href} key={category.label}>
-              {category.label}
-            </Link>
-          ))}
-        </div>
+      </div>
+
+      <div className="category-showcase" aria-label="Zain knowledge center categories">
+        {zainCategories.map((category) => (
+          <Link className="knowledge-category" href={category.href} key={category.label}>
+            <strong>{category.label}</strong>
+            <span>{category.detail}</span>
+          </Link>
+        ))}
       </div>
 
       <div className="scenario-tabs" role="tablist" aria-label="Customer scenarios">
@@ -99,22 +160,22 @@ export function CustomerJourneyPanel({
       <div className="journey-flow-grid">
         <div className="journey-step-card">
           <Search size={18} />
-          <span className="small">Customer asks</span>
+          <span className="small">Customer language</span>
           <strong>{scenario.query}</strong>
         </div>
         <div className="journey-step-card">
           <Bot size={18} />
-          <span className="small">System action</span>
+          <span className="small">AI intent</span>
           <strong>{scenario.intent}</strong>
         </div>
         <div className="journey-step-card">
           <CheckCircle2 size={18} />
-          <span className="small">Best knowledge</span>
+          <span className="small">Zain KB answer</span>
           <strong>{scenario.article}</strong>
         </div>
         <div className="journey-step-card">
           <ArrowRight size={18} />
-          <span className="small">Recommended next action</span>
+          <span className="small">Next best action</span>
           <strong>{scenario.action}</strong>
         </div>
       </div>
@@ -132,6 +193,55 @@ export function CustomerJourneyPanel({
           <Headphones size={18} />
           <span>{scenario.escalation}</span>
         </div>
+      </div>
+    </section>
+  );
+}
+
+const supportChannels = [
+  {
+    icon: Smartphone,
+    title: "Zain Iraq App",
+    body: "Manage account, check balance, subscribe to bundles and pay bills from the customer channel."
+  },
+  {
+    icon: MapPin,
+    title: "Stores and service centers",
+    body: "Route branch-required tasks like SIM/eSIM replacement, documents and ownership verification."
+  },
+  {
+    icon: CreditCard,
+    title: "USSD and SMS actions",
+    body: "Surface codes such as *100# balance, *101# recharge and *225# roaming usage where relevant."
+  },
+  {
+    icon: Wifi,
+    title: "Network support",
+    body: "Handle APN, 4.5G+, device, data bundle and coverage troubleshooting without mixing it into billing."
+  }
+];
+
+export function SupportChannelPanel() {
+  return (
+    <section className="section">
+      <div className="section-title">
+        <div>
+          <h2>Telco support channels included</h2>
+          <p className="muted">The UI is organized around Zain Iraq customer behavior rather than generic software support.</p>
+        </div>
+        <span className="chip published">Industry tailored</span>
+      </div>
+      <div className="grid four support-channel-grid">
+        {supportChannels.map((channel) => {
+          const Icon = channel.icon;
+          return (
+            <div className="support-channel-card" key={channel.title}>
+              <Icon size={22} />
+              <h3>{channel.title}</h3>
+              <p>{channel.body}</p>
+            </div>
+          );
+        })}
       </div>
     </section>
   );

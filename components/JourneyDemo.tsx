@@ -107,6 +107,12 @@ export function RoleLogin({
   points: string[];
   onLogin: () => void;
 }) {
+  const step = role === "Agent" ? "Step 2 of 3" : "Step 3 of 3";
+  const context =
+    role === "Agent"
+      ? "Internal view after the customer cannot self-serve. Agents see troubleshooting, internal notes and AI assist."
+      : "Governance view after the support gap is identified. Admins publish and control what each channel can see.";
+
   return (
     <main className="portal-page">
       <header className="portal-header">
@@ -123,8 +129,10 @@ export function RoleLogin({
       <section className="portal-shell">
         <div className="portal-copy">
           <span className="chip magenta">{role} portal</span>
+          <span className="chip advisory">{step} in presenter demo</span>
           <h1>{title}</h1>
           <p>{body}</p>
+          <p>{context}</p>
           <div className="portal-points">
             {points.map((point) => (
               <div className="portal-point" key={point}>

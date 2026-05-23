@@ -5,7 +5,7 @@ import { AlertTriangle, Bell, Search } from "lucide-react";
 import { AppShell, ArticleMini, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult } from "@/components/ArticleBlocks";
 import { DemoActionButton } from "@/components/DemoActionButton";
-import { CustomerJourneyPanel } from "@/components/GuidedJourneys";
+import { CustomerJourneyPanel, DemoPathNav, SupportChannelPanel } from "@/components/GuidedJourneys";
 import { DemoImpactPanel } from "@/components/JourneyDemo";
 import { announcements, articles, searchArticles } from "@/lib/data";
 import { applyDemoKnowledgeToArticle, useDemoKnowledge } from "@/lib/demo-state";
@@ -50,7 +50,10 @@ function CustomerContent() {
         </section>
       ) : null}
 
+      <DemoPathNav current="customer" />
+
       <section className="hero">
+        <span className="chip hero-chip">Public customer view</span>
         <h1>{copy.heroTitle}</h1>
         <p>{copy.heroBody}</p>
         <div className="search-box">
@@ -68,6 +71,8 @@ function CustomerContent() {
           setSearched(true);
         }}
       />
+
+      <SupportChannelPanel />
 
       <section className="section">
         <SectionTitle title={copy.customerCanSee} />

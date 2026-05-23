@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Bell, Filter, Search } from "lucide-react";
 import { AppShell, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult, PersonaCard } from "@/components/ArticleBlocks";
-import { AgentWorkflowPanel } from "@/components/GuidedJourneys";
+import { AgentWorkflowPanel, DemoPathNav } from "@/components/GuidedJourneys";
 import { DemoImpactPanel, RoleLogin } from "@/components/JourneyDemo";
 import { LlmAssistant } from "@/components/LlmAssistant";
 import { agents, announcements, articles, searchArticles } from "@/lib/data";
@@ -53,6 +53,8 @@ function AgentContent() {
 
   return (
     <>
+      <DemoPathNav current="agent" />
+
       <SectionTitle title={copy.title} level={1}>
         <span className="chip magenta">{localizedAgent.role}</span>
       </SectionTitle>

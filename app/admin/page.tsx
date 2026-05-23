@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { BarChart3, Bell, FileText, LockKeyhole, Pin, RadioTower, Users } from "lucide-react";
 import { AppShell, SectionTitle, StatCard } from "@/components/AppChrome";
-import { AdminWorkflowPanel } from "@/components/GuidedJourneys";
+import { AdminWorkflowPanel, DemoPathNav } from "@/components/GuidedJourneys";
 import { DemoImpactPanel, RoleLogin } from "@/components/JourneyDemo";
 import { analytics, articles } from "@/lib/data";
 
@@ -40,6 +40,8 @@ export default function AdminPage() {
 function AdminWorkspace() {
   return (
     <>
+      <DemoPathNav current="admin" />
+
       <section className="page-heading">
         <div>
           <span className="chip magenta">Admin role</span>
