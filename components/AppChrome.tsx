@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, Bot, Globe2, Home, LayoutDashboard, Search, ShieldCheck } from "lucide-react";
+import { BookOpen, Bot, Globe2, Home, LayoutDashboard, Search, ShieldCheck, Sun, Moon } from "lucide-react";
 import { ZainLogo } from "./ZainLogo";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
@@ -90,11 +90,15 @@ export function localize(key: string, language: Language) {
 export function Header({
   active = "Home",
   language,
-  onLanguageChange
+  onLanguageChange,
+  theme = "light",
+  onThemeToggle
 }: {
   active?: string;
   language: Language;
   onLanguageChange: (language: Language) => void;
+  theme?: "light" | "dark";
+  onThemeToggle?: () => void;
 }) {
   return (
     <header className="topbar">
@@ -106,6 +110,15 @@ export function Header({
         </div>
       </div>
       <div className="topbar-actions">
+        {onThemeToggle && (
+          <button
+            onClick={onThemeToggle}
+            className="theme-toggle-btn"
+            aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
+          >
+            {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
+        )}
         <div className="language-switch" aria-label="Language switcher">
           {(["EN", "AR", "KU"] as Language[]).map((item) => (
             <button className={language === item ? "active" : ""} key={item} onClick={() => onLanguageChange(item)}>
@@ -158,11 +171,34 @@ export function AppShell({
 }) {
   const [language, setLanguage] = useState<Language>("EN");
   const isRtl = language !== "EN";
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
+    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
+    
+    setTheme(initialTheme);
+    document.documentElement.setAttribute("data-theme", initialTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "light" ? "dark" : "light";
+    setTheme(nextTheme);
+    document.documentElement.setAttribute("data-theme", nextTheme);
+    localStorage.setItem("theme", nextTheme);
+  };
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>
       <div className="app" dir={isRtl ? "rtl" : "ltr"}>
-        <Header active={active} language={language} onLanguageChange={setLanguage} />
+        <Header 
+          active={active} 
+          language={language} 
+          onLanguageChange={setLanguage} 
+          theme={theme}
+          onThemeToggle={toggleTheme}
+        />
         <div className="layout">
           <Sidebar active={active} variant={variant} />
           <main className="main">{children}</main>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Archive, Edit3, Eye, FilePlus2, Pin, Trash2 } from "lucide-react";
 import { AppShell, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { DemoActionButton } from "@/components/DemoActionButton";
+import { ConfidenceGauge } from "@/components/ArticleBlocks";
 import { articles } from "@/lib/data";
 import { articleAdminCopy, articleCopy, term } from "@/lib/localized-copy";
 
@@ -83,7 +84,7 @@ function ArticlesContent() {
                       <h3>{localized.title}</h3>
                       <p className="muted">{article.views.toLocaleString()} {copy.views} · {article.helpful}% {copy.helpful}</p>
                     </div>
-                    <span className="confidence">{article.confidence}%</span>
+                    <ConfidenceGauge confidence={article.confidence} />
                   </div>
                 );
               })}

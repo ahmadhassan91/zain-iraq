@@ -73,7 +73,7 @@ function CustomerContent() {
         <div className="grid two">
           <div className="result-list">
             {results.map((article) => (
-              <ArticleResult key={article.id} article={article} href={`/customer/article/${article.id}`} />
+              <ArticleResult key={article.id} article={article} href={`/customer/article/${article.id}`} searchQuery={query} />
             ))}
           </div>
           <div className="grid">

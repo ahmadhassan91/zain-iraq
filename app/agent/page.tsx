@@ -83,7 +83,7 @@ function AgentContent() {
             </SectionTitle>
             <div className="result-list">
               {results.map((article) => (
-                <ArticleResult key={article.id} article={article} href={`/agent/article/${article.id}`} />
+                <ArticleResult key={article.id} article={article} href={`/agent/article/${article.id}`} searchQuery={query} />
               ))}
             </div>
           </section>
