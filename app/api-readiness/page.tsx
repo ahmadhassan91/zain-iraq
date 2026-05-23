@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Bot, Braces, CheckCircle2, FileJson, Gauge, MessageSquareText, Radio, Search, Send, Signal } from "lucide-react";
 import { AppShell, SectionTitle, StatCard, useLanguage, type Language } from "@/components/AppChrome";
+import { PocMaturityPanel } from "@/components/GuidedJourneys";
 import { apiCopy } from "@/lib/localized-copy";
 
 const endpoints = [
@@ -191,6 +192,8 @@ function ApiReadinessContent() {
           <StatCard label={copy.llmLayer} value="RAG" detail={copy.llmDetail} />
         </div>
       </section>
+
+      <PocMaturityPanel />
 
       <section className="section">
         <div className="grid three api-grid">

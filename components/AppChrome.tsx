@@ -182,6 +182,11 @@ export function AppShell({
     document.documentElement.setAttribute("data-theme", initialTheme);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.setAttribute("dir", isRtl ? "rtl" : "ltr");
+    document.documentElement.setAttribute("lang", language === "AR" ? "ar" : language === "KU" ? "ku" : "en");
+  }, [isRtl, language]);
+
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
     setTheme(nextTheme);

@@ -30,11 +30,14 @@ Route: `/` or `/customer`
 
 The default screen is customer-facing. It should feel like a public Zain support experience, not an internal dashboard.
 
+The customer layer now includes a website-native support area that mirrors the way Zain content is organized around knowledge categories such as prepaid plans, services and offers, SIM replacement and Super Card. The intelligence layer sits on top of this familiar structure through guided scenarios and ranked answers.
+
 ### What the Customer Sees
 
 - Public-only navigation: Home and Customer KB.
 - Service alert banner for customer-facing announcements.
 - Search box for public FAQs and support articles.
+- Guided scenario panel for roaming, SIM replacement, bill/payment and product discovery.
 - Ranked public knowledge results with confidence score.
 - Public article cards for roaming, bundles and international support.
 - "What's New" updates for customer-visible announcements.
@@ -47,9 +50,10 @@ The default screen is customer-facing. It should feel like a public Zain support
 2. Point out that the page is customer-facing by default.
 3. Show that internal links such as Admin Dashboard and Agent Workspace are not visible.
 4. Search for roaming support.
-5. Open a public article such as "Roaming support update".
-6. Click Helpful or Missing info to show customer feedback capture.
-7. Switch to Arabic or Kurdish and show RTL layout.
+5. Select the Roaming issue scenario to show the linear journey: customer question, intent, best article and next action.
+6. Open a public article such as "Roaming support update".
+7. Click Helpful or Missing info to show customer feedback capture.
+8. Switch to Arabic or Kurdish and show RTL layout.
 
 ### Business Message
 
@@ -79,6 +83,7 @@ After continuing into the workspace, Admin can demonstrate:
 
 - Governance workspace overview.
 - Demo publish action.
+- Guided cause-and-effect workflow for publish update, failed search remediation and notification management.
 - Article editor entry point.
 - Article lifecycle management.
 - Notifications and alerts.
@@ -89,10 +94,23 @@ After continuing into the workspace, Admin can demonstrate:
 
 1. Open `/admin`.
 2. Click Continue to Admin workspace.
-3. In the Governance workspace, click Publish demo update.
-4. Return to `/` or `/customer`.
-5. Show that the customer-facing content now reflects the updated roaming support message.
-6. Open `/agent` and show that Agent also sees the updated operational version.
+3. Use the Admin cause-and-effect panel and select Publish update.
+4. Click Publish demo update.
+5. Return to `/` or `/customer`.
+6. Show that the customer-facing content now reflects the updated roaming support message.
+7. Open `/agent` and show that Agent also sees the updated operational version.
+
+### Failed Search Remediation Flow
+
+The Admin workspace includes a guided remediation scenario:
+
+1. Review failed searches.
+2. Identify a low-confidence roaming query.
+3. Create or update the missing KB answer.
+4. Approve and publish.
+5. Future searches improve.
+
+This is demonstrated as POC workflow logic. In production, the remediation would persist through database, workflow and analytics services.
 
 ### Article Management
 
@@ -184,6 +202,7 @@ After continuing into the workspace, Agent can demonstrate:
 
 - Agent assist workspace.
 - Current selected agent skill group.
+- Guided agent resolution workflow.
 - Search for internal knowledge.
 - Ranked knowledge results with confidence score.
 - Operational updates.
@@ -197,11 +216,13 @@ After continuing into the workspace, Agent can demonstrate:
 1. Open `/agent`.
 2. Click Continue to Agent workspace.
 3. Show the current agent, for example Roaming.
-4. Search for "customer cannot use data while roaming".
-5. Show ranked knowledge results and confidence score.
-6. Open an agent article to show the difference between customer answer and internal note.
-7. Use Ask assistant to demonstrate the LLM support area.
-8. Select another agent persona to show targeted skills and pinned content.
+4. Select a workflow such as Roaming complaint resolution, Escalation workflow or Restricted content access.
+5. Show the troubleshooting steps and copy-ready response direction.
+6. Search for "customer cannot use data while roaming".
+7. Show ranked knowledge results and confidence score.
+8. Open an agent article to show the difference between customer answer and internal note.
+9. Use Ask assistant to demonstrate the LLM support area.
+10. Select another agent persona to show targeted skills and pinned content.
 
 ### Agent Article View
 
@@ -227,6 +248,8 @@ Route: `/api-readiness`
 
 This screen demonstrates that the POC is API-first and can support external channels.
 
+It also includes a POC maturity disclosure that separates what is functional today, what is simulated for demo and what would be required for production.
+
 ### APIs Shown
 
 - Search API.
@@ -242,6 +265,7 @@ This screen demonstrates that the POC is API-first and can support external chan
 - The response contract includes confidence score.
 - Channel outputs can differ for Website, Chatbot, WhatsApp and Agent Portal.
 - The LLM layer is positioned as an optional grounded assistant over approved KB content.
+- The assistant labels responses as Live LLM or Simulated fallback so the demo is transparent.
 
 ### Sample JSON Links
 
@@ -273,6 +297,23 @@ Demo checks:
 - Customer-facing content remains clean and public.
 - Feedback and analytics help identify missing or low-confidence knowledge.
 - The POC is ready to discuss API integration, channel responses and LLM grounding.
+
+## Current Maturity Answers
+
+Use these answers if the client asks what is real versus simulated.
+
+- Article count: 8 seeded articles.
+- Customer-facing articles: public articles only are shown in the customer journey.
+- Agent/internal articles: agent and private group articles are visible in agent/admin journeys.
+- Ingestion: manually seeded from Zain-relevant public content and scenario requirements; no automated scraper yet.
+- Search: keyword/token scoring with confidence simulation; not semantic/vector search yet.
+- Multilingual: UI and seeded content translations exist for English, Arabic and Kurdish; true multilingual semantic search is not implemented yet.
+- Confidence score: simulated from seeded article metadata.
+- LLM: live Netlify function can call OpenAI when configured; UI falls back to clearly labeled simulated grounded responses if the endpoint/key is unavailable.
+- Publishing: session-based demo state through browser local storage; not persisted to backend.
+- RBAC: route and UI based separation for POC; no production authentication or authorization enforcement yet.
+- Analytics: seeded/static analytics and demo feedback actions; no real event database yet.
+- APIs: sample JSON contracts are static except the assistant endpoint, which is a live Netlify function when environment variables are configured.
 
 ## Suggested Closing Narrative
 

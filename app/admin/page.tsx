@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { BarChart3, Bell, FileText, LockKeyhole, Pin, RadioTower, Users } from "lucide-react";
 import { AppShell, SectionTitle, StatCard } from "@/components/AppChrome";
+import { AdminWorkflowPanel } from "@/components/GuidedJourneys";
 import { DemoImpactPanel, RoleLogin } from "@/components/JourneyDemo";
 import { analytics, articles } from "@/lib/data";
 
@@ -53,6 +54,8 @@ function AdminWorkspace() {
       <section className="section">
         <DemoImpactPanel view="admin" />
       </section>
+
+      <AdminWorkflowPanel />
 
       <section className="section">
         <div className="action-row">

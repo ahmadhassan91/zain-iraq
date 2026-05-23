@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Bell, Filter, Search } from "lucide-react";
 import { AppShell, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult, PersonaCard } from "@/components/ArticleBlocks";
+import { AgentWorkflowPanel } from "@/components/GuidedJourneys";
 import { DemoImpactPanel, RoleLogin } from "@/components/JourneyDemo";
 import { LlmAssistant } from "@/components/LlmAssistant";
 import { agents, announcements, articles, searchArticles } from "@/lib/data";
@@ -57,6 +58,14 @@ function AgentContent() {
       </SectionTitle>
 
       <DemoImpactPanel view="agent" />
+
+      <AgentWorkflowPanel
+        onSelectAgent={setAgentId}
+        onSelectQuery={(nextQuery) => {
+          setQuery(nextQuery);
+          setSearched(true);
+        }}
+      />
 
       <div className="grid two">
         <div className="grid">

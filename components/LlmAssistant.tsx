@@ -14,6 +14,7 @@ type AssistantResponse = {
   handoff?: { required: boolean; reason: string | null };
   error?: string;
   message?: string;
+  simulated?: boolean;
 };
 
 const preComposedAnswers: Record<string, Record<Language, AssistantResponse>> = {
@@ -22,19 +23,22 @@ const preComposedAnswers: Record<string, Record<Language, AssistantResponse>> = 
       answer: "**Roaming Bundle & Device Activation Guide (Simulated Grounded Response)**\n\n1. **Verify Travel Bundle**: Confirm the destination is eligible and the customer has active travel credit. Usage & active offers can be verified by dialing ***225#**.\n2. **Device Cellular Settings**: Ensure that Cellular Data is turned ON and Data Roaming is toggled ON in mobile system settings.\n3. **Network Operator Selection**: In case of connectivity failure, advise the customer to manually search for a network in carrier settings and attach to a Zain partner network.\n4. **Balance or APN Check**: Ensure balance isn't depleted and high-speed internet limits are checked.",
       confidence: 0.96,
       citations: [{ articleId: "roaming-activation", title: "Roaming bundles and data setup", confidence: 0.96 }],
-      handoff: { required: false, reason: null }
+      handoff: { required: false, reason: null },
+      simulated: true
     },
     AR: {
       answer: "**دليل تفعيل باقات التجوال والأجهزة (استجابة محاكاة موثقة)**\n\n1. **التحقق من باقة السفر**: تأكد من أهلية الوجهة ومن وجود رصيد سفر فعال للعميل. يمكن فحص العروض والاستخدام بالاتصال بـ ***225#**.\n2. **إعدادات خلوي الجهاز**: تأكد من تشغيل البيانات الخلوية وتفعيل بيانات التجوال من إعدادات النظام بالهاتف.\n3. **اختيار مشغل الشبكة**: في حال فشل الاتصال، انصح العميل بالبحث يدوياً عن الشبكة في إعدادات الناقل والاتصال بشبكة شريكة لزين.\n4. **التحقق من الرصيد أو APN**: تأكد من عدم نفاد الرصيد ومراجعة حدود الإنترنت فائق السرعة.",
       confidence: 0.96,
       citations: [{ articleId: "roaming-activation", title: "Roaming bundles and data setup", confidence: 0.96 }],
-      handoff: { required: false, reason: null }
+      handoff: { required: false, reason: null },
+      simulated: true
     },
     KU: {
       answer: "**ڕێبەری چالاککردنی پاکێجی ڕۆمینگ و ئامێر (وەڵامی هاوشێوەکراوی پشتبەستوو)**\n\n1. **پشتڕاستکردنەوەی پاکێجی گەشت**: دڵنیا ببە شوێنی گەشتەکە شیاوە و کڕیار باڵانسی گەشتی چالاکی هەیە. پێشنیار و بەکارهێنان بە لێدانی ***225#** دەپشکنرێت.\n2. **ڕێکخستنی مۆبایلی ئامێر**: دڵنیا ببە کە Cellular Data هەڵکراوە و ڕۆمینگی داتا لە ڕێکخستنی سیستەمی مۆبایلەکە چالاک کراوە.\n3. **هەڵبژاردنی ئۆپەرەیتەری تۆڕ**: لە کاتی سەرنەکەوتنی پەیوەندی، ئامۆژگاری کڕیار بکە بە دەستی لە ڕێکخستنی تۆڕدا بگەڕێت و پەیوەست بێت بە تۆڕێکی هاوبەشی زەین.\n4. **پشکنینی باڵانس یان APN**: دڵنیا ببە باڵانس تەواو نەبووە و پشکنینی سنووری ئینتەرنێتی خێرا بکە.",
       confidence: 0.96,
       citations: [{ articleId: "roaming-activation", title: "Roaming bundles and data setup", confidence: 0.96 }],
-      handoff: { required: false, reason: null }
+      handoff: { required: false, reason: null },
+      simulated: true
     }
   },
   internet: {
@@ -42,19 +46,22 @@ const preComposedAnswers: Record<string, Record<Language, AssistantResponse>> = 
       answer: "**4.5G+ Internet Debug & Diagnostics Log (Simulated Grounded Response)**\n\n- **Tower Connection**: Active 4.5G+ link confirmed in area.\n- **Active Plan**: weekly or monthly data recharge cards.\n- **Resolution Steps for Agent Assist**:\n  1. Guide customer to dial ***101#** with recharge code if card registration failed.\n  2. Check data balance and expiration by sending an empty SMS to **21777**.\n  3. Verify phone APN settings (should be `zainmail.iraq` or `internet`).\n  4. Instruct the customer to cycle Airplane Mode to force cell re-attachment.",
       confidence: 0.93,
       citations: [{ articleId: "slow-internet", title: "4.5G+ internet recharge cards", confidence: 0.93 }],
-      handoff: { required: false, reason: null }
+      handoff: { required: false, reason: null },
+      simulated: true
     },
     AR: {
       answer: "**سجل تشخيص واستكشاف أخطاء إنترنت 4.5G+ (استجابة محاكاة موثقة)**\n\n- **الاتصال بالبرج**: تم تأكيد اتصال خلوي فعال لـ 4.5G+ في المنطقة.\n- **الباقة الفعالة**: بطاقات شحن البيانات الأسبوعية أو الشهرية.\n- **خطوات الحل للمساعدة**:\n  1. وجّه العميل للاتصال بـ ***101#** مع رمز الشحن إذا فشل تسجيل البطاقة.\n  2. افحص رصيد البيانات والصلاحية بإرسال رسالة SMS فارغة إلى **21777**.\n  3. تحقق من إعدادات اسم نقطة الوصول APN (يجب أن تكون `zainmail.iraq` أو `internet`).\n  4. اطلب من العميل تشغيل وضع الطيران ثم إيقافه لإجبار الجهاز على إعادة الاتصال بالخلية.",
       confidence: 0.93,
       citations: [{ articleId: "slow-internet", title: "4.5G+ internet recharge cards", confidence: 0.93 }],
-      handoff: { required: false, reason: null }
+      handoff: { required: false, reason: null },
+      simulated: true
     },
     KU: {
       answer: "**تۆماری دەستنیشانکردنی کێشە و چارەسەری ئینتەرنێتی 4.5G+ (وەڵامی هاوشێوەکراوی پشتبەستوو)**\n\n- **پەیوەندی تاوەر**: بەستنی چالاکی 4.5G+ لە ناوچەکەدا پشتڕاستکراوەتەوە.\n- **پاکێجی چالاک**: کارتی پڕکردنەوەی داتای هەفتانە یان مانگانە.\n- **هەنگاوەکانی چارەسەر بۆ یارمەتی ئەجێنت**:\n  1. ڕێنمایی کڕیار بکە لێبدات ***101#** لەگەڵ کۆدی پڕکردنەوە ئەگەر تۆمارکردنی کارتەکە سەرنەکەوت.\n  2. باڵانسی داتا و بەسەرچوون بپشکنە بە ناردنی SMSی بەتاڵ بۆ **21777**.\n  3. ڕێکخستنی APNی مۆبایلەکە بپشکنە (پێویستە لەسەر `zainmail.iraq` یان `internet` بێت).\n  4. داوا لە کڕیار بکە دۆخی فڕۆکە چالاک و ناچالاک بکات بۆ ناچارکردنی بەستنەوەی نوێی تۆڕ.",
       confidence: 0.93,
       citations: [{ articleId: "slow-internet", title: "4.5G+ internet recharge cards", confidence: 0.93 }],
-      handoff: { required: false, reason: null }
+      handoff: { required: false, reason: null },
+      simulated: true
     }
   },
   sim: {
@@ -62,19 +69,22 @@ const preComposedAnswers: Record<string, Record<Language, AssistantResponse>> = 
       answer: "**eSIM Availability & SIM Replacement Procedures (Simulated Grounded Response)**\n\n- **Technology**: Zain Iraq supports eSIM for all compatible devices (iPhones, Samsung Galaxy, and high-end Android models).\n- **Verification Rule**: For security, replacement of physical SIM cards or digital eSIM activation requires physical ID verification.\n- **Steps to Guide the Customer**:\n  1. Confirm the customer's device supports eSIM (check for EID in settings or dial *#06#).\n  2. Direct the customer to their nearest Zain Iraq official branch.\n  3. Instruct them to bring their active physical ID (national ID / residency card) for quick ownership check and instant QR-code issuance.",
       confidence: 0.89,
       citations: [{ articleId: "sim-replacement", title: "eSIM and SIM replacement support", confidence: 0.89 }],
-      handoff: { required: false, reason: null }
+      handoff: { required: false, reason: null },
+      simulated: true
     },
     AR: {
       answer: "**إجراءات توفر eSIM واستبدال الشريحة (استجابة محاكاة موثقة)**\n\n- **التقنية**: تدعم زين العراق eSIM لجميع الأجهزة المتوافقة (آيفون، سامسونج جالاكسي، وأجهزة أندرويد الحديثة).\n- **قاعدة التحقق**: لدواعي الأمان، يتطلب استبدال الشريحة الفعلية أو تفعيل eSIM الرقمية التحقق من الهوية حضورياً.\n- **خطوات إرشاد العميل**:\n  1. تأكد من أن جهاز العميل يدعم eSIM (ابحث عن EID في الإعدادات أو اتصل بـ *#06#).\n  2. وجّه العميل إلى أقرب فرع رسمي لزين العراق.\n  3. اطلب منهم إحضار بطاقة هوية صالحة (الهوية الوطنية / بطاقة الإقامة) للتحقق السريع من الملكية وإصدار رمز QR فوراً.",
       confidence: 0.89,
       citations: [{ articleId: "sim-replacement", title: "eSIM and SIM replacement support", confidence: 0.89 }],
-      handoff: { required: false, reason: null }
+      handoff: { required: false, reason: null },
+      simulated: true
     },
     KU: {
       answer: "**ڕێکاری بەردەستبوونی eSIM و گۆڕینی SIM (وەڵامی هاوشێوەکراوی پشتبەستوو)**\n\n- **تەکنەلۆژیا**: زەین عێراق پشتگیری eSIM دەکات بۆ هەموو ئامێرە گونجاوەکان (ئایفۆن، سامسۆنگ گالاکسی، و مۆدێلە بەرزەکانی ئەندرۆید).\n- **یاسای پشتڕاستکردنەوە**: بۆ پاراستنی ئاسایش، گۆڕینی کارتی فیزیکی SIM یان چالاککردنی دیجیتاڵی eSIM پێویستی بە پشتڕاستکردنەوەی فیزیکی ناسنامە هەیە.\n- **هەنگاوەکانی ڕێنمایی کڕیار**:\n  1. پشتڕاست بکەرەوە ئامێری کڕیار پشتگیری eSIM دەکات (بۆ EID لە ڕێکخستنەکان بگەڕێ یان لێبدە *#06#).\n  2. کڕیارەکە ئاراستەی نزیکترین لقی فەرمی زەین عێراق بکە.\n  3. داوایان لێبکە ناسنامەی چالاکی فیزیکی (ناسنامەی نیشتمانی / کارتی نشینگە) بهێنن بۆ پشکنینی خێرای خاوەندارێتی و پێدانی دەستبەجێی کۆدی QR.",
       confidence: 0.89,
       citations: [{ articleId: "sim-replacement", title: "eSIM and SIM replacement support", confidence: 0.89 }],
-      handoff: { required: false, reason: null }
+      handoff: { required: false, reason: null },
+      simulated: true
     }
   }
 };
@@ -119,7 +129,8 @@ function getFallbackAnswer(query: string, lang: Language): AssistantResponse {
       answer: `**Grounded AI Response from Zain Iraq Knowledge Base**\n\n${localized.customerAnswer}\n\n**Recommended Action Procedure:**\n${localized.steps.map((step, idx) => `${idx + 1}. ${step}`).join("\n")}`,
       confidence: article.confidence / 100,
       citations: citations,
-      handoff: { required: article.confidence < 85, reason: article.confidence < 85 ? "Low confidence score" : null }
+      handoff: { required: article.confidence < 85, reason: article.confidence < 85 ? "Low confidence score" : null },
+      simulated: true
     };
   }
   
@@ -132,7 +143,8 @@ function getFallbackAnswer(query: string, lang: Language): AssistantResponse {
       : "I couldn't find a direct match in the Zain Iraq Knowledge Base for your request. Please assist the customer by checking standard network status or routing them to advanced technical support.",
     confidence: 0.65,
     citations: [],
-    handoff: { required: true, reason: "No relevant KB articles were found for this query" }
+    handoff: { required: true, reason: "No relevant KB articles were found for this query" },
+    simulated: true
   };
 }
 
@@ -371,6 +383,9 @@ export function LlmAssistant({ initialQuestion = "Customer cannot use data while
                 {Math.round(response.confidence * 100)}% Conf
               </span>
             )}
+            <span className={response.simulated ? "chip advisory" : "chip published"}>
+              {response.simulated ? "Simulated fallback" : "Live LLM"}
+            </span>
           </div>
 
           <div className="answer-text" style={{ 

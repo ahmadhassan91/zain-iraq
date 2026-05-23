@@ -5,6 +5,7 @@ import { AlertTriangle, Bell, Search } from "lucide-react";
 import { AppShell, ArticleMini, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult } from "@/components/ArticleBlocks";
 import { DemoActionButton } from "@/components/DemoActionButton";
+import { CustomerJourneyPanel } from "@/components/GuidedJourneys";
 import { DemoImpactPanel } from "@/components/JourneyDemo";
 import { announcements, articles, searchArticles } from "@/lib/data";
 import { applyDemoKnowledgeToArticle, useDemoKnowledge } from "@/lib/demo-state";
@@ -60,6 +61,13 @@ function CustomerContent() {
           </button>
         </div>
       </section>
+
+      <CustomerJourneyPanel
+        onSelectQuery={(nextQuery) => {
+          setQuery(nextQuery);
+          setSearched(true);
+        }}
+      />
 
       <section className="section">
         <SectionTitle title={copy.customerCanSee} />
