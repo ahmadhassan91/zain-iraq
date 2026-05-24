@@ -11,6 +11,12 @@ import { announcements, articles, searchArticles } from "@/lib/data";
 import { applyDemoKnowledgeToArticle, useDemoKnowledge } from "@/lib/demo-state";
 import { announcementCopy, articleCopy, customerCopy, term } from "@/lib/localized-copy";
 
+const customerViewLabel = {
+  EN: "Public customer view",
+  AR: "واجهة العميل العامة",
+  KU: "دیمەنی گشتی کڕیار"
+};
+
 export default function CustomerPage() {
   return (
     <AppShell active="Customer KB" variant="public">
@@ -53,7 +59,7 @@ function CustomerContent() {
       <DemoPathNav current="customer" />
 
       <section className="hero">
-        <span className="chip hero-chip">Public customer view</span>
+        <span className="chip hero-chip">{customerViewLabel[language]}</span>
         <h1>{copy.heroTitle}</h1>
         <p>{copy.heroBody}</p>
         <div className="search-box">
