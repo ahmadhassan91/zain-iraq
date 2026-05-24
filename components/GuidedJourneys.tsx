@@ -227,7 +227,7 @@ export function SupportChannelPanel() {
       <div className="section-title">
         <div>
           <h2>Telco support channels included</h2>
-          <p className="muted">The UI is organized around Zain Iraq customer behavior rather than generic software support.</p>
+          <p className="muted">Guide customers from common service questions to the right answer, action or support channel.</p>
         </div>
         <span className="chip published">Industry tailored</span>
       </div>
