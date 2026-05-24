@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, Bot, Globe2, Home, LayoutDashboard, Search, ShieldCheck, Sun, Moon } from "lucide-react";
+import { BookOpen, Bot, Globe2, Home, LayoutDashboard, Search, Sun, Moon } from "lucide-react";
 import { ZainLogo } from "./ZainLogo";
 import { createContext, useContext, useState, useEffect } from "react";
+import { PresenterControls } from "./PresenterControls";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
@@ -126,10 +127,6 @@ export function Header({
             </button>
           ))}
         </div>
-        <div className="chip">
-          <ShieldCheck size={16} />
-          {localize(active, language)}
-        </div>
       </div>
     </header>
   );
@@ -151,10 +148,6 @@ export function Sidebar({ active = "Home", variant = "internal" }: { active?: st
             </Link>
           );
         })}
-      </div>
-      <div className="footer-note">
-        <strong>{variant === "public" ? shellCopy[language].publicScopeTitle : shellCopy[language].scopeTitle}</strong>
-        <p className="small">{variant === "public" ? shellCopy[language].publicScope : shellCopy[language].scope}</p>
       </div>
     </aside>
   );
@@ -208,6 +201,7 @@ export function AppShell({
           <Sidebar active={active} variant={variant} />
           <main className="main">{children}</main>
         </div>
+        <PresenterControls />
       </div>
     </LanguageContext.Provider>
   );

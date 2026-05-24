@@ -3,29 +3,21 @@
 import { useEffect, useMemo, useState } from "react";
 import { Bell, Filter, Search } from "lucide-react";
 import { AppShell, SectionTitle, useLanguage } from "@/components/AppChrome";
-import { ArticleResult, PersonaCard } from "@/components/ArticleBlocks";
-import { AgentWorkflowPanel, DemoPathNav } from "@/components/GuidedJourneys";
-import { DemoImpactPanel, RoleLogin } from "@/components/JourneyDemo";
+import { ArticleResult } from "@/components/ArticleBlocks";
+import { AgentWorkflowPanel } from "@/components/GuidedJourneys";
 import { LlmAssistant } from "@/components/LlmAssistant";
 import { agents, announcements, articles, searchArticles } from "@/lib/data";
 import { applyDemoKnowledgeToArticle, useDemoKnowledge } from "@/lib/demo-state";
 import { agentCopy, agentLocalized, announcementCopy, articleCopy, term } from "@/lib/localized-copy";
 
+const colorMap: Record<string, string> = {
+  magenta: "var(--magenta, #d12c89)",
+  teal: "var(--teal, #4a9e9d)",
+  blue: "var(--blue, #1f3f77)",
+  violet: "var(--violet, #5f3283)"
+};
+
 export default function AgentPage() {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  if (!loggedIn) {
-    return (
-      <RoleLogin
-        role="Agent"
-        title="Agent portal"
-        body="Access internal troubleshooting procedures, pinned knowledge, agent-only notes and the LLM assistant."
-        points={["Internal operational notes", "Skill-based pinned articles", "AI-assisted KB answers", "Escalation guidance"]}
-        onLogin={() => setLoggedIn(true)}
-      />
-    );
-  }
-
   return (
     <AppShell active="Agent Workspace">
       <AgentContent />
@@ -52,15 +44,34 @@ function AgentContent() {
   }, [copy.query]);
 
   return (
-    <>
-      <DemoPathNav current="agent" />
+    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", paddingBottom: "3rem" }}>
+      {/* Page Heading & Persona Selector */}
+      <div className="page-heading" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", flexWrap: "wrap", padding: "1.5rem", borderRadius: "12px" }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: "1.8rem" }}>{copy.title}</h1>
+          <p className="muted" style={{ margin: "0.25rem 0 0", fontSize: "0.92rem" }}>
+            Internal troubleshooting, pinned knowledge and AI assistance for <strong>{localizedAgent.role}</strong>
+          </p>
+        </div>
+        <div className="agent-selector">
+          {agents.map((item) => {
+            const localized = agentLocalized(item, language);
+            const bg = colorMap[item.color] || item.color;
+            return (
+              <button 
+                key={item.id} 
+                className={agentId === item.id ? "active" : ""} 
+                onClick={() => setAgentId(item.id)}
+              >
+                <span className="agent-initials" style={{ background: bg }}>{item.initials}</span>
+                {localized.name}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-      <SectionTitle title={copy.title} level={1}>
-        <span className="chip magenta">{localizedAgent.role}</span>
-      </SectionTitle>
-
-      <DemoImpactPanel view="agent" />
-
+      {/* Guided Agent Workflow */}
       <AgentWorkflowPanel
         onSelectAgent={setAgentId}
         onSelectQuery={(nextQuery) => {
@@ -69,11 +80,18 @@ function AgentContent() {
         }}
       />
 
+      {/* Two Column Workspace */}
       <div className="grid two">
-        <div className="grid">
-          <div className="panel">
+        {/* Left Column: Search & Results */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          <div className="panel" style={{ padding: "1.5rem" }}>
             <div className="search-box" style={{ maxWidth: "100%" }}>
-              <input value={query} onChange={(event) => setQuery(event.target.value)} aria-label="Agent AI search" />
+              <input 
+                value={query} 
+                onChange={(event) => setQuery(event.target.value)} 
+                aria-label="Agent AI search" 
+                placeholder="Search troubleshooting procedures, eSIM documents, roaming APN..."
+              />
               <button className="btn primary" onClick={() => setSearched(true)}>
                 <Search size={17} />
                 {searched ? copy.searched : copy.search}
@@ -100,50 +118,44 @@ function AgentContent() {
           </section>
         </div>
 
-        <aside className="grid">
-          <div className="panel">
-            <SectionTitle title={copy.updates}>
-              <Bell size={18} color="#d12c89" />
-            </SectionTitle>
-            <div className="article-list">
-              {agentUpdates.map((announcement) => (
-                <div className="result-item" key={announcement.id}>
-                  <div>
-                    <h3>{announcementCopy(announcement, language).title}</h3>
-                    <p className="muted">{announcementCopy(announcement, language).message}</p>
-                    <p className="small">{announcement.scheduledFor}</p>
-                  </div>
-                  <span className={`chip ${announcement.severity.toLowerCase()}`}>{term(announcement.severity, language)}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        {/* Right Column: AI Assistant, Pinned, and Updates */}
+        <aside style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          {/* Grounded LLM Assistant */}
           <LlmAssistant initialQuestion={query} />
-          <div className="persona-list">
-            {agents.map((item) => (
-              <button className="persona-select" key={item.id} onClick={() => setAgentId(item.id)}>
-                <PersonaCard agent={item} active={item.id === agentId} />
-              </button>
-            ))}
-          </div>
-          <div className="panel">
-            <h3>{copy.pinned}</h3>
-            <div className="article-list">
+
+          {/* Personal Pinned Content */}
+          <div className="panel" style={{ padding: "1.5rem" }}>
+            <h3 style={{ marginTop: 0, marginBottom: "1rem", fontSize: "1.1rem", fontFamily: "var(--font-display)" }}>{copy.pinned}</h3>
+            <div className="article-list" style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {pinned.map((article) => (
                 <ArticleResult key={article.id} article={article} href={`/agent/article/${article.id}`} />
               ))}
             </div>
           </div>
-          <div className="panel">
-            <h3>{copy.tabs}</h3>
-            <div className="chip-row">
-              {results.slice(0, 3).map((article) => (
-                <span className="chip" key={article.id}>{articleCopy(article, language).title}</span>
+
+          {/* Operational Updates */}
+          <div className="panel" style={{ padding: "1.5rem" }}>
+            <div className="section-title" style={{ marginBottom: "1rem" }}>
+              <h2 style={{ fontSize: "1.1rem" }}>{copy.updates}</h2>
+              <Bell size={18} color="#d12c89" />
+            </div>
+            <div className="article-list" style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              {agentUpdates.map((announcement) => (
+                <div className="result-item" key={announcement.id} style={{ padding: "0.75rem", borderRadius: "8px", border: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "1rem" }}>
+                  <div>
+                    <h3 style={{ margin: 0, fontSize: "0.95rem", fontWeight: 700 }}>{announcementCopy(announcement, language).title}</h3>
+                    <p className="muted" style={{ margin: "0.25rem 0", fontSize: "0.85rem", lineHeight: 1.4 }}>{announcementCopy(announcement, language).message}</p>
+                    <span className="muted" style={{ fontSize: "0.75rem" }}>{announcement.scheduledFor}</span>
+                  </div>
+                  <span className={`chip ${announcement.severity.toLowerCase()}`} style={{ fontSize: "0.75rem" }}>
+                    {term(announcement.severity, language)}
+                  </span>
+                </div>
               ))}
             </div>
           </div>
         </aside>
       </div>
-    </>
+    </div>
   );
 }

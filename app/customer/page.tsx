@@ -1,39 +1,58 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, Suspense } from "react";
 import type { FormEvent } from "react";
 import { AlertTriangle, Bell, Search } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 import { AppShell, ArticleMini, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult } from "@/components/ArticleBlocks";
-import { DemoActionButton } from "@/components/DemoActionButton";
-import { CustomerJourneyPanel, DemoPathNav, SupportChannelPanel } from "@/components/GuidedJourneys";
-import { DemoImpactPanel } from "@/components/JourneyDemo";
 import { announcements, articles, searchArticles } from "@/lib/data";
 import { applyDemoKnowledgeToArticle, useDemoKnowledge } from "@/lib/demo-state";
 import { announcementCopy, articleCopy, customerCopy, term } from "@/lib/localized-copy";
 
-const customerViewLabel = {
-  EN: "Public customer view",
-  AR: "واجهة العميل العامة",
-  KU: "دیمەنی گشتی کڕیار"
-};
-
 export default function CustomerPage() {
   return (
     <AppShell active="Customer KB" variant="public">
-      <CustomerContent />
+      <Suspense fallback={<div className="empty-state"><p>Loading support center...</p></div>}>
+        <CustomerContent />
+      </Suspense>
     </AppShell>
   );
 }
 
 function CustomerContent() {
-  const [query, setQuery] = useState("How do I activate roaming?");
-  const [activeQuery, setActiveQuery] = useState("How do I activate roaming?");
-  const [searched, setSearched] = useState(false);
-  const resultsRef = useRef<HTMLElement | null>(null);
+  const searchParams = useSearchParams();
+  const qParam = searchParams.get("q");
+  const topicParam = searchParams.get("topic");
+
+  const initialQuery = useMemo(() => {
+    if (qParam) return qParam;
+    if (topicParam) {
+      switch (topicParam) {
+        case "roaming": return "roaming data setup";
+        case "sim": return "SIM replacement eSIM";
+        case "billing": return "balance recharge payment";
+        case "bundles": return "Super Card data bundle";
+        case "app": return "Zain app login";
+        case "network": return "internet 4.5G coverage";
+        default: return "";
+      }
+    }
+    return "";
+  }, [qParam, topicParam]);
+
   const { language } = useLanguage();
   const copy = customerCopy[language];
   const { state } = useDemoKnowledge();
+
+  const [query, setQuery] = useState(initialQuery || "How do I activate roaming?");
+  const [activeQuery, setActiveQuery] = useState(initialQuery || "How do I activate roaming?");
+  const [searched, setSearched] = useState(!!initialQuery);
+  const [feedbackText, setFeedbackText] = useState("");
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const isFirstRender = useRef(true);
+  const resultsRef = useRef<HTMLElement | null>(null);
+
   const results = useMemo(() => {
     const publicArticles = articles
       .filter((article) => article.visibility === "Public")
@@ -70,14 +89,26 @@ function CustomerContent() {
       })
       .sort((a, b) => b.confidence - a.confidence);
   }, [activeQuery, language, searched, state]);
+
   const customerAnnouncements = announcements.filter((announcement) => announcement.audience !== "Agent");
   const liveAlert = customerAnnouncements.find((announcement) => announcement.status === "Live");
 
   useEffect(() => {
-    setQuery(copy.query);
-    setActiveQuery(copy.query);
-    setSearched(false);
-  }, [copy.query]);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      if (initialQuery) {
+        setQuery(initialQuery);
+        setActiveQuery(initialQuery);
+        setSearched(true);
+        return;
+      }
+    }
+    if (!initialQuery) {
+      setQuery(copy.query);
+      setActiveQuery(copy.query);
+      setSearched(false);
+    }
+  }, [copy.query, initialQuery]);
 
   const runSearch = (event?: FormEvent) => {
     event?.preventDefault();
@@ -88,6 +119,15 @@ function CustomerContent() {
     window.setTimeout(() => {
       resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 50);
+  };
+
+  const handleFeedbackSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (feedbackText.trim()) {
+      setFeedbackSubmitted(true);
+      setFeedbackText("");
+      setTimeout(() => setFeedbackSubmitted(false), 4000);
+    }
   };
 
   return (
@@ -103,14 +143,20 @@ function CustomerContent() {
         </section>
       ) : null}
 
-      <DemoPathNav current="customer" />
-
       <section className="hero">
-        <span className="chip hero-chip">{customerViewLabel[language]}</span>
         <h1>{copy.heroTitle}</h1>
         <p>{copy.heroBody}</p>
         <form className="search-box" onSubmit={runSearch}>
-          <input value={query} onChange={(event) => setQuery(event.target.value)} aria-label="Search knowledge center" />
+          <input 
+            value={query} 
+            onChange={(event) => setQuery(event.target.value)} 
+            aria-label="Search knowledge center" 
+            placeholder={
+              language === "AR" ? "ابحث في مقالات المساعدة..." : 
+              language === "KU" ? "بگەڕێ لە بابەتەکانی پشتگیری..." : 
+              "Search help articles..."
+            }
+          />
           <button className="btn primary" type="submit">
             <Search size={17} />
             {searched ? copy.searched : copy.search}
@@ -122,24 +168,6 @@ function CustomerContent() {
             <span>{results.length} {copy.resultsFor} &ldquo;{activeQuery}&rdquo;</span>
           </div>
         ) : null}
-      </section>
-
-      <CustomerJourneyPanel
-        onSelectQuery={(nextQuery) => {
-          setQuery(nextQuery);
-          setActiveQuery(nextQuery);
-          setSearched(true);
-          window.setTimeout(() => {
-            resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 50);
-        }}
-      />
-
-      <SupportChannelPanel />
-
-      <section className="section">
-        <SectionTitle title={copy.customerCanSee} />
-        <DemoImpactPanel view="customer" />
       </section>
 
       <section className="section" ref={resultsRef}>
@@ -179,8 +207,17 @@ function CustomerContent() {
             </div>
             <div className="panel">
               <h3>{copy.missingTitle}</h3>
-              <textarea className="textarea" placeholder={copy.missingPlaceholder} />
-              <DemoActionButton className="btn magenta" message={copy.feedbackSubmitted}>{copy.submitFeedback}</DemoActionButton>
+              <form onSubmit={handleFeedbackSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                <textarea 
+                  className="textarea" 
+                  value={feedbackText}
+                  onChange={(e) => setFeedbackText(e.target.value)}
+                  placeholder={copy.missingPlaceholder} 
+                />
+                <button className="btn magenta" type="submit">
+                  {feedbackSubmitted ? copy.feedbackSubmitted : copy.submitFeedback}
+                </button>
+              </form>
             </div>
           </div>
         </div>
