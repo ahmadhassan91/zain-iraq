@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { FormEvent } from "react";
 import { AlertTriangle, Bell, Search } from "lucide-react";
 import { AppShell, ArticleMini, SectionTitle, useLanguage } from "@/components/AppChrome";
 import { ArticleResult } from "@/components/ArticleBlocks";
@@ -27,21 +28,67 @@ export default function CustomerPage() {
 
 function CustomerContent() {
   const [query, setQuery] = useState("How do I activate roaming?");
+  const [activeQuery, setActiveQuery] = useState("How do I activate roaming?");
   const [searched, setSearched] = useState(false);
+  const resultsRef = useRef<HTMLElement | null>(null);
   const { language } = useLanguage();
   const copy = customerCopy[language];
   const { state } = useDemoKnowledge();
-  const results = useMemo(
-    () => searchArticles(query).filter((article) => article.visibility === "Public").map((article) => applyDemoKnowledgeToArticle(article, state)),
-    [query, state]
-  );
+  const results = useMemo(() => {
+    const publicArticles = articles
+      .filter((article) => article.visibility === "Public")
+      .map((article) => applyDemoKnowledgeToArticle(article, state));
+
+    if (!searched) {
+      return searchArticles(activeQuery)
+        .filter((article) => article.visibility === "Public")
+        .map((article) => applyDemoKnowledgeToArticle(article, state));
+    }
+
+    const normalized = activeQuery.toLowerCase().trim();
+    const tokens = normalized.split(/[\s,.\-!?()؟،]+/).filter((token) => token.length >= 2);
+
+    if (!normalized || !tokens.length) {
+      return publicArticles.slice(0, 4);
+    }
+
+    return publicArticles
+      .filter((article) => {
+        const localized = articleCopy(article, language);
+        const haystack = [
+          localized.title,
+          localized.category,
+          localized.summary,
+          localized.customerAnswer,
+          localized.internalNote,
+          ...localized.tags
+        ]
+          .join(" ")
+          .toLowerCase();
+
+        return haystack.includes(normalized) || tokens.some((token) => haystack.includes(token));
+      })
+      .sort((a, b) => b.confidence - a.confidence);
+  }, [activeQuery, language, searched, state]);
   const customerAnnouncements = announcements.filter((announcement) => announcement.audience !== "Agent");
   const liveAlert = customerAnnouncements.find((announcement) => announcement.status === "Live");
 
   useEffect(() => {
     setQuery(copy.query);
+    setActiveQuery(copy.query);
     setSearched(false);
   }, [copy.query]);
+
+  const runSearch = (event?: FormEvent) => {
+    event?.preventDefault();
+    const nextQuery = query.trim() || copy.query;
+    setQuery(nextQuery);
+    setActiveQuery(nextQuery);
+    setSearched(true);
+    window.setTimeout(() => {
+      resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  };
 
   return (
     <>
@@ -62,19 +109,29 @@ function CustomerContent() {
         <span className="chip hero-chip">{customerViewLabel[language]}</span>
         <h1>{copy.heroTitle}</h1>
         <p>{copy.heroBody}</p>
-        <div className="search-box">
+        <form className="search-box" onSubmit={runSearch}>
           <input value={query} onChange={(event) => setQuery(event.target.value)} aria-label="Search knowledge center" />
-          <button className="btn primary" onClick={() => setSearched(true)}>
+          <button className="btn primary" type="submit">
             <Search size={17} />
             {searched ? copy.searched : copy.search}
           </button>
-        </div>
+        </form>
+        {searched ? (
+          <div className="hero-search-summary" aria-live="polite">
+            <Search size={15} />
+            <span>{results.length} {copy.resultsFor} &ldquo;{activeQuery}&rdquo;</span>
+          </div>
+        ) : null}
       </section>
 
       <CustomerJourneyPanel
         onSelectQuery={(nextQuery) => {
           setQuery(nextQuery);
+          setActiveQuery(nextQuery);
           setSearched(true);
+          window.setTimeout(() => {
+            resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 50);
         }}
       />
 
@@ -85,15 +142,26 @@ function CustomerContent() {
         <DemoImpactPanel view="customer" />
       </section>
 
-      <section className="section">
+      <section className="section" ref={resultsRef}>
         <SectionTitle title={copy.bestMatches}>
-          <span className="chip">{copy.aiRanked}</span>
+          <div className="chip-row">
+            <span className="chip">{copy.aiRanked}</span>
+            {searched ? <span className="chip published">{results.length} {copy.resultsFor} &ldquo;{activeQuery}&rdquo;</span> : null}
+          </div>
         </SectionTitle>
         <div className="grid two">
           <div className="result-list">
-            {results.map((article) => (
-              <ArticleResult key={article.id} article={article} href={`/customer/article/${article.id}`} searchQuery={query} />
-            ))}
+            {results.length ? (
+              results.map((article) => (
+                <ArticleResult key={article.id} article={article} href={`/customer/article/${article.id}`} searchQuery={activeQuery} />
+              ))
+            ) : (
+              <div className="empty-state">
+                <Search size={22} />
+                <h3>{copy.noResultsTitle}</h3>
+                <p className="muted">{copy.noResultsBody}</p>
+              </div>
+            )}
           </div>
           <div className="grid">
             <div className="panel">

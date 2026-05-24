@@ -1011,6 +1011,22 @@ a {
   background: rgba(255, 255, 255, 0.12);
 }
 
+.hero-search-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 14px;
+  padding: 9px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 8px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.13);
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
 .search-box {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -1269,6 +1285,28 @@ a {
 .persona-list {
   display: grid;
   gap: 12px;
+}
+
+.empty-state {
+  display: grid;
+  gap: 10px;
+  min-height: 210px;
+  place-items: center;
+  padding: 28px;
+  text-align: center;
+  border: 1px dashed rgba(209, 44, 137, 0.32);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.empty-state svg {
+  color: var(--magenta);
+}
+
+.empty-state h3,
+.empty-state p {
+  margin: 0;
 }
 
 .result-item {
