@@ -3,92 +3,91 @@
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { 
-  Plane, 
   Smartphone, 
   CreditCard, 
-  Package, 
-  AppWindow, 
   Wifi, 
+  Layers, 
+  HelpCircle, 
   Search, 
-  ArrowRight,
-  Globe2,
-  Users,
-  LayoutDashboard
+  ArrowRight 
 } from "lucide-react";
 import { AppShell, useLanguage } from "@/components/AppChrome";
 
 const landingCopy = {
   EN: {
     heroTitle: "How can we help you today?",
-    heroBody: "Search roaming, bundles, SIM, internet, app and more support FAQs",
-    searchPlaceholder: "Search help articles...",
+    heroSubtitle: "Search our knowledge base for instant answers or explore categories below",
+    searchPlaceholder: "Type your question here (e.g., Turkey roaming)...",
     searchButton: "Search",
-    popularTopics: "Popular topics",
-    explorePlatform: "Explore the platform",
-    platformSubtitle: "Access different portals within the unified Zain Knowledge Base",
-    topics: [
-      { id: "roaming", title: "Roaming & Travel", desc: "Bundles, data setup, partner networks", icon: Plane },
-      { id: "sim", title: "SIM & eSIM", desc: "Replacement, activation, branch services", icon: Smartphone },
-      { id: "billing", title: "Balance & Payments", desc: "Recharge, bills, balance checks", icon: CreditCard },
-      { id: "bundles", title: "Data Bundles", desc: "Super Card, KAFOO, internet packages", icon: Package },
-      { id: "app", title: "Zain Iraq App", desc: "Login, self-service, OTP support", icon: AppWindow },
-      { id: "network", title: "Network & Coverage", desc: "4.5G+, APN, internet troubleshooting", icon: Wifi }
+    featuredCategories: "Featured Categories",
+    trendingFaqs: "Trending FAQs",
+    supportPathTitle: "Need further assistance?",
+    supportPathDesc: "If you cannot find the answer to your query, you can escalate directly to our human support team.",
+    categories: [
+      { id: "prepaid", title: "Prepaid", desc: "Super Card, KAFOO, and reload guides", icon: Smartphone },
+      { id: "postpaid", title: "Postpaid", desc: "Monthly bill payment and credit limits", icon: CreditCard },
+      { id: "zainfi", title: "Zain-Fi Devices", desc: "4G/5G router setup and high-speed plans", icon: Wifi },
+      { id: "services", title: "Services", desc: "SIM activation, eSIM transfer, and value add-ons", icon: Layers },
+      { id: "support", title: "Support", desc: "Store locations, complaints, and contact info", icon: HelpCircle }
     ],
-    platforms: [
-      { title: "Customer Knowledge Center", desc: "Public self-service FAQs, guides and troubleshooting", href: "/customer", icon: Globe2 },
-      { title: "Agent Workspace", desc: "AI-grounded assist, procedures and checklists", href: "/agent", icon: Users },
-      { title: "Admin Dashboard", desc: "Governance, article editor, visibility controls and analytics", href: "/admin", icon: LayoutDashboard }
+    faqs: [
+      { q: "How do I activate roaming before travelling to Turkey?", query: "Turkey roaming activation", articleId: "roaming-activation" },
+      { q: "What are the rates for roaming data in Europe?", query: "Europe roaming rates" },
+      { q: "How do I check my remaining high-speed Zain-Fi balance?", query: "Zain-Fi balance check" },
+      { q: "What is required to swap my physical SIM card to an eSIM?", query: "SIM card to eSIM swap" }
     ]
   },
   AR: {
     heroTitle: "كيف يمكننا مساعدتك اليوم؟",
-    heroBody: "ابحث عن التجوال، الباقات، الشريحة، الإنترنت، التطبيق والمزيد من الأسئلة الشائعة",
-    searchPlaceholder: "ابحث في مقالات المساعدة...",
+    heroSubtitle: "ابحث في قاعدة المعرفة للحصول على إجابات فورية أو تصفح الفئات أدناه",
+    searchPlaceholder: "اكتب سؤالك هنا (مثال: تجوال تركيا)...",
     searchButton: "بحث",
-    popularTopics: "المواضيع الشائعة",
-    explorePlatform: "استكشاف المنصة",
-    platformSubtitle: "الدخول إلى البوابات المختلفة داخل قاعدة معرفة زين الموحدة",
-    topics: [
-      { id: "roaming", title: "التجوال والسفر", desc: "الباقات، إعداد البيانات، شبكات الشركاء", icon: Plane },
-      { id: "sim", title: "الشريحة و eSIM", desc: "الاستبدال، التفعيل، خدمات الفروع", icon: Smartphone },
-      { id: "billing", title: "الرصيد والدفع", desc: "الشحن، الفواتير، فحص الرصيد", icon: CreditCard },
-      { id: "bundles", title: "باقات البيانات", desc: "سوبر كارد، كافو، باقات الإنترنت", icon: Package },
-      { id: "app", title: "تطبيق زين العراق", desc: "تسجيل الدخول، الخدمة الذاتية، دعم رمز OTP", icon: AppWindow },
-      { id: "network", title: "الشبكة والتغطية", desc: "شبكة 4.5G+، إعدادات APN، استكشاف أخطاء الإنترنت", icon: Wifi }
+    featuredCategories: "الفئات المميزة",
+    trendingFaqs: "الأسئلة الشائعة الرائجة",
+    supportPathTitle: "هل تحتاج إلى مزيد من المساعدة؟",
+    supportPathDesc: "إذا لم تتمكن من العثور على إجابة لاستفسارك، يمكنك التصعيد مباشرة إلى فريق الدعم البشري لدينا.",
+    categories: [
+      { id: "prepaid", title: "الدفع المسبق", desc: "سوبر كارد، كافو، وأدلة إعادة الشحن", icon: Smartphone },
+      { id: "postpaid", title: "الدفع الآجل", desc: "دفع الفواتير الشهرية والحدود الائتمانية", icon: CreditCard },
+      { id: "zainfi", title: "أجهزة زين-فاي", desc: "إعداد راوتر 4G/5G وباقات السرعة العالية", icon: Wifi },
+      { id: "services", title: "الخدمات", desc: "تفعيل الشريحة، نقل eSIM، والإضافات ذات القيمة", icon: Layers },
+      { id: "support", title: "الدعم", desc: "مواقع الفروع، الشكاوى، ومعلومات الاتصال", icon: HelpCircle }
     ],
-    platforms: [
-      { title: "مركز معرفة العملاء", desc: "الأسئلة الشائعة العامة والخدمة الذاتية وأدلة استكشاف الأخطاء", href: "/customer", icon: Globe2 },
-      { title: "مساحة عمل الوكيل", desc: "المساعد الذكي للوكلاء، الإجراءات وقوائم التحقق", href: "/agent", icon: Users },
-      { title: "لوحة الإدارة", desc: "الحوكمة، محرر المقالات، التحكم بالظهور والتحليلات", href: "/admin", icon: LayoutDashboard }
+    faqs: [
+      { q: "كيف يمكنني تفعيل التجوال قبل السفر إلى تركيا؟", query: "تفعيل تجوال تركيا", articleId: "roaming-activation" },
+      { q: "ما هي أسعار بيانات التجوال في أوروبا؟", query: "أسعار التجوال في أوروبا" },
+      { q: "كيف يمكنني التحقق من رصيد زين-فاي المتبقي؟", query: "فحص رصيد زين فاي" },
+      { q: "ما هي المتطلبات لتحويل شريحتي العادية إلى eSIM؟", query: "تحويل الشريحة إلى eSIM" }
     ]
   },
   KU: {
     heroTitle: "ئەمڕۆ چۆن دەتوانین یارمەتیت بدەین؟",
-    heroBody: "بگەڕێ بۆ ڕۆمینگ، پاکێج، SIM، ئینتەرنێت، ئەپ و پرسیارە باوەکانی تری پشتگیری",
-    searchPlaceholder: "بگەڕێ لە بابەتەکانی پشتگیری...",
+    heroSubtitle: "لە بنکەی زانیاریمان بگەڕێ بۆ وەڵامی خێرا یان هاوپۆلەکان لە خوارەوە ببینە",
+    searchPlaceholder: "پرسیارەکەت لێرە بنووسە (بۆ نموونە، ڕۆمینگی تورکیا)...",
     searchButton: "گەڕان",
-    popularTopics: "بابەتە باوەکان",
-    explorePlatform: "پلاتفۆرمەکە ببینە",
-    platformSubtitle: "چوونە ناو دەروازە جیاوازەکانی بنکەی زانیاری یەکگرتووی زەین",
-    topics: [
-      { id: "roaming", title: "ڕۆمینگ و گەشت", desc: "پاکێجەکان، ڕێکخستنی داتا، تۆڕی هاوبەش", icon: Plane },
-      { id: "sim", title: "SIM & eSIM", desc: "گۆڕین، چالاککردن، خزمەتگوزاری لق", icon: Smartphone },
-      { id: "billing", title: "باڵانس و پارەدان", desc: "شحن، فاتورە، پشکنینی باڵانس", icon: CreditCard },
-      { id: "bundles", title: "پاکێجی داتا", desc: "سۆپەر کارت، کافو، پاکێجی ئینتەرنێت", icon: Package },
-      { id: "app", title: "ئەپی زەین عێراق", desc: "چوونە ژوورەوە، خزمەتگوزاری خۆیی، پشتگیری OTP", icon: AppWindow },
-      { id: "network", title: "تۆڕ و داپۆشین", desc: "تۆڕی 4.5G+، APN، چارەسەری کێشەی ئینتەرنێت", icon: Wifi }
+    featuredCategories: "هاوپۆلە تایبەتەکان",
+    trendingFaqs: "پرسیارە باوەکانی ئێستا",
+    supportPathTitle: "پێویستت بە یارمەتی زیاترە؟",
+    supportPathDesc: "ئەگەر نەتوانی وەڵامی پرسیارەکەت بدۆزیتەوە، دەتوانیت ڕاستەوخۆ پەیوەندی بکەیت بە تیمی پشتگیری مرۆیی ئێمە.",
+    categories: [
+      { id: "prepaid", title: "پێشەکی", desc: "سۆپەر کارت، کافۆ، و ڕێنماییەکانی بارکردنەوە", icon: Smartphone },
+      { id: "postpaid", title: "پاشەکی", desc: "دانی فاتیورەی مانگانە و سنووری قەرز", icon: CreditCard },
+      { id: "zainfi", title: "ئامێرەکانی زەین-فای", desc: "ڕێکخستنی ڕاوتەری 4G/5G و پاکێجەکانی خێرایی بەرز", icon: Wifi },
+      { id: "services", title: "خزمەتگوزارییەکان", desc: "چالاککردنی سیم، گواستنەوەی eSIM، و زیادکراوەکان", icon: Layers },
+      { id: "support", title: "پشتگیری", desc: "شوێنی لقەکان، سکاڵاکان، و زانیاری پەیوەندی", icon: HelpCircle }
     ],
-    platforms: [
-      { title: "ناوەندی زانیاری کڕیاران", desc: "پرسیارە باوەکانی خۆیی، ڕێنماییەکان و چارەسەری کێشە بۆ کڕیار", href: "/customer", icon: Globe2 },
-      { title: "شوێنی کاری ئەجێنت", desc: "یاریدەدەری ئامادە بە AI، ڕێکارەکان و لیستی پشکنین", href: "/agent", icon: Users },
-      { title: "داشبۆردی بەڕێوەبەر", desc: "حوکمرانی، دەستکاری بابەت، کۆنترۆڵی بینین و شیکاری", href: "/admin", icon: LayoutDashboard }
+    faqs: [
+      { q: "چۆن ڕۆمینگ چالاک بکەم پێش گەشتکردن بۆ تورکیا؟", query: "چالاککردنی ڕۆمینگی تورکیا", articleId: "roaming-activation" },
+      { q: "نرخی داتای ڕۆمینگ لە ئەوروپا چەندە؟", query: "نرخی ڕۆمینگ لە ئەوروپا" },
+      { q: "چۆن باڵانسی متبووی زەین-فای بپشکنم؟", query: "پشکنینی باڵانسی زەین-فای" },
+      { q: "چی پێویستە بۆ گۆڕینی سیمکارتەکەم بۆ eSIM؟", query: "گۆڕینی سیمکارت بۆ eSIM" }
     ]
   }
 };
 
-export default function Home() {
+export default function CustomerHome() {
   return (
-    <AppShell active="Home" variant="public">
+    <AppShell active="HOME">
       <LandingContent />
     </AppShell>
   );
@@ -103,83 +102,194 @@ function LandingContent() {
   const handleSearchSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      router.push(`/customer?q=${encodeURIComponent(query.trim())}`);
+      router.push(`/customer/search?q=${encodeURIComponent(query.trim())}`);
     } else {
-      router.push("/customer");
+      router.push("/customer/search");
+    }
+  };
+
+  const handleCategoryClick = (categoryTitle: string) => {
+    router.push(`/customer/search?q=${encodeURIComponent(categoryTitle)}`);
+  };
+
+  const handleFaqClick = (faq: { q: string; query: string; articleId?: string }) => {
+    if (faq.articleId) {
+      router.push(`/customer/article/${faq.articleId}`);
+    } else {
+      router.push(`/customer/search?q=${encodeURIComponent(faq.query)}`);
     }
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "2.5rem", paddingBottom: "3rem" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "32px", maxWidth: "960px", margin: "0 auto", paddingBottom: "48px" }}>
       {/* Hero Section */}
-      <section className="landing-hero">
-        <h1>{copy.heroTitle}</h1>
-        <p>{copy.heroBody}</p>
-        <form className="search-box" onSubmit={handleSearchSubmit}>
+      <section 
+        className="hero-flat"
+        style={{
+          backgroundColor: "#ffffff",
+          border: "1px solid #d0d0d0",
+          borderRadius: "4px",
+          padding: "48px 32px",
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "16px"
+        }}
+      >
+        <h1 style={{ fontSize: "28px", fontWeight: "bold", margin: 0, color: "#1a1a1a" }}>
+          {copy.heroTitle}
+        </h1>
+        <p style={{ fontSize: "14px", color: "#666666", margin: 0, maxWidth: "600px" }}>
+          {copy.heroSubtitle}
+        </p>
+        
+        <form 
+          onSubmit={handleSearchSubmit}
+          style={{
+            display: "flex",
+            width: "100%",
+            maxWidth: "600px",
+            border: "1px solid #d0d0d0",
+            borderRadius: "4px",
+            overflow: "hidden",
+            marginTop: "12px",
+            backgroundColor: "#f5f5f5"
+          }}
+        >
           <input 
             value={query} 
             onChange={(e) => setQuery(e.target.value)} 
             placeholder={copy.searchPlaceholder}
-            aria-label="Search Zain support articles" 
+            aria-label="Search help center"
+            style={{
+              flex: 1,
+              border: "none",
+              background: "transparent",
+              padding: "12px 16px",
+              fontSize: "14px",
+              color: "#1a1a1a",
+              outline: "none"
+            }}
           />
-          <button className="btn primary" type="submit">
-            <Search size={18} />
+          <button 
+            type="submit"
+            style={{
+              backgroundColor: "#1a1a1a",
+              border: "none",
+              color: "#ffffff",
+              padding: "0 24px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              cursor: "pointer",
+              fontWeight: "600",
+              fontSize: "14px"
+            }}
+          >
+            <Search size={16} />
             {copy.searchButton}
           </button>
         </form>
       </section>
 
-      {/* Popular Topics Section */}
-      <section className="section" style={{ padding: "0 1rem" }}>
-        <div className="section-title" style={{ marginBottom: "1.5rem" }}>
-          <h2>{copy.popularTopics}</h2>
-        </div>
-        <div className="topic-grid">
-          {copy.topics.map((topic) => {
-            const Icon = topic.icon;
+      {/* Featured Categories */}
+      <section>
+        <h2 style={{ fontSize: "14px", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "0.1em", color: "#666666", marginBottom: "16px" }}>
+          {copy.featuredCategories}
+        </h2>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))", gap: "16px" }}>
+          {copy.categories.map((category) => {
+            const Icon = category.icon;
             return (
-              <a 
-                key={topic.id}
-                onClick={() => router.push(`/customer?topic=${topic.id}`)}
-                className="topic-card"
+              <div 
+                key={category.id}
+                onClick={() => handleCategoryClick(category.title)}
+                style={{
+                  backgroundColor: "#ffffff",
+                  border: "1px solid #d0d0d0",
+                  borderRadius: "4px",
+                  padding: "20px",
+                  cursor: "pointer",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "8px",
+                  transition: "border-color 0.2s"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = "#1a1a1a"}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = "#d0d0d0"}
               >
-                <div className="topic-icon">
-                  <Icon size={22} />
+                <div style={{ color: "#d12c89", display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+                  <Icon size={20} />
                 </div>
-                <h3>{topic.title}</h3>
-                <p>{topic.desc}</p>
-              </a>
+                <h3 style={{ fontSize: "15px", fontWeight: "bold", margin: 0, color: "#1a1a1a" }}>{category.title}</h3>
+                <p style={{ fontSize: "12px", color: "#666666", margin: 0, lineHeight: "1.4" }}>{category.desc}</p>
+              </div>
             );
           })}
         </div>
       </section>
 
-      {/* Platform Explore Section */}
-      <section className="section" style={{ padding: "0 1rem", borderTop: "1px solid var(--border)", paddingTop: "2.5rem" }}>
-        <div className="section-title" style={{ marginBottom: "0.5rem" }}>
-          <h2>{copy.explorePlatform}</h2>
+      {/* Trending FAQs */}
+      <section style={{ backgroundColor: "#ffffff", border: "1px solid #d0d0d0", borderRadius: "4px", padding: "24px" }}>
+        <h2 style={{ fontSize: "14px", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "0.1em", color: "#666666", marginBottom: "16px", marginTop: 0 }}>
+          {copy.trendingFaqs}
+        </h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          {copy.faqs.map((faq, idx) => (
+            <div 
+              key={idx}
+              onClick={() => handleFaqClick(faq)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "12px 16px",
+                backgroundColor: "#f5f5f5",
+                borderRadius: "4px",
+                cursor: "pointer",
+                transition: "background-color 0.2s"
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#e8e8e8"}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f5f5f5"}
+            >
+              <span style={{ fontSize: "14px", color: "#1a1a1a", fontWeight: "500" }}>{faq.q}</span>
+              <ArrowRight size={16} style={{ color: "#666666" }} />
+            </div>
+          ))}
         </div>
-        <p className="muted" style={{ marginBottom: "1.5rem", fontSize: "0.92rem" }}>{copy.platformSubtitle}</p>
-        <div className="platform-grid">
-          {copy.platforms.map((platform) => {
-            const Icon = platform.icon;
-            return (
-              <a 
-                key={platform.title}
-                onClick={() => router.push(platform.href)}
-                className="platform-card"
-                style={{ cursor: "pointer" }}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.25rem" }}>
-                  <div style={{ color: "var(--magenta)", display: "flex" }}>
-                    <Icon size={20} />
-                  </div>
-                  <h3 style={{ margin: 0 }}>{platform.title}</h3>
-                </div>
-                <p style={{ margin: 0 }}>{platform.desc}</p>
-              </a>
-            );
-          })}
+      </section>
+
+      {/* Escalate Support Banner */}
+      <section 
+        style={{
+          border: "1px solid #d0d0d0",
+          borderRadius: "4px",
+          padding: "24px",
+          backgroundColor: "#ffffff",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px"
+        }}
+      >
+        <h3 style={{ fontSize: "16px", fontWeight: "bold", margin: 0, color: "#1a1a1a" }}>{copy.supportPathTitle}</h3>
+        <p style={{ fontSize: "13px", color: "#666666", margin: 0, lineHeight: "1.5" }}>{copy.supportPathDesc}</p>
+        <div style={{ marginTop: "8px" }}>
+          <button 
+            onClick={() => router.push("/agent")}
+            style={{
+              backgroundColor: "#1a1a1a",
+              color: "#ffffff",
+              border: "none",
+              borderRadius: "4px",
+              padding: "8px 16px",
+              fontSize: "13px",
+              fontWeight: "600",
+              cursor: "pointer"
+            }}
+          >
+            Escalate to Agent Chat
+          </button>
         </div>
       </section>
     </div>

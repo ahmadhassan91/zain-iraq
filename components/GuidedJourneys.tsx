@@ -1,52 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import {
-  AlertTriangle,
-  ArrowRight,
-  Bot,
-  CheckCircle2,
-  CreditCard,
   FilePlus2,
-  Headphones,
-  MapPin,
   RadioTower,
   Search,
-  ShieldCheck,
-  Smartphone,
-  Wifi
+  ShieldCheck
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage, type Language } from "@/components/AppChrome";
 import { useDemoKnowledge } from "@/lib/demo-state";
 
-
-
 const guidedCopy = {
   EN: {
-    demoChip: "Presenter demo path",
-    demoTitle: "One telco issue, three role views",
-    demoBody: "Start with a customer support question, show the agent resolution workspace, then show how Admin changes the source of truth.",
-    customerStep: "Customer",
-    customerStepTitle: "Find an answer",
-    customerStepBody: "Public KB, Zain categories, app/store/contact channels",
-    agentStep: "Agent",
-    agentStepTitle: "Resolve the case",
-    agentStepBody: "Internal checklist, pinned content, LLM grounded by KB",
-    adminStep: "Admin",
-    adminStepTitle: "Govern the source",
-    adminStepBody: "Publish once, control visibility, monitor content gaps",
-    journeyChip: "Zain-style Knowledge Center",
-    journeyTitle: "Choose a customer intent",
-    journeyBody: "The demo now starts where telecom customers usually start: roaming, SIM/eSIM, balance, bundles, app support and nearby stores.",
-    customerLanguage: "Customer language",
-    aiIntent: "AI intent",
-    kbAnswer: "Zain KB answer",
-    nextAction: "Next best action",
-    relatedFaqs: "Related FAQs suggested",
-    channelsTitle: "Telco support channels included",
-    channelsBody: "Guide customers from common service questions to the right answer, action or support channel.",
-    industryTailored: "Industry tailored",
     operationalWorkflow: "Operational workflow",
     agentPath: "Agent resolution path",
     agentBody: "The agent journey prioritizes troubleshooting, customer-safe responses, internal notes and escalation readiness.",
@@ -59,40 +24,9 @@ const guidedCopy = {
     sessionState: "POC state is session-based. Production would persist through API, workflow and database services.",
     publishedMessage: "Published demo update applied to the Customer KB and Agent Workspace.",
     remediatedMessage: "Search gap marked as remediated. The demo now shows how future low-confidence queries would be improved.",
-    alertMessage: "Alert preview prepared for the customer banner and internal agent advisory.",
-    maturityChip: "POC maturity disclosure",
-    maturityTitle: "What is live, simulated and next",
-    functional: "Functional today",
-    functionalBody: "Role routes, guided workflows, multilingual UI, public/internal visibility, Netlify LLM endpoint and API sample contracts.",
-    simulated: "Simulated for demo",
-    simulatedBody: "RBAC, persistence, analytics logs, feedback storage, article approval workflow and search-gap remediation.",
-    production: "Production next",
-    productionBody: "Database, semantic/vector search, ingestion pipeline, real auth/RBAC, analytics events and channel integrations."
+    alertMessage: "Alert preview prepared for the customer banner and internal agent advisory."
   },
   AR: {
-    demoChip: "مسار عرض للمقدم",
-    demoTitle: "مشكلة اتصالات واحدة، ثلاث واجهات حسب الدور",
-    demoBody: "ابدأ بسؤال دعم من العميل، ثم اعرض مساحة حل الوكيل، ثم كيف يغيّر المسؤول مصدر المعرفة.",
-    customerStep: "العميل",
-    customerStepTitle: "العثور على إجابة",
-    customerStepBody: "معرفة عامة، فئات زين، التطبيق، الفروع وقنوات التواصل",
-    agentStep: "الوكيل",
-    agentStepTitle: "حل الحالة",
-    agentStepBody: "قائمة فحص داخلية، محتوى مثبت ومساعد LLM مستند إلى المعرفة",
-    adminStep: "المسؤول",
-    adminStepTitle: "حوكمة المصدر",
-    adminStepBody: "نشر مرة واحدة، ضبط الرؤية ومتابعة فجوات المحتوى",
-    journeyChip: "مركز معرفة بأسلوب زين",
-    journeyTitle: "اختر نية العميل",
-    journeyBody: "يبدأ العرض من المواضع التي يبدأ منها عملاء الاتصالات عادة: التجوال، الشريحة، الرصيد، الباقات، التطبيق والفروع القريبة.",
-    customerLanguage: "لغة العميل",
-    aiIntent: "نية الذكاء الاصطناعي",
-    kbAnswer: "إجابة معرفة زين",
-    nextAction: "أفضل إجراء تالٍ",
-    relatedFaqs: "أسئلة مرتبطة مقترحة",
-    channelsTitle: "قنوات دعم الاتصالات المشمولة",
-    channelsBody: "وجّه العملاء من أسئلة الخدمة الشائعة إلى الإجابة أو الإجراء أو قناة الدعم المناسبة.",
-    industryTailored: "مصمم للقطاع",
     operationalWorkflow: "سير عمل تشغيلي",
     agentPath: "مسار حل الوكيل",
     agentBody: "تركز رحلة الوكيل على استكشاف الأخطاء، الرد الآمن للعميل، الملاحظات الداخلية وجاهزية التصعيد.",
@@ -105,40 +39,9 @@ const guidedCopy = {
     sessionState: "حالة POC مؤقتة للجلسة. في الإنتاج تُحفظ عبر API وسير العمل وقاعدة البيانات.",
     publishedMessage: "تم تطبيق تحديث العرض على معرفة العميل ومساحة الوكيل.",
     remediatedMessage: "تمت معالجة فجوة البحث. يوضح العرض كيف تتحسن الاستفسارات منخفضة الثقة مستقبلاً.",
-    alertMessage: "تم تجهيز معاينة التنبيه لشريط العميل والتنبيه الداخلي للوكيل.",
-    maturityChip: "توضيح نضج POC",
-    maturityTitle: "ما هو مباشر، وما هو محاكى، وما التالي",
-    functional: "يعمل اليوم",
-    functionalBody: "مسارات الأدوار، سير العمل الموجه، واجهة متعددة اللغات، الرؤية العامة/الداخلية، نقطة LLM في Netlify وعقود API نموذجية.",
-    simulated: "محاكى للعرض",
-    simulatedBody: "الصلاحيات، التخزين، سجلات التحليلات، حفظ الملاحظات، سير اعتماد المقالات ومعالجة فجوات البحث.",
-    production: "التالي للإنتاج",
-    productionBody: "قاعدة بيانات، بحث دلالي/متجهي، خط إدخال محتوى، صلاحيات حقيقية، أحداث تحليلات وتكاملات القنوات."
+    alertMessage: "تم تجهيز معاينة التنبيه لشريط العميل والتنبيه الداخلي للوكيل."
   },
   KU: {
-    demoChip: "ڕێڕەوی نمایش بۆ پێشکەشکار",
-    demoTitle: "یەک کێشەی پەیوەندی، سێ دیمەنی ڕۆڵ",
-    demoBody: "لە پرسیاری پشتگیری کڕیارەوە دەست پێ بکە، دواتر شوێنی چارەسەری ئەجێنت پیشان بدە، پاشان چۆن بەڕێوەبەر سەرچاوەی زانیاری دەگۆڕێت.",
-    customerStep: "کڕیار",
-    customerStepTitle: "وەڵام بدۆزەوە",
-    customerStepBody: "زانیاری گشتی، پۆلەکانی زەین، ئەپ، لق و کەناڵی پەیوەندی",
-    agentStep: "ئەجێنت",
-    agentStepTitle: "حاڵەتەکە چارەسەر بکە",
-    agentStepBody: "لیستی پشکنینی ناوخۆ، ناوەڕۆکی جێگیر و یاریدەدەری LLM پشتبەستوو بە زانیاری",
-    adminStep: "بەڕێوەبەر",
-    adminStepTitle: "حوکمرانی سەرچاوە",
-    adminStepBody: "یەکجار بڵاو بکەوە، بینین کۆنترۆڵ بکە و کەلێنی ناوەڕۆک چاودێری بکە",
-    journeyChip: "ناوەندی زانیاری بە شێوازی زەین",
-    journeyTitle: "مەبەستی کڕیار هەڵبژێرە",
-    journeyBody: "نمایشەکە لەو شوێنانەوە دەست پێ دەکات کە کڕیارانی پەیوەندی زۆرجار لێی دەست پێ دەکەن: ڕۆمینگ، SIM/eSIM، باڵانس، پاکێج، پشتگیری ئەپ و لقە نزیکەکان.",
-    customerLanguage: "زمانی کڕیار",
-    aiIntent: "مەبەستی AI",
-    kbAnswer: "وەڵامی زانیاری زەین",
-    nextAction: "باشترین هەنگاوی دواتر",
-    relatedFaqs: "پرسیاری پەیوەندیدار پێشنیارکراو",
-    channelsTitle: "کەناڵەکانی پشتگیری پەیوەندی",
-    channelsBody: "کڕیاران لە پرسیارە باوەکانی خزمەتەوە بەرەو وەڵام، کردار یان کەناڵی پشتگیری گونجاو ڕێنمایی بکە.",
-    industryTailored: "تایبەت بە بوارەکە",
     operationalWorkflow: "ڕەوتی کارکردنی ئۆپەراسیۆن",
     agentPath: "ڕێڕەوی چارەسەری ئەجێنت",
     agentBody: "گەشتی ئەجێنت گرنگی بە چارەسەری کێشە، وەڵامی پارێزراوی کڕیار، تێبینی ناوخۆ و ئامادگی بەرزکردنەوە دەدات.",
@@ -151,19 +54,9 @@ const guidedCopy = {
     sessionState: "دۆخی POC تایبەتە بە دانیشتن. لە بەرهەمدا لە ڕێگەی API، ڕەوتی کار و بنکەدراوە هەڵدەگیرێت.",
     publishedMessage: "نوێکاری نمایش بۆ زانیاری کڕیار و شوێنی کاری ئەجێنت جێبەجێ کرا.",
     remediatedMessage: "کەلێنی گەڕان چارەسەر کرا. نمایشەکە پیشان دەدات پرسیاری کەم متمانە لە داهاتوودا چۆن باشتر دەبێت.",
-    alertMessage: "پێشبینینی ئاگادارکردنەوە بۆ بەندی کڕیار و ئاگاداری ناوخۆی ئەجێنت ئامادە کرا.",
-    maturityChip: "ڕوونکردنەوەی ئاستی POC",
-    maturityTitle: "چی زیندووە، چی نمایشە و چی دواترە",
-    functional: "ئەمڕۆ کاردەکات",
-    functionalBody: "ڕێڕەوی ڕۆڵەکان، ڕەوتە ڕێنماییکراوەکان، UI چەندزمانە، بینینی گشتی/ناوخۆ، خاڵی LLM لە Netlify و گرێبەستی نموونەی API.",
-    simulated: "بۆ نمایش هاوشێوەکراوە",
-    simulatedBody: "RBAC، هەڵگرتن، تۆمارەکانی شیکاری، هەڵگرتنی بۆچوون، ڕەوتی پەسەندکردنی بابەت و چارەسەری کەلێنی گەڕان.",
-    production: "دواتر بۆ بەرهەم",
-    productionBody: "بنکەدراوە، گەڕانی مانایی/ڤێکتەر، ڕەوتی هێنانی ناوەڕۆک، ڕۆڵ و مۆڵەتی ڕاستەقینە، ڕووداوی شیکاری و یەکخستنی کەناڵەکان."
+    alertMessage: "پێشبینینی ئاگادارکردنەوە بۆ بەندی کڕیار و ئاگاداری ناوخۆ ئامادە کرا."
   }
 } satisfies Record<Language, Record<string, string>>;
-
-
 
 export function AgentWorkflowPanel({
   onSelectQuery,
@@ -434,5 +327,3 @@ export function AdminWorkflowPanel() {
     </section>
   );
 }
-
-

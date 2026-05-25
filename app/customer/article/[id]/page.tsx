@@ -1,22 +1,15 @@
 import { AppShell } from "@/components/AppChrome";
-import { ArticleViewer } from "@/components/ArticleBlocks";
-import { articles, findArticle } from "@/lib/data";
-import { notFound } from "next/navigation";
+import { ArticleDetailContent } from "./ArticleDetailContent";
+import { articles } from "@/lib/data";
 
 export function generateStaticParams() {
   return articles.map((article) => ({ id: article.id }));
 }
 
-export default function CustomerArticlePage({ params }: { params: { id: string } }) {
-  const article = findArticle(params.id);
-
-  if (article.visibility !== "Public") {
-    notFound();
-  }
-
+export default function CustomerArticleDetailPage({ params }: { params: { id: string } }) {
   return (
-    <AppShell active="Customer KB" variant="public">
-      <ArticleViewer article={article} mode="customer" />
+    <AppShell active="ARTICLE DETAIL">
+      <ArticleDetailContent id={params.id} />
     </AppShell>
   );
 }
