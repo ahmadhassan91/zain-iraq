@@ -203,8 +203,8 @@ export function Sidebar({ active = "Home" }: { active?: string }) {
                     fontSize: "13px",
                     fontWeight: activeState ? "600" : "500",
                     transition: "all 0.2s",
-                    backgroundColor: activeState ? "#1a1a1a" : "transparent",
-                    color: activeState ? "#ffffff" : "#1a1a1a",
+                    backgroundColor: activeState ? "var(--active-nav-bg, #1a1a1a)" : "transparent",
+                    color: activeState ? "var(--active-nav-text, #ffffff)" : "var(--text)",
                     borderLeft: activeState && !isRtl ? "4px solid #d12c89" : "none",
                     borderRight: activeState && isRtl ? "4px solid #d12c89" : "none",
                   }}
@@ -218,7 +218,7 @@ export function Sidebar({ active = "Home" }: { active?: string }) {
         ))}
       </div>
 
-      <div style={{ marginTop: "auto", paddingTop: "20px", borderTop: "1px solid #d0d0d0" }}>
+      <div style={{ marginTop: "auto", paddingTop: "20px", borderTop: "1px solid var(--border)" }}>
         <button
           onClick={handleLogout}
           className="sidebar-item"

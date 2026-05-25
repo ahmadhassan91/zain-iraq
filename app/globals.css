@@ -42,6 +42,9 @@
   --muted: #4b5565;
   --muted-2: #697586;
   
+  --active-nav-bg: #1a1a1a;
+  --active-nav-text: #ffffff;
+  
   /* Zero Shadows by default */
   --shadow: none;
   --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.05);
@@ -56,24 +59,27 @@
   --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Force light flat design system in all dark states */
+/* Sleek, flat premium dark design system for dark mode */
 [data-theme="dark"],
 .dark {
-  --bg: #f5f5f5;
-  --surface: #ffffff;
-  --surface-soft: #f0f0f0;
-  --border: #d0d0d0;
+  --bg: #121212;
+  --surface: #1a1a1a;
+  --surface-soft: #202020;
+  --border: #2d2d2d;
   --border-subpixel: transparent;
-  --text: #1c1f24;
-  --text-inverse: #ffffff;
-  --muted: #4b5565;
-  --muted-2: #697586;
+  --text: #f5f5f5;
+  --text-inverse: #121212;
+  --muted: #999999;
+  --muted-2: #707070;
   --shadow: none;
-  --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 4px 8px rgba(255, 255, 255, 0.02);
   --shadow-glow: none;
-  --glass-bg: #ffffff;
-  --glass-border: #d0d0d0;
+  --glass-bg: #1a1a1a;
+  --glass-border: #2d2d2d;
   --glass-blur: 0px;
+  
+  --active-nav-bg: #ffffff;
+  --active-nav-text: #121212;
 }
 
 * {
@@ -269,7 +275,7 @@ a {
 .sidebar {
   padding: 24px 18px;
   border-inline-end: 1px solid var(--border);
-  background: #f0f0f0;
+  background: var(--surface-soft);
   transition: all 0.2s ease;
 }
 
