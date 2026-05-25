@@ -115,8 +115,8 @@ function SearchResultsContent() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "24px", maxWidth: "960px", margin: "0 auto", paddingBottom: "48px" }}>
       {/* Search Input area */}
-      <section style={{ backgroundColor: "#ffffff", border: "1px solid #d0d0d0", borderRadius: "4px", padding: "16px 24px" }}>
-        <form onSubmit={handleSearchSubmit} style={{ display: "flex", border: "1px solid #d0d0d0", borderRadius: "4px", overflow: "hidden", backgroundColor: "#f5f5f5" }}>
+      <section style={{ backgroundColor: "var(--surface)", border: "1px solid var(--border)", borderRadius: "4px", padding: "16px 24px" }}>
+        <form onSubmit={handleSearchSubmit} style={{ display: "flex", border: "1px solid var(--border)", borderRadius: "4px", overflow: "hidden", backgroundColor: "var(--surface-soft)" }}>
           <input 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -127,15 +127,15 @@ function SearchResultsContent() {
               background: "transparent",
               padding: "12px 16px",
               fontSize: "14px",
-              color: "#1a1a1a",
+              color: "var(--text)",
               outline: "none"
             }}
           />
           <button 
             type="submit"
             style={{
-              backgroundColor: "#1a1a1a",
-              color: "#ffffff",
+              backgroundColor: "var(--active-nav-bg)",
+              color: "var(--active-nav-text)",
               border: "none",
               padding: "0 24px",
               display: "flex",
@@ -150,7 +150,7 @@ function SearchResultsContent() {
             Search
           </button>
         </form>
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "12px", color: "#666666", fontSize: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "12px", color: "var(--muted)", fontSize: "12px" }}>
           <Search size={14} />
           <span>{copy.resultsFor} &ldquo;<strong>{activeQuery}</strong>&rdquo;</span>
         </div>
@@ -159,8 +159,8 @@ function SearchResultsContent() {
       {/* Main Matched Result */}
       <section 
         style={{ 
-          backgroundColor: "#ffffff", 
-          border: "1px solid #d0d0d0", 
+          backgroundColor: "var(--surface)", 
+          border: "1px solid var(--border)", 
           borderRadius: "4px", 
           overflow: "hidden"
         }}
@@ -168,8 +168,8 @@ function SearchResultsContent() {
         {/* Banner header for Best Match */}
         <div 
           style={{ 
-            backgroundColor: "#1a1a1a", 
-            color: "#ffffff", 
+            backgroundColor: "var(--active-nav-bg)", 
+            color: "var(--active-nav-text)", 
             padding: "10px 24px", 
             display: "flex", 
             alignItems: "center", 
@@ -188,7 +188,7 @@ function SearchResultsContent() {
         <div 
           style={{
             height: "180px",
-            backgroundColor: "#eaeaea",
+            backgroundColor: "var(--surface-soft)",
             position: "relative",
             display: "flex",
             alignItems: "flex-end",
@@ -211,7 +211,7 @@ function SearchResultsContent() {
 
         {/* Article Summary */}
         <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "16px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "12px", color: "#666666" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "12px", color: "var(--muted)" }}>
             <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
               <Clock size={14} />
               {copy.readTime}
@@ -220,17 +220,17 @@ function SearchResultsContent() {
             <span>Last updated: {primaryArticle.updatedAt}</span>
           </div>
 
-          <p style={{ fontSize: "14px", color: "#1a1a1a", lineHeight: "1.6", margin: 0 }}>
+          <p style={{ fontSize: "14px", color: "var(--text)", lineHeight: "1.6", margin: 0 }}>
             {primaryArticle.summary}
           </p>
 
-          <div style={{ fontSize: "13px", padding: "16px", backgroundColor: "#f5f5f5", borderRadius: "4px", border: "1px solid #d0d0d0" }}>
-            <strong style={{ display: "block", color: "#1a1a1a", marginBottom: "6px" }}>{copy.pricingTitle}:</strong>
+          <div style={{ fontSize: "13px", padding: "16px", backgroundColor: "var(--surface-soft)", borderRadius: "4px", border: "1px solid var(--border)" }}>
+            <strong style={{ display: "block", color: "var(--text)", marginBottom: "6px" }}>{copy.pricingTitle}:</strong>
             <div style={{ display: "flex", gap: "24px" }}>
               {copy.rates.map((rate, i) => (
                 <div key={i} style={{ display: "flex", flexDirection: "column" }}>
-                  <span style={{ fontSize: "11px", color: "#666666", textTransform: "uppercase" }}>{rate.region}</span>
-                  <strong style={{ fontSize: "14px", color: "#1a1a1a" }}>{rate.rate}</strong>
+                  <span style={{ fontSize: "11px", color: "var(--muted)", textTransform: "uppercase" }}>{rate.region}</span>
+                  <strong style={{ fontSize: "14px", color: "var(--text)" }}>{rate.rate}</strong>
                 </div>
               ))}
             </div>
@@ -240,8 +240,8 @@ function SearchResultsContent() {
             <button
               onClick={() => router.push(`/customer/article/${primaryArticle.id}`)}
               style={{
-                backgroundColor: "#1a1a1a",
-                color: "#ffffff",
+                backgroundColor: "var(--active-nav-bg)",
+                color: "var(--active-nav-text)",
                 border: "none",
                 borderRadius: "4px",
                 padding: "10px 20px",
@@ -261,8 +261,8 @@ function SearchResultsContent() {
       </section>
 
       {/* Related articles */}
-      <section style={{ backgroundColor: "#ffffff", border: "1px solid #d0d0d0", borderRadius: "4px", padding: "24px" }}>
-        <h3 style={{ fontSize: "14px", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "0.1em", color: "#666666", marginTop: 0, marginBottom: "16px" }}>
+      <section style={{ backgroundColor: "var(--surface)", border: "1px solid var(--border)", borderRadius: "4px", padding: "24px" }}>
+        <h3 style={{ fontSize: "14px", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--muted)", marginTop: 0, marginBottom: "16px" }}>
           {copy.relatedArticles}
         </h3>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
@@ -271,7 +271,7 @@ function SearchResultsContent() {
               key={article.id}
               onClick={() => router.push(`/customer/article/${article.id}`)}
               style={{
-                border: "1px solid #d0d0d0",
+                border: "1px solid var(--border)",
                 borderRadius: "4px",
                 padding: "16px",
                 cursor: "pointer",
@@ -280,16 +280,16 @@ function SearchResultsContent() {
                 gap: "8px",
                 transition: "border-color 0.2s"
               }}
-              onMouseEnter={(e) => e.currentTarget.style.borderColor = "#1a1a1a"}
-              onMouseLeave={(e) => e.currentTarget.style.borderColor = "#d0d0d0"}
+              onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--active-nav-bg)"}
+              onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--border)"}
             >
-              <span style={{ fontSize: "10px", fontWeight: "bold", color: "#666666", textTransform: "uppercase" }}>
+              <span style={{ fontSize: "10px", fontWeight: "bold", color: "var(--muted)", textTransform: "uppercase" }}>
                 {article.category}
               </span>
-              <h4 style={{ fontSize: "14px", fontWeight: "bold", color: "#1a1a1a", margin: 0 }}>
+              <h4 style={{ fontSize: "14px", fontWeight: "bold", color: "var(--text)", margin: 0 }}>
                 {article.title}
               </h4>
-              <p style={{ fontSize: "12px", color: "#666666", margin: 0, lineHeight: "1.4" }}>
+              <p style={{ fontSize: "12px", color: "var(--muted)", margin: 0, lineHeight: "1.4" }}>
                 {article.summary}
               </p>
             </div>

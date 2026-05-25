@@ -16,8 +16,8 @@ function AgentDashboardContent() {
   // Styles for the flat light-gray Zain dashboard
   const styles = {
     container: {
-      backgroundColor: "#f5f5f5",
-      color: "#1a1a1a",
+      backgroundColor: "var(--bg)",
+      color: "var(--text)",
       fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       padding: "24px",
       display: "flex",
@@ -26,8 +26,8 @@ function AgentDashboardContent() {
       minHeight: "100%",
     },
     headerCard: {
-      backgroundColor: "#ffffff",
-      border: "1px solid #d0d0d0",
+      backgroundColor: "var(--surface)",
+      border: "1px solid var(--border)",
       borderRadius: "4px",
       padding: "24px",
       display: "flex",
@@ -38,12 +38,12 @@ function AgentDashboardContent() {
     title: {
       fontSize: "24px",
       fontWeight: "bold" as const,
-      color: "#1a1a1a",
+      color: "var(--text)",
       margin: 0,
     },
     subtitle: {
       fontSize: "14px",
-      color: "#666666",
+      color: "var(--muted)",
       margin: "4px 0 0 0",
     },
     statsRow: {
@@ -52,8 +52,8 @@ function AgentDashboardContent() {
       gap: "24px",
     },
     card: {
-      backgroundColor: "#ffffff",
-      border: "1px solid #d0d0d0",
+      backgroundColor: "var(--surface)",
+      border: "1px solid var(--border)",
       borderRadius: "4px",
       padding: "24px",
       display: "flex",
@@ -63,7 +63,7 @@ function AgentDashboardContent() {
     metricLabel: {
       fontSize: "11px",
       textTransform: "uppercase" as const,
-      color: "#666666",
+      color: "var(--muted)",
       fontWeight: "bold" as const,
       letterSpacing: "0.05em",
       marginBottom: "8px",
@@ -74,12 +74,12 @@ function AgentDashboardContent() {
     metricValue: {
       fontSize: "36px",
       fontWeight: "bold" as const,
-      color: "#1a1a1a",
+      color: "var(--text)",
       lineHeight: 1.1,
     },
     metricDetail: {
       fontSize: "12px",
-      color: "#999999",
+      color: "var(--muted)",
       marginTop: "8px",
     },
     layoutGrid: {
@@ -92,9 +92,9 @@ function AgentDashboardContent() {
       fontWeight: "bold" as const,
       textTransform: "uppercase" as const,
       letterSpacing: "0.1em",
-      color: "#1a1a1a",
+      color: "var(--text)",
       marginBottom: "16px",
-      borderBottom: "1px solid #d0d0d0",
+      borderBottom: "1px solid var(--border)",
       paddingBottom: "8px",
       display: "flex",
       justifyContent: "space-between",
@@ -108,13 +108,13 @@ function AgentDashboardContent() {
     queueTh: {
       fontSize: "11px",
       textTransform: "uppercase" as const,
-      color: "#666666",
+      color: "var(--muted)",
       padding: "12px 16px",
-      borderBottom: "1px solid #d0d0d0",
+      borderBottom: "1px solid var(--border)",
       fontWeight: "bold" as const,
     },
     queueTr: {
-      borderBottom: "1px solid #e0e0e0",
+      borderBottom: "1px solid var(--border)",
       transition: "background-color 0.15s ease",
     },
     queueTd: {
@@ -131,19 +131,19 @@ function AgentDashboardContent() {
       textTransform: "uppercase" as const,
     },
     redAlert: {
-      backgroundColor: "#fdf2f2",
-      border: "1px solid #e74c3c",
-      color: "#e74c3c",
+      backgroundColor: "var(--magenta-soft, #fdf2f2)",
+      border: "1px solid var(--magenta, #d12c89)",
+      color: "var(--magenta, #d12c89)",
     },
     normalBadge: {
-      backgroundColor: "#f0f0f0",
-      border: "1px solid #d0d0d0",
-      color: "#666666",
+      backgroundColor: "var(--surface-soft)",
+      border: "1px solid var(--border)",
+      color: "var(--muted)",
     },
     insightCard: {
-      backgroundColor: "#ffffff",
-      border: "1px solid #d0d0d0",
-      borderLeft: "4px solid #2ecc71",
+      backgroundColor: "var(--surface)",
+      border: "1px solid var(--border)",
+      borderLeft: "4px solid var(--teal, #2ecc71)",
       borderRadius: "4px",
       padding: "20px 24px",
       display: "flex",
@@ -153,12 +153,12 @@ function AgentDashboardContent() {
     insightTitle: {
       fontSize: "14px",
       fontWeight: "bold" as const,
-      color: "#1a1a1a",
+      color: "var(--text)",
       margin: 0,
     },
     insightText: {
       fontSize: "13px",
-      color: "#666666",
+      color: "var(--muted)",
       margin: "4px 0 0 0",
     },
     listItem: {
@@ -166,7 +166,7 @@ function AgentDashboardContent() {
       justifyContent: "space-between",
       alignItems: "center",
       padding: "12px 0",
-      borderBottom: "1px solid #e0e0e0",
+      borderBottom: "1px solid var(--border)",
     },
     listItemLast: {
       display: "flex",
@@ -177,20 +177,20 @@ function AgentDashboardContent() {
     articleTitle: {
       fontSize: "14px",
       fontWeight: "bold" as const,
-      color: "#1a1a1a",
+      color: "var(--text)",
       margin: 0,
     },
     articleMeta: {
       fontSize: "12px",
-      color: "#666666",
+      color: "var(--muted)",
       margin: "2px 0 0 0",
     },
     actionBtn: {
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "#1a1a1a",
-      color: "#ffffff",
+      backgroundColor: "var(--active-nav-bg)",
+      color: "var(--active-nav-text)",
       border: "none",
       borderRadius: "4px",
       padding: "8px 16px",
@@ -204,9 +204,9 @@ function AgentDashboardContent() {
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: "#ffffff",
-      color: "#1a1a1a",
-      border: "1px solid #d0d0d0",
+      backgroundColor: "var(--surface)",
+      color: "var(--text)",
+      border: "1px solid var(--border)",
       borderRadius: "4px",
       padding: "8px 16px",
       fontSize: "13px",

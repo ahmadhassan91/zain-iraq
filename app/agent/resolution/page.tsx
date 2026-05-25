@@ -69,8 +69,8 @@ function AgentResolutionContent() {
 
   const styles = {
     container: {
-      backgroundColor: "#f5f5f5",
-      color: "#1a1a1a",
+      backgroundColor: "var(--bg)",
+      color: "var(--text)",
       fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
       padding: "24px",
       display: "flex",
@@ -82,7 +82,7 @@ function AgentResolutionContent() {
       display: "inline-flex",
       alignItems: "center",
       gap: "8px",
-      color: "#666666",
+      color: "var(--muted)",
       fontSize: "14px",
       textDecoration: "none",
       fontWeight: "bold" as const,
@@ -94,8 +94,8 @@ function AgentResolutionContent() {
       gap: "24px",
     },
     card: {
-      backgroundColor: "#ffffff",
-      border: "1px solid #d0d0d0",
+      backgroundColor: "var(--surface)",
+      border: "1px solid var(--border)",
       borderRadius: "4px",
       padding: "24px",
       display: "flex",
@@ -108,16 +108,16 @@ function AgentResolutionContent() {
       fontWeight: "bold" as const,
       textTransform: "uppercase" as const,
       letterSpacing: "0.1em",
-      color: "#1a1a1a",
+      color: "var(--text)",
       marginBottom: "16px",
-      borderBottom: "1px solid #d0d0d0",
+      borderBottom: "1px solid var(--border)",
       paddingBottom: "8px",
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
     },
     queryBox: {
-      backgroundColor: "#f9f9f9",
+      backgroundColor: "var(--surface-soft)",
       borderLeft: "4px solid #e74c3c",
       padding: "16px",
       borderRadius: "0 4px 4px 0",
@@ -133,23 +133,23 @@ function AgentResolutionContent() {
       textTransform: "uppercase" as const,
     },
     redBadge: {
-      backgroundColor: "#fdf2f2",
-      border: "1px solid #e74c3c",
-      color: "#e74c3c",
+      backgroundColor: "var(--magenta-soft, #fdf2f2)",
+      border: "1px solid var(--magenta, #d12c89)",
+      color: "var(--magenta, #d12c89)",
     },
     greenBadge: {
-      backgroundColor: "#ebfbf0",
-      border: "1px solid #2ecc71",
-      color: "#2ecc71",
+      backgroundColor: "var(--teal-soft, #ebfbf0)",
+      border: "1px solid var(--teal, #2ecc71)",
+      color: "var(--teal, #2ecc71)",
     },
     grayBadge: {
-      backgroundColor: "#f0f0f0",
-      border: "1px solid #d0d0d0",
-      color: "#666666",
+      backgroundColor: "var(--surface-soft)",
+      border: "1px solid var(--border)",
+      color: "var(--muted)",
     },
     primaryBtn: {
-      backgroundColor: "#1a1a1a",
-      color: "#ffffff",
+      backgroundColor: "var(--active-nav-bg)",
+      color: "var(--active-nav-text)",
       border: "none",
       borderRadius: "4px",
       padding: "10px 20px",
@@ -163,9 +163,9 @@ function AgentResolutionContent() {
       transition: "background-color 0.15s ease",
     },
     secondaryBtn: {
-      backgroundColor: "#ffffff",
-      color: "#1a1a1a",
-      border: "1px solid #d0d0d0",
+      backgroundColor: "var(--surface)",
+      color: "var(--text)",
+      border: "1px solid var(--border)",
       borderRadius: "4px",
       padding: "10px 20px",
       fontSize: "13px",
@@ -188,9 +188,9 @@ function AgentResolutionContent() {
       fontWeight: "bold" as const,
     },
     alertSuccess: {
-      backgroundColor: "#ebfbf0",
-      border: "1px solid #2ecc71",
-      color: "#2ecc71",
+      backgroundColor: "var(--teal-soft, #ebfbf0)",
+      border: "1px solid var(--teal, #2ecc71)",
+      color: "var(--teal, #2ecc71)",
     },
     alertWarning: {
       backgroundColor: "#fff6ed",
@@ -198,13 +198,13 @@ function AgentResolutionContent() {
       color: "#e67e22",
     },
     noteBox: {
-      backgroundColor: "#fcfaf6",
-      border: "1px solid #e67e22",
+      backgroundColor: "var(--surface-soft)",
+      border: "1px solid var(--border)",
       borderRadius: "4px",
       padding: "16px",
       fontSize: "13px",
       lineHeight: "1.5",
-      color: "#1a1a1a",
+      color: "var(--text)",
       marginBottom: "20px",
     },
     composerTextarea: {
@@ -212,10 +212,11 @@ function AgentResolutionContent() {
       minHeight: "150px",
       padding: "12px",
       borderRadius: "4px",
-      border: "1px solid #d0d0d0",
+      border: "1px solid var(--border)",
       fontSize: "14px",
       lineHeight: "1.6",
-      color: "#1a1a1a",
+      color: "var(--text)",
+      backgroundColor: "var(--surface)",
       fontFamily: "inherit",
       resize: "vertical" as const,
       marginBottom: "16px",
@@ -226,7 +227,7 @@ function AgentResolutionContent() {
       paddingLeft: "20px",
       fontSize: "13px",
       lineHeight: "1.6",
-      color: "#1a1a1a",
+      color: "var(--text)",
     },
   };
 
@@ -374,10 +375,10 @@ function AgentResolutionContent() {
                   style={{
                     padding: "8px 12px",
                     borderRadius: "4px",
-                    border: "1px solid #d0d0d0",
+                    border: "1px solid var(--border)",
                     fontSize: "13px",
-                    backgroundColor: "#ffffff",
-                    color: "#1a1a1a",
+                    backgroundColor: "var(--surface)",
+                    color: "var(--text)",
                     outline: "none",
                   }}
                   onChange={(e) => {
@@ -412,7 +413,7 @@ function AgentResolutionContent() {
             </div>
 
             <div style={{ marginBottom: "16px" }}>
-              <span style={{ fontSize: "11px", color: "#666666", fontWeight: "bold" }}>APPROVED ARTICLE TITLE</span>
+              <span style={{ fontSize: "11px", color: "var(--muted)", fontWeight: "bold" }}>APPROVED ARTICLE TITLE</span>
               <h3 style={{ fontSize: "16px", fontWeight: "bold", margin: "4px 0 0 0" }}>
                 {recommendedArticle.title}
               </h3>
@@ -421,12 +422,12 @@ function AgentResolutionContent() {
             {/* Customer Answer Copy Action */}
             <div style={{ marginBottom: "20px" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                <span style={{ fontSize: "11px", color: "#666666", fontWeight: "bold" }}>CUSTOMER-FACING RESPONSE</span>
+                <span style={{ fontSize: "11px", color: "var(--muted)", fontWeight: "bold" }}>CUSTOMER-FACING RESPONSE</span>
                 <button 
                   style={{
                     background: "none",
                     border: "none",
-                    color: copiedState ? "#2ecc71" : "#1a1a1a",
+                    color: copiedState ? "var(--teal, #2ecc71)" : "var(--text)",
                     fontSize: "12px",
                     fontWeight: "bold",
                     cursor: "pointer",
@@ -442,13 +443,13 @@ function AgentResolutionContent() {
               </div>
               
               <div style={{ 
-                backgroundColor: "#f9f9f9", 
-                border: "1px solid #d0d0d0", 
+                backgroundColor: "var(--surface-soft)", 
+                border: "1px solid var(--border)", 
                 borderRadius: "4px",
                 padding: "14px",
                 fontSize: "13px",
                 lineHeight: "1.6",
-                color: "#1a1a1a"
+                color: "var(--text)"
               }}>
                 {recommendedArticle.customerAnswer}
               </div>
@@ -466,7 +467,7 @@ function AgentResolutionContent() {
 
             {/* Troubleshooting Steps */}
             <div>
-              <span style={{ fontSize: "11px", color: "#666666", fontWeight: "bold", display: "block", marginBottom: "8px" }}>
+              <span style={{ fontSize: "11px", color: "var(--muted)", fontWeight: "bold", display: "block", marginBottom: "8px" }}>
                 GUIDED RESOLUTION PROCEDURES
               </span>
               <ol style={styles.stepsList}>
@@ -482,7 +483,7 @@ function AgentResolutionContent() {
             <div style={{ 
               display: "flex", 
               gap: "12px", 
-              borderTop: "1px solid #d0d0d0", 
+              borderTop: "1px solid var(--border)", 
               paddingTop: "16px",
               marginTop: "12px"
             }}>

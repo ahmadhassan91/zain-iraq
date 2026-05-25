@@ -147,7 +147,7 @@ export function ArticleDetailContent({ id }: { id: string }) {
           style={{
             background: "none",
             border: "none",
-            color: "#666666",
+            color: "var(--muted)",
             fontSize: "13px",
             fontWeight: "600",
             cursor: "pointer",
@@ -165,8 +165,8 @@ export function ArticleDetailContent({ id }: { id: string }) {
       {/* Article Detail Card Container */}
       <article 
         style={{
-          backgroundColor: "#ffffff",
-          border: "1px solid #d0d0d0",
+          backgroundColor: "var(--surface)",
+          border: "1px solid var(--border)",
           borderRadius: "4px",
           overflow: "hidden"
         }}
@@ -199,7 +199,7 @@ export function ArticleDetailContent({ id }: { id: string }) {
         {/* Content Area */}
         <div style={{ padding: "32px", display: "flex", flexDirection: "column", gap: "28px" }}>
           {/* Read time and metadata */}
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "12px", color: "#666666", borderBottom: "1px solid #e5e5e5", paddingBottom: "16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", fontSize: "12px", color: "var(--muted)", borderBottom: "1px solid var(--border)", paddingBottom: "16px" }}>
             <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
               <Clock size={14} />
               {copy.readTime}
@@ -212,20 +212,20 @@ export function ArticleDetailContent({ id }: { id: string }) {
 
           {/* Section 1: Why am I charged */}
           <section style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            <h2 style={{ fontSize: "16px", fontWeight: "bold", color: "#1a1a1a", margin: 0 }}>
+            <h2 style={{ fontSize: "16px", fontWeight: "bold", color: "var(--text)", margin: 0 }}>
               {copy.whyChargedTitle}
             </h2>
-            <p style={{ fontSize: "14px", color: "#1a1a1a", lineHeight: "1.6", margin: 0 }}>
+            <p style={{ fontSize: "14px", color: "var(--text)", lineHeight: "1.6", margin: 0 }}>
               {copy.whyChargedBody}
             </p>
           </section>
 
           {/* Section 2: Pay-As-You-Go Rates Table */}
           <section style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <h2 style={{ fontSize: "16px", fontWeight: "bold", color: "#1a1a1a", margin: 0 }}>
+            <h2 style={{ fontSize: "16px", fontWeight: "bold", color: "var(--text)", margin: 0 }}>
               {copy.ratesTitle}
             </h2>
-            <p style={{ fontSize: "13px", color: "#666666", margin: 0 }}>
+            <p style={{ fontSize: "13px", color: "var(--muted)", margin: 0 }}>
               {copy.ratesDesc}
             </p>
             <table 
@@ -233,32 +233,32 @@ export function ArticleDetailContent({ id }: { id: string }) {
                 width: "100%",
                 borderCollapse: "collapse",
                 marginTop: "4px",
-                border: "1px solid #d0d0d0",
+                border: "1px solid var(--border)",
                 fontSize: "14px"
               }}
             >
               <thead>
-                <tr style={{ backgroundColor: "#f5f5f5", borderBottom: "1px solid #d0d0d0" }}>
-                  <th style={{ padding: "12px 16px", textAlign: isRtl ? "right" : "left", fontWeight: "bold", color: "#1a1a1a" }}>
+                <tr style={{ backgroundColor: "var(--surface-soft)", borderBottom: "1px solid var(--border)" }}>
+                  <th style={{ padding: "12px 16px", textAlign: isRtl ? "right" : "left", fontWeight: "bold", color: "var(--text)" }}>
                     {copy.tableZone}
                   </th>
-                  <th style={{ padding: "12px 16px", textAlign: isRtl ? "left" : "right", fontWeight: "bold", color: "#1a1a1a" }}>
+                  <th style={{ padding: "12px 16px", textAlign: isRtl ? "left" : "right", fontWeight: "bold", color: "var(--text)" }}>
                     {copy.tableRate}
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr style={{ borderBottom: "1px solid #e5e5e5" }}>
-                  <td style={{ padding: "12px 16px", color: "#1a1a1a" }}>Turkey</td>
-                  <td style={{ padding: "12px 16px", textAlign: isRtl ? "left" : "right", fontWeight: "bold", color: "#1a1a1a" }}>2 IQD/MB</td>
+                <tr style={{ borderBottom: "1px solid var(--border)" }}>
+                  <td style={{ padding: "12px 16px", color: "var(--text)" }}>Turkey</td>
+                  <td style={{ padding: "12px 16px", textAlign: isRtl ? "left" : "right", fontWeight: "bold", color: "var(--text)" }}>2 IQD/MB</td>
                 </tr>
-                <tr style={{ borderBottom: "1px solid #e5e5e5" }}>
-                  <td style={{ padding: "12px 16px", color: "#1a1a1a" }}>Europe</td>
-                  <td style={{ padding: "12px 16px", textAlign: isRtl ? "left" : "right", fontWeight: "bold", color: "#1a1a1a" }}>2 IQD/MB</td>
+                <tr style={{ borderBottom: "1px solid var(--border)" }}>
+                  <td style={{ padding: "12px 16px", color: "var(--text)" }}>Europe</td>
+                  <td style={{ padding: "12px 16px", textAlign: isRtl ? "left" : "right", fontWeight: "bold", color: "var(--text)" }}>2 IQD/MB</td>
                 </tr>
                 <tr>
-                  <td style={{ padding: "12px 16px", color: "#1a1a1a" }}>United States / USA</td>
-                  <td style={{ padding: "12px 16px", textAlign: isRtl ? "left" : "right", fontWeight: "bold", color: "#1a1a1a" }}>3 IQD/MB</td>
+                  <td style={{ padding: "12px 16px", color: "var(--text)" }}>United States / USA</td>
+                  <td style={{ padding: "12px 16px", textAlign: isRtl ? "left" : "right", fontWeight: "bold", color: "var(--text)" }}>3 IQD/MB</td>
                 </tr>
               </tbody>
             </table>
@@ -266,7 +266,7 @@ export function ArticleDetailContent({ id }: { id: string }) {
 
           {/* Section 3: Connection Steps */}
           <section style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <h2 style={{ fontSize: "16px", fontWeight: "bold", color: "#1a1a1a", margin: 0 }}>
+            <h2 style={{ fontSize: "16px", fontWeight: "bold", color: "var(--text)", margin: 0 }}>
               {copy.avoidChargesTitle}
             </h2>
             <ol 
@@ -279,7 +279,7 @@ export function ArticleDetailContent({ id }: { id: string }) {
                 gap: "10px",
                 fontSize: "14px",
                 lineHeight: "1.5",
-                color: "#1a1a1a"
+                color: "var(--text)"
               }}
             >
               {copy.steps.map((step, index) => (
@@ -291,8 +291,8 @@ export function ArticleDetailContent({ id }: { id: string }) {
           {/* Section 4: Was this helpful feedback module */}
           <section 
             style={{ 
-              backgroundColor: "#f5f5f5", 
-              border: "1px solid #d0d0d0", 
+              backgroundColor: "var(--surface-soft)", 
+              border: "1px solid var(--border)", 
               borderRadius: "4px", 
               padding: "24px",
               marginTop: "16px",
@@ -303,7 +303,7 @@ export function ArticleDetailContent({ id }: { id: string }) {
           >
             {feedbackState === "initial" && (
               <>
-                <h3 style={{ fontSize: "14px", fontWeight: "bold", margin: 0, color: "#1a1a1a", display: "flex", alignItems: "center", gap: "8px" }}>
+                <h3 style={{ fontSize: "14px", fontWeight: "bold", margin: 0, color: "var(--text)", display: "flex", alignItems: "center", gap: "8px" }}>
                   <HelpCircle size={16} style={{ color: "#d12c89" }} />
                   <span>{copy.feedbackTitle}</span>
                 </h3>
@@ -311,8 +311,8 @@ export function ArticleDetailContent({ id }: { id: string }) {
                   <button
                     onClick={() => handleFeedback("yes")}
                     style={{
-                      backgroundColor: "#1a1a1a",
-                      color: "#ffffff",
+                      backgroundColor: "var(--active-nav-bg, #1a1a1a)",
+                      color: "var(--active-nav-text, #ffffff)",
                       border: "none",
                       borderRadius: "4px",
                       padding: "8px 16px",
@@ -330,9 +330,9 @@ export function ArticleDetailContent({ id }: { id: string }) {
                   <button
                     onClick={() => handleFeedback("no")}
                     style={{
-                      backgroundColor: "#ffffff",
-                      color: "#1a1a1a",
-                      border: "1px solid #d0d0d0",
+                      backgroundColor: "var(--surface)",
+                      color: "var(--text)",
+                      border: "1px solid var(--border)",
                       borderRadius: "4px",
                       padding: "8px 16px",
                       fontSize: "13px",
@@ -359,7 +359,7 @@ export function ArticleDetailContent({ id }: { id: string }) {
 
             {feedbackState === "no" && (
               <form onSubmit={handleSubmitFeedback} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-                <h3 style={{ fontSize: "14px", fontWeight: "bold", margin: 0, color: "#1a1a1a" }}>
+                <h3 style={{ fontSize: "14px", fontWeight: "bold", margin: 0, color: "var(--text)" }}>
                   {copy.feedbackImproveText}
                 </h3>
                 <textarea
@@ -370,22 +370,22 @@ export function ArticleDetailContent({ id }: { id: string }) {
                   style={{
                     width: "100%",
                     minHeight: "80px",
-                    border: "1px solid #d0d0d0",
+                    border: "1px solid var(--border)",
                     borderRadius: "4px",
                     padding: "10px",
                     fontSize: "13px",
                     outline: "none",
                     fontFamily: "inherit",
-                    backgroundColor: "#ffffff",
-                    color: "#1a1a1a"
+                    backgroundColor: "var(--surface)",
+                    color: "var(--text)"
                   }}
                 />
                 <div>
                   <button
                     type="submit"
                     style={{
-                      backgroundColor: "#1a1a1a",
-                      color: "#ffffff",
+                      backgroundColor: "var(--active-nav-bg, #1a1a1a)",
+                      color: "var(--active-nav-text, #ffffff)",
                       border: "none",
                       borderRadius: "4px",
                       padding: "8px 16px",
@@ -401,7 +401,7 @@ export function ArticleDetailContent({ id }: { id: string }) {
             )}
 
             {feedbackState === "submitted" && (
-              <div style={{ color: "#1a1a1a", fontSize: "14px", fontWeight: "500" }}>
+              <div style={{ color: "var(--text)", fontSize: "14px", fontWeight: "500" }}>
                 {copy.feedbackFinalSubmit}
               </div>
             )}

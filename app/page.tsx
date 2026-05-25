@@ -126,8 +126,8 @@ function LandingContent() {
       <section 
         className="hero-flat"
         style={{
-          backgroundColor: "#ffffff",
-          border: "1px solid #d0d0d0",
+          backgroundColor: "var(--surface)",
+          border: "1px solid var(--border)",
           borderRadius: "4px",
           padding: "48px 32px",
           textAlign: "center",
@@ -137,10 +137,10 @@ function LandingContent() {
           gap: "16px"
         }}
       >
-        <h1 style={{ fontSize: "28px", fontWeight: "bold", margin: 0, color: "#1a1a1a" }}>
+        <h1 style={{ fontSize: "28px", fontWeight: "bold", margin: 0, color: "var(--text)" }}>
           {copy.heroTitle}
         </h1>
-        <p style={{ fontSize: "14px", color: "#666666", margin: 0, maxWidth: "600px" }}>
+        <p style={{ fontSize: "14px", color: "var(--muted)", margin: 0, maxWidth: "600px" }}>
           {copy.heroSubtitle}
         </p>
         
@@ -150,11 +150,11 @@ function LandingContent() {
             display: "flex",
             width: "100%",
             maxWidth: "600px",
-            border: "1px solid #d0d0d0",
+            border: "1px solid var(--border)",
             borderRadius: "4px",
             overflow: "hidden",
             marginTop: "12px",
-            backgroundColor: "#f5f5f5"
+            backgroundColor: "var(--surface-soft)"
           }}
         >
           <input 
@@ -168,16 +168,16 @@ function LandingContent() {
               background: "transparent",
               padding: "12px 16px",
               fontSize: "14px",
-              color: "#1a1a1a",
+              color: "var(--text)",
               outline: "none"
             }}
           />
           <button 
             type="submit"
             style={{
-              backgroundColor: "#1a1a1a",
+              backgroundColor: "var(--active-nav-bg)",
               border: "none",
-              color: "#ffffff",
+              color: "var(--active-nav-text)",
               padding: "0 24px",
               display: "flex",
               alignItems: "center",
@@ -195,7 +195,7 @@ function LandingContent() {
 
       {/* Featured Categories */}
       <section>
-        <h2 style={{ fontSize: "14px", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "0.1em", color: "#666666", marginBottom: "16px" }}>
+        <h2 style={{ fontSize: "14px", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--muted)", marginBottom: "16px" }}>
           {copy.featuredCategories}
         </h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))", gap: "16px" }}>
@@ -206,8 +206,8 @@ function LandingContent() {
                 key={category.id}
                 onClick={() => handleCategoryClick(category.title)}
                 style={{
-                  backgroundColor: "#ffffff",
-                  border: "1px solid #d0d0d0",
+                  backgroundColor: "var(--surface)",
+                  border: "1px solid var(--border)",
                   borderRadius: "4px",
                   padding: "20px",
                   cursor: "pointer",
@@ -216,14 +216,14 @@ function LandingContent() {
                   gap: "8px",
                   transition: "border-color 0.2s"
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.borderColor = "#1a1a1a"}
-                onMouseLeave={(e) => e.currentTarget.style.borderColor = "#d0d0d0"}
+                onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--active-nav-bg)"}
+                onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--border)"}
               >
                 <div style={{ color: "#d12c89", display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
                   <Icon size={20} />
                 </div>
-                <h3 style={{ fontSize: "15px", fontWeight: "bold", margin: 0, color: "#1a1a1a" }}>{category.title}</h3>
-                <p style={{ fontSize: "12px", color: "#666666", margin: 0, lineHeight: "1.4" }}>{category.desc}</p>
+                <h3 style={{ fontSize: "15px", fontWeight: "bold", margin: 0, color: "var(--text)" }}>{category.title}</h3>
+                <p style={{ fontSize: "12px", color: "var(--muted)", margin: 0, lineHeight: "1.4" }}>{category.desc}</p>
               </div>
             );
           })}
@@ -231,8 +231,8 @@ function LandingContent() {
       </section>
 
       {/* Trending FAQs */}
-      <section style={{ backgroundColor: "#ffffff", border: "1px solid #d0d0d0", borderRadius: "4px", padding: "24px" }}>
-        <h2 style={{ fontSize: "14px", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "0.1em", color: "#666666", marginBottom: "16px", marginTop: 0 }}>
+      <section style={{ backgroundColor: "var(--surface)", border: "1px solid var(--border)", borderRadius: "4px", padding: "24px" }}>
+        <h2 style={{ fontSize: "14px", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--muted)", marginBottom: "16px", marginTop: 0 }}>
           {copy.trendingFaqs}
         </h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -245,16 +245,16 @@ function LandingContent() {
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "12px 16px",
-                backgroundColor: "#f5f5f5",
+                backgroundColor: "var(--surface-soft)",
                 borderRadius: "4px",
                 cursor: "pointer",
                 transition: "background-color 0.2s"
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#e8e8e8"}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "#f5f5f5"}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "var(--border)"}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "var(--surface-soft)"}
             >
-              <span style={{ fontSize: "14px", color: "#1a1a1a", fontWeight: "500" }}>{faq.q}</span>
-              <ArrowRight size={16} style={{ color: "#666666" }} />
+              <span style={{ fontSize: "14px", color: "var(--text)", fontWeight: "500" }}>{faq.q}</span>
+              <ArrowRight size={16} style={{ color: "var(--muted)" }} />
             </div>
           ))}
         </div>
@@ -263,23 +263,23 @@ function LandingContent() {
       {/* Escalate Support Banner */}
       <section 
         style={{
-          border: "1px solid #d0d0d0",
+          border: "1px solid var(--border)",
           borderRadius: "4px",
           padding: "24px",
-          backgroundColor: "#ffffff",
+          backgroundColor: "var(--surface)",
           display: "flex",
           flexDirection: "column",
           gap: "8px"
         }}
       >
-        <h3 style={{ fontSize: "16px", fontWeight: "bold", margin: 0, color: "#1a1a1a" }}>{copy.supportPathTitle}</h3>
-        <p style={{ fontSize: "13px", color: "#666666", margin: 0, lineHeight: "1.5" }}>{copy.supportPathDesc}</p>
+        <h3 style={{ fontSize: "16px", fontWeight: "bold", margin: 0, color: "var(--text)" }}>{copy.supportPathTitle}</h3>
+        <p style={{ fontSize: "13px", color: "var(--muted)", margin: 0, lineHeight: "1.5" }}>{copy.supportPathDesc}</p>
         <div style={{ marginTop: "8px" }}>
           <button 
             onClick={() => router.push("/agent")}
             style={{
-              backgroundColor: "#1a1a1a",
-              color: "#ffffff",
+              backgroundColor: "var(--active-nav-bg)",
+              color: "var(--active-nav-text)",
               border: "none",
               borderRadius: "4px",
               padding: "8px 16px",
