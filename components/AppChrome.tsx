@@ -24,7 +24,22 @@ const shellCopy: Record<Language, Record<string, string>> = {
     Notifications: "Notifications",
     Analytics: "Analytics",
     "Groups & Skills": "Groups & Skills",
-    "API Readiness": "API Readiness"
+    "API Readiness": "API Readiness",
+    
+    // Sidebar Group Titles
+    "CUSTOMER EXPERIENCE": "Customer Experience",
+    "AGENT WORKSPACE": "Agent Workspace",
+    "ADMIN INSIGHTS": "Admin Insights",
+    
+    // Sidebar Item Labels
+    "HOME": "Home",
+    "SEARCH + RESULTS": "Search + Results",
+    "ARTICLE DETAIL": "Article Detail",
+    "DASHBOARD": "Dashboard",
+    "RESOLUTION": "Resolution",
+    "OVERVIEW": "Overview",
+    "ARTICLE PERFORMANCE": "Article Performance",
+    "LOGOUT": "Logout"
   },
   AR: {
     product: "قاعدة معرفة زين العراق",
@@ -41,7 +56,22 @@ const shellCopy: Record<Language, Record<string, string>> = {
     Notifications: "التنبيهات",
     Analytics: "التحليلات",
     "Groups & Skills": "المجموعات والمهارات",
-    "API Readiness": "جاهزية الواجهات"
+    "API Readiness": "جاهزية الواجهات",
+    
+    // Sidebar Group Titles
+    "CUSTOMER EXPERIENCE": "تجربة العملاء",
+    "AGENT WORKSPACE": "مساحة عمل الوكيل",
+    "ADMIN INSIGHTS": "إحصائيات الإدارة",
+    
+    // Sidebar Item Labels
+    "HOME": "الرئيسية",
+    "SEARCH + RESULTS": "البحث والنتائج",
+    "ARTICLE DETAIL": "تفاصيل المقال",
+    "DASHBOARD": "لوحة التحكم",
+    "RESOLUTION": "الحلول والدعم",
+    "OVERVIEW": "نظرة عامة",
+    "ARTICLE PERFORMANCE": "أداء المقالات",
+    "LOGOUT": "تسجيل الخروج"
   },
   KU: {
     product: "بنکەی زانیاری زەین عێراق",
@@ -58,7 +88,22 @@ const shellCopy: Record<Language, Record<string, string>> = {
     Notifications: "ئاگادارکردنەوەکان",
     Analytics: "شیکارییەکان",
     "Groups & Skills": "گرووپ و شارەزایی",
-    "API Readiness": "ئامادەیی API"
+    "API Readiness": "ئامادەیی API",
+    
+    // Sidebar Group Titles
+    "CUSTOMER EXPERIENCE": "ئەزموونی کڕیار",
+    "AGENT WORKSPACE": "شوێنی کاری ئەجێنت",
+    "ADMIN INSIGHTS": "تێڕوانینی بەڕێوەبەر",
+    
+    // Sidebar Item Labels
+    "HOME": "سەرەکی",
+    "SEARCH + RESULTS": "گەڕان و ئەنجامەکان",
+    "ARTICLE DETAIL": "وردەکاری بابەت",
+    "DASHBOARD": "داشبۆرد",
+    "RESOLUTION": "چارەسەرکردن",
+    "OVERVIEW": "تێڕوانینی گشتی",
+    "ARTICLE PERFORMANCE": "کارکردنی بابەتەکان",
+    "LOGOUT": "چوونە دەرەوە"
   }
 };
 
@@ -183,7 +228,7 @@ export function Sidebar({ active = "Home" }: { active?: string }) {
         {navGroups.map((group) => (
           <div key={group.title} className="nav-group" style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
             <span className="sidebar-group-title" style={{ fontSize: "11px", fontWeight: "bold", color: "#666666", letterSpacing: "0.1em", padding: "0 8px", textTransform: "uppercase", marginBottom: "4px" }}>
-              {group.title}
+              {localize(group.title, language)}
             </span>
             {group.items.map((item) => {
               const Icon = item.icon;
@@ -210,7 +255,7 @@ export function Sidebar({ active = "Home" }: { active?: string }) {
                   }}
                 >
                   <Icon size={16} />
-                  <span>{item.label}</span>
+                  <span>{localize(item.label, language)}</span>
                 </Link>
               );
             })}
@@ -239,7 +284,7 @@ export function Sidebar({ active = "Home" }: { active?: string }) {
           }}
         >
           <LogOut size={16} />
-          <span>LOGOUT</span>
+          <span>{localize("LOGOUT", language)}</span>
         </button>
       </div>
     </aside>
